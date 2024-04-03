@@ -718,7 +718,7 @@ public class WelcomeController implements Initializable {
 		controller.setMainConfiguration(new MainConfiguration());
 		ConfigurationController.loadConfiguration(controller.getMainConfiguration(),
 				controller.getConfiguration(controller.getActualCourse()));
-
+		
 		FXMLLoader loader = new FXMLLoader(fxmlLoader, I18n.getResourceBundle());
 		try {
 			long daysElapsed = lastUpdate.until(LocalDateTime.now(), ChronoUnit.DAYS);

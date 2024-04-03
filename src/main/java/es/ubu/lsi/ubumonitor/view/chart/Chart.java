@@ -49,6 +49,8 @@ public abstract class Chart implements ExportableChart {
 	protected boolean useRangeDate;
 	protected boolean useLogs;
 
+	protected boolean useAlgorithms; // Clustering list Algorithms
+	
 	protected boolean useNegativeValues;
 	protected boolean useOptions;
 	protected Controller controller = Controller.getInstance();
@@ -281,6 +283,10 @@ public abstract class Chart implements ExportableChart {
 
 	public boolean isUseRangeDate() {
 		return useRangeDate;
+	}
+	
+	public boolean isUseAlgorithms() {
+		return useAlgorithms;
 	}
 
 	@Override

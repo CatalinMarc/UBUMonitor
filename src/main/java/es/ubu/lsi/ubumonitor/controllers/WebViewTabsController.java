@@ -77,28 +77,27 @@ public class WebViewTabsController {
 	
 	
 	private void initWebViewTabs(Course actualCourse, MainConfiguration mainConfiguration, Stage stage) {
-		clusteringController.init(mainController);
-		tabPane.getSelectionModel()
-				.select(ConfigHelper.getProperty("webViewTab", tabPane.getSelectionModel()
-						.getSelectedIndex()));
-		tabPane.getSelectionModel()
-				.selectedItemProperty()
-				.addListener((ob, old, newValue) -> {
-					mainController.getActions().onWebViewTabChange();
-					SelectionController selectionController = mainController.getSelectionController();
-					if (selectionController.getTabUbuLogs()
-							.isSelected()) {
-						mainController.getActions().onSetTabLogs();
-					} else if (selectionController.getTabUbuGrades()
-							.isSelected()) {
-						mainController.getActions().onSetTabGrades();
-					} else if (selectionController.getTabActivity()
-							.isSelected()) {
-						mainController.getActions().onSetTabActivityCompletion();
-					}
-				});
+//		clusteringController.init(mainController);
+//		tabPane.getSelectionModel()
+//				.select(ConfigHelper.getProperty("webViewTab", tabPane.getSelectionModel()
+//						.getSelectedIndex()));
+//		tabPane.getSelectionModel()
+//				.selectedItemProperty()
+//				.addListener((ob, old, newValue) -> {
+//					mainController.getActions().onWebViewTabChange();
+//					SelectionController selectionController = mainController.getSelectionController();
+//					if (selectionController.getTabUbuLogs()
+//							.isSelected()) {
+//						mainController.getActions().onSetTabLogs();
+//					} else if (selectionController.getTabUbuGrades()
+//							.isSelected()) {
+//						mainController.getActions().onSetTabGrades();
+//					} else if (selectionController.getTabActivity()
+//							.isSelected()) {
+//						mainController.getActions().onSetTabActivityCompletion();
+//					}
+//				});
 
-		
 		
 		add(visualizationController, mainController, visualizationTab, actualCourse, mainConfiguration, stage);
 		add(riskController, mainController, riskTab, actualCourse, mainConfiguration, stage);
@@ -107,6 +106,7 @@ public class WebViewTabsController {
 		add(multiController, mainController, multiTab, actualCourse, mainConfiguration, stage);
 		add(enrollmentController, mainController, enrollmentTab, actualCourse, mainConfiguration, stage);
 		add(sigmaController, mainController, sigmaTab, actualCourse, mainConfiguration, stage);
+		add(clusteringController, mainController, clusteringTab, actualCourse, mainConfiguration, stage);
 	}
 
 	private void add(WebViewAction webViewAction, MainController mainController, Tab tab, Course actualCourse, MainConfiguration mainConfiguration, Stage stage) {

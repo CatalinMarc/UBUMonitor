@@ -7,7 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 public enum ChartType {
-
+	
+	// Analisis visual
 	TOTAL_BAR(Tabs.LOGS, 0), 
 	HEAT_MAP(Tabs.LOGS, 2), 
 	BOXPLOT_LOG(Tabs.LOGS, 23),
@@ -22,6 +23,7 @@ public enum ChartType {
 	SESSION(Tabs.LOGS, 10),
 	TABLE_LOG(Tabs.LOGS, 9),
 
+	// ??
 	LINE(Tabs.GRADES, 11),
 	RADAR(Tabs.GRADES, 12), 
 	BOXPLOT(Tabs.GRADES, 13),
@@ -32,12 +34,14 @@ public enum ChartType {
 
 	ACTIVITIES_TABLE(Tabs.ACTIVITY_COMPLETION, 17),
 
+	// Riesgo de abandono
 	RISK_BAR(Tabs.RISK, 20),
 	BUBBLE(Tabs.RISK, 21), 
 	BUBBLE_LOGARITHMIC(Tabs.RISK, 22), 
 	RISK_BAR_TEMPORAL(Tabs.RISK, 18),
 	RISK_EVOLUTION(Tabs.RISK, 19),
 
+	// Foros
 	FORUM_BAR(Tabs.FORUM, 26), 
 	FORUM_USER_POST_BAR(Tabs.FORUM, 30),
 	FORUM_NETWORK(Tabs.FORUM, 27),
@@ -47,16 +51,20 @@ public enum ChartType {
 	FORUM_WORD_CLOUD(Tabs.FORUM, 29),
 	FORUM_TABLE(Tabs.FORUM, 25),
 
+	// Eventos de calendario
 	CALENDAR_EVENT_TIMELINE(Tabs.CALENDAR_EVENT, 28),
 
+	// Comparaciones 
 	RANKING_TABLE(Tabs.MULTI, 34), 
 	POINTS_TABLE(Tabs.MULTI, 36),
 	BUBBLE_COMPARISON(Tabs.MULTI, 35),
 	
+	// Matriculacion
 	ENROLLMENT_BAR(Tabs.ENROLLMENT, 37),
 	ENROLLMENT_COURSE_NETWORK(Tabs.ENROLLMENT, 39),
 	ENROLLMENT_SANKEY(Tabs.ENROLLMENT, 38),
 	
+	// Sigma
 	SIGMA_PIE(Tabs.SIGMA, 41),
 	SIGMA_BAR(Tabs.SIGMA, 42), 
 	SIGMA_STACKED_BAR(Tabs.SIGMA, 43), 
@@ -68,9 +76,14 @@ public enum ChartType {
 	USUAL_ADDRESS_MAP(Tabs.SIGMA, 50),
 	SIGMA_TABLE_ENROLLED(Tabs.SIGMA, 44),
 	SIGMA_TABLE_NOT_ENROLLED(Tabs.SIGMA, 45),
+	
+	// Clustering
+	CLUSTERING_CLASSIC(Tabs.CLUSTERING, 52),
+	CLUSTERING_HIERARCHICAL(Tabs.CLUSTERING, 53),
+	
 	  ;
 	
-	// next id 51
+	// next id 54
 
 	private Tabs tab;
 	private int id;
@@ -85,6 +98,7 @@ public enum ChartType {
 
 		for (ChartType chartType : ChartType.values()) {
 	
+			
 			if (tabs.contains(chartType.getTab())) {
 				NON_DEFAULT_VALUES.add(chartType);
 			} else {

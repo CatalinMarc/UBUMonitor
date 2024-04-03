@@ -86,10 +86,10 @@ public class MainConfiguration {
 		createItem(GENERAL, "fontColorYScaleTitle", Color.BLACK);
 		createItem(GENERAL, "fontColorXScaleTitle", Color.BLACK);
 
+		
+		// Analisis visual
 		createItem(ChartType.TOTAL_BAR, HORIZONTAL_MODE, false);
 		
-		
-	
 		createItem(ChartType.HEAT_MAP, "zeroValue", Color.web("#f78880"));
 		createItem(ChartType.HEAT_MAP, "firstInterval", Color.web("#f4e3ae"));
 		createItem(ChartType.HEAT_MAP, "secondInterval", Color.web("#fff033"));
@@ -303,6 +303,19 @@ public class MainConfiguration {
 		createItem(ChartType.ENROLLMENT_SANKEY, "linkColor", Color.web("#efc9af", 0.3));
 		createItem(ChartType.ENROLLMENT_SANKEY, "courseColorNode", Color.web("#FC9E21"));
 		createItem(ChartType.ENROLLMENT_SANKEY, "minFrequency", 1);
+		
+		// Clustering
+		//createItem(ChartType.CLUSTERING_CLASSIC, HORIZONTAL_MODE, false);
+		//createItem(ChartType.CLUSTERING_HIERACHICAL, HORIZONTAL_MODE, false);
+		
+		//createItem(ChartType.CLUSTERING_CLASSIC, HORIZONTAL_MODE, true);
+		//createItem(ChartType.CLUSTERING_CLASSIC, "standardDeviation", false);
+		//createItem(ChartType.CLUSTERING_CLASSIC, "notched", false);
+		
+		//createItem(ChartType.CLUSTERING_HIERACHICAL, HORIZONTAL_MODE, true);
+		//createItem(ChartType.CLUSTERING_HIERACHICAL, "standardDeviation", false);
+		//createItem(ChartType.CLUSTERING_HIERACHICAL, "notched", false);
+		
 		
 		if(Controller.getInstance().getSigmaCache().exists()) {
 			createItem(ChartType.SIGMA_BOXPLOT, "limit", 5);

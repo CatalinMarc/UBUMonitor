@@ -17,6 +17,7 @@ import es.ubu.lsi.ubumonitor.clustering.controller.Connector;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.clustering.util.ExportUtil;
+import es.ubu.lsi.ubumonitor.controllers.tabs.clustering.ClassicController;
 import es.ubu.lsi.ubumonitor.util.I18n;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import es.ubu.lsi.ubumonitor.util.JSArray;
@@ -41,13 +42,13 @@ public class Scatter2DChart extends ClusteringChart {
 	/**
 	 * Constructor.
 	 * 
-	 * @param clusteringController controlador general
+	 * @param classicController controlador general
 	 */
-	public Scatter2DChart(PartitionalClusteringController clusteringController) {
-		super(clusteringController.getWebViewScatter());
+	public Scatter2DChart(ClassicController classicController) {
+		super(classicController.getClusteringController().getWebView());
 
 		WebEngine webEngine = getWebEngine();
-		connector = new Connector(clusteringController);
+		connector = new Connector(classicController);
 		webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
 			if (Worker.State.SUCCEEDED != newState)
 				return;

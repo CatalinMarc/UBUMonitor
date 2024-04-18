@@ -49,7 +49,7 @@ public abstract class Chart implements ExportableChart {
 	protected boolean useRangeDate;
 	protected boolean useLogs;
 
-	protected boolean useAlgorithms; // Clustering list Algorithms
+	protected boolean clusteringClassic; // For grid pane classic or hierarchical
 	
 	protected boolean useNegativeValues;
 	protected boolean useOptions;
@@ -285,8 +285,8 @@ public abstract class Chart implements ExportableChart {
 		return useRangeDate;
 	}
 	
-	public boolean isUseAlgorithms() {
-		return useAlgorithms;
+	public boolean isClusteringClassic() {
+		return clusteringClassic;
 	}
 
 	@Override

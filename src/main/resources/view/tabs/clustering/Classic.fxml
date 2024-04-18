@@ -4,172 +4,140 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.web.WebView?>
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.PropertySheet?>
 <?import org.controlsfx.control.RangeSlider?>
 
-<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ubu.lsi.ubumonitor.clustering.controller.PartitionalClusteringController">
-   <top>
-      <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
-          <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
-            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+<GridPane hgap="5.0" pickOnBounds="false" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ubu.lsi.ubumonitor.controllers.tabs.clustering.ClassicController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" percentWidth="17.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="22.0" prefWidth="200.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="15.0" prefWidth="200.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="8.0" percentWidth="1.0" prefWidth="10.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="15.0" prefWidth="200.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <PropertySheet fx:id="propertySheet" modeSwitcherVisible="false" searchBoxVisible="false" GridPane.columnIndex="1" GridPane.rowSpan="2147483647" />
+      <CheckBox fx:id="checkBoxLogs" mnemonicParsing="false" text="%tab.logs" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </CheckBox>
+      <CheckBox fx:id="checkBoxGrades" mnemonicParsing="false" text="%tab.grades" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </CheckBox>
+      <CheckBox fx:id="checkBoxActivity" mnemonicParsing="false" text="%tab.activityCompletion" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </CheckBox>
+      <CheckComboBox fx:id="checkComboBoxLogs" prefWidth="108.0" showCheckedCount="true" title="%clustering.logTypes" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="NEVER">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </CheckComboBox>
+      <DatePicker fx:id="datePickerStart" editable="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <DatePicker fx:id="datePickerEnd" editable="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <CheckBox fx:id="checkBoxFilter" mnemonicParsing="false" text="%clustering.filter" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Label fx:id="lblDistance" text="%clustering.distance" visible="false" />
+      <ChoiceBox fx:id="choiceBoxDistance" visible="false" GridPane.columnIndex="1" />
+      <Label fx:id="lblDistanceCluster" text="%clustering.distanceClusters" visible="false" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="choiceBoxLinkage" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ComboBox fx:id="comboBoxAlgorithm" prefWidth="175.0">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </ComboBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="5" GridPane.rowSpan="2147483647" />
+      <GridPane GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-
-            <PropertySheet fx:id="propertySheet" modeSwitcherVisible="false" searchBoxVisible="false" GridPane.columnIndex="1" GridPane.rowSpan="2147483647" />
-            <CheckBox fx:id="checkBoxGrades" mnemonicParsing="false" text="%tab.grades" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin></CheckBox>
-            <ListView fx:id="algorithmList" prefWidth="150.0" GridPane.rowSpan="2147483647" />
-            <RangeSlider fx:id="rangeSlider" blockIncrement="1.0" highValue="10.0" lowValue="2.0" majorTickUnit="1.0" max="15.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="6" GridPane.rowIndex="1" GridPane.rowSpan="2">
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin></RangeSlider>
-            <GridPane GridPane.columnIndex="4">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <CheckBox fx:id="checkBoxReduce" mnemonicParsing="false" text="%clustering.reduce" GridPane.halignment="RIGHT">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin></CheckBox>
-                  <Spinner fx:id="spinnerReduce" editable="true" prefWidth="90.0" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
-            <Label text="%clustering.numberOfClusters" GridPane.columnIndex="6">
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin></Label>
-            <GridPane GridPane.columnIndex="6" GridPane.rowIndex="3">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ChoiceBox fx:id="choiceBoxAnalyze" />
-                  <Button mnemonicParsing="false" onAction="#executeAnalysis" text="%clustering.analyze" GridPane.columnIndex="1" />
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="20.0" />
-               </GridPane.margin>
-            </GridPane>
-            <GridPane GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="2">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="%clustering.iterations" GridPane.halignment="RIGHT">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Spinner fx:id="spinnerIterations" editable="true" prefWidth="90.0" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
-               <children>
-                  <Button fx:id="buttonExecute" mnemonicParsing="false" onAction="#executeClustering" text="%clustering.execute">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></Button>
-                  <ProgressIndicator fx:id="progressExecute" prefHeight="30.0" prefWidth="30.0" visible="false">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </ProgressIndicator>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="20.0" />
-               </GridPane.margin>
-            </HBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="5" GridPane.rowSpan="2147483647" />
-            <CheckComboBox fx:id="checkComboBoxLogs" showCheckedCount="true" title="%clustering.logTypes" GridPane.columnIndex="3" GridPane.hgrow="NEVER">
+            <ChoiceBox fx:id="choiceBoxAnalyze" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
-            </CheckComboBox>
-            <CheckBox fx:id="checkBoxFilter" mnemonicParsing="false" selected="true" text="%clustering.filter" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <CheckBox fx:id="checkBoxActivity" mnemonicParsing="false" text="%tab.activityCompletion" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            </ChoiceBox>
+            <Button fx:id="buttonAnalyze" mnemonicParsing="false" onAction="#executeAnalysis" text="%clustering.analyze" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
                <GridPane.margin>
-                  <Insets left="10.0" />
+                  <Insets />
                </GridPane.margin>
-            </CheckBox>
-            <CheckBox fx:id="checkBoxLogs" mnemonicParsing="false" text="%tab.logs" GridPane.columnIndex="2">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </CheckBox>
-            <DatePicker fx:id="datePickerStart" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <DatePicker fx:id="datePickerEnd" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            </Button>
          </children>
       </GridPane>
-   </top>
-   <center>
-      <SplitPane dividerPositions="0.8" BorderPane.alignment="CENTER">
-         <items>
-            <TabPane minWidth="0.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="%clustering.2Dgraph">
-                     <content>
-                        <WebView fx:id="webViewScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />
-                     </content>
-                  </Tab>
-                  <Tab text="%clustering.3Dgraph">
-                     <content>
-                        <WebView fx:id="webView3DScatter" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-                <Tab text="%clustering.silhouetteAnalysis">
-                     <content>
-                        <WebView fx:id="webViewSilhouette" cache="true" cacheHint="SPEED" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
-            
-            <fx:include fx:id="clusteringTable" source="Table.fxml" />
-            
-         </items>
-      </SplitPane>
-   </center>
-</BorderPane>
+      <Label text="%clustering.numberOfClusters" GridPane.columnIndex="6" />
+      <GridPane fx:id="gridPaneReduce" GridPane.columnIndex="4">
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <CheckBox fx:id="checkBoxReduce" mnemonicParsing="false" text="%clustering.reduce" GridPane.halignment="RIGHT">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </CheckBox>
+            <Spinner fx:id="spinnerReduce" editable="true" prefWidth="90.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+      </GridPane>
+      <GridPane fx:id="gridPaneIterations" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" text="%clustering.iterations" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Spinner fx:id="spinnerIterations" editable="true" prefWidth="90.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+      </GridPane>
+      <RangeSlider fx:id="rangeSlider" blockIncrement="1.0" highValue="10.0" lowValue="2.0" majorTickUnit="1.0" max="15.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="6" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <ProgressIndicator fx:id="progressExecute" prefHeight="30.0" prefWidth="30.0" visible="false" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+         <children>
+            <Button id="Entrar" fx:id="buttonExecute" cancelButton="false" disable="false" focusTraversable="true" graphicTextGap="5.0" mnemonicParsing="false" onAction="#executeClustering" prefWidth="70.0" styleClass="accept_button" text="%clustering.execute" textOverrun="ELLIPSIS" underline="false" visible="true" />
+            <ProgressIndicator fx:id="progressExecute1" prefHeight="30.0" prefWidth="30.0" visible="false">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ProgressIndicator>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

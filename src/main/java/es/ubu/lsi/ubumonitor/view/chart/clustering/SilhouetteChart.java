@@ -19,6 +19,7 @@ import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
 import es.ubu.lsi.ubumonitor.clustering.data.Distance;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.clustering.util.ExportUtil;
+import es.ubu.lsi.ubumonitor.controllers.tabs.clustering.ClassicController;
 import es.ubu.lsi.ubumonitor.util.I18n;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import es.ubu.lsi.ubumonitor.util.JSArray;
@@ -42,10 +43,10 @@ public class SilhouetteChart extends ClusteringChart {
 	/**
 	 * Constructor.
 	 * 
-	 * @param clusteringController controlador general
+	 * @param classicController controlador general
 	 */
-	public SilhouetteChart(PartitionalClusteringController clusteringController) {
-		super(clusteringController.getWebViewSilhouette());
+	public SilhouetteChart(ClassicController classicController) {
+		super(classicController.getClusteringController().getWebView());
 		getWebEngine().load(getClass().getResource("/graphics/SilhouetteChart.html").toExternalForm());
 	}
 

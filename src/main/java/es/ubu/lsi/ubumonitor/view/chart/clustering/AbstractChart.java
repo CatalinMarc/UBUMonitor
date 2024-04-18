@@ -125,5 +125,14 @@ public abstract class AbstractChart {
 	protected WebEngine getWebEngine() {
 		return webEngine;
 	}
+	
+	/**
+	 * Devuelve el web view.
+	 * 
+	 * @return webView
+	 */
+	protected WebView getWebView() {
+		return webView;
+	}
 
 }

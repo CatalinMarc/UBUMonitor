@@ -134,7 +134,7 @@ public abstract class WebViewAction implements MainAction {
 					webViewCharts.toFront();
 					webViewController.getImageView().setVisible(false);
 					javaConnector.inititDefaultValues();
-
+				    
 					javaConnector.updateChart();
 
 				});

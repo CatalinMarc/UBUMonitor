@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -41,45 +42,10 @@ public class ScatterClustering extends Plotly {
 	protected SelectionController sellectionController;
 	protected ClusteringController clusteringController;
 	
-	/* ------------------- FXML Components ------------------- */
-	
-	protected ListView<Algorithm> algorithmList;
-	
-	protected PropertySheet propertySheet;
-	
-	protected CheckBox checkBoxLogs;
-	protected CheckBox checkBoxGrades;
-	protected CheckBox checkBoxActivity;
-	protected CheckBox checkBoxFilter;
-	protected CheckBox checkBoxReduce;
-	
-	protected CheckComboBox<LogCollector<?>> checkComboBoxLogs;
-	
-	protected DatePicker datePickerStart;
-	protected DatePicker datePickerEnd;
-	
-	protected GridPane gridPane;
-	protected GridPane gridPaneReduce;
-	protected GridPane gridPaneIterations;
-	
-	protected Spinner<Integer> spinnerReduce;
-	protected Spinner<Integer> spinnerIterations;
-	
-	protected Button buttonExecute;
-	protected Button buttonAnalyze;
-	
-	protected RangeSlider rangeSlider;
-	
-	protected ChoiceBox<AnalysisFactory> choiceBoxAnalyze;
-	
-	protected ChoiceBox<Distance<double[]>> choiceBoxDistance;
-	protected ChoiceBox<LinkageMeasure> choiceBoxLinkage;
-	
 	public ScatterClustering(MainController mainController, ChartType chartType) {
 		super(mainController, chartType);
 		
 		initControllers();
-		initComponents();
 	}
 	
 	private void initControllers() {
@@ -87,43 +53,7 @@ public class ScatterClustering extends Plotly {
 		clusteringController = mainController.getWebViewTabsController().getClusteringController();
 	}
 	
-	private void initComponents() {
-		
-		gridPane = clusteringController.getGridPane();
-		
-		algorithmList = clusteringController.getAlgorithmList();
-		
-		propertySheet = clusteringController.getPropertySheet();
-		
-		checkBoxLogs = clusteringController.getCheckBoxLogs();
-		checkBoxGrades = clusteringController.getCheckBoxGrades();
-		checkBoxActivity = clusteringController.getCheckBoxActivity();
-		checkBoxFilter = clusteringController.getCheckBoxFilter();
-		checkBoxReduce = clusteringController.getCheckBoxReduce();
-		
-		checkComboBoxLogs = clusteringController.getCheckComboBoxLogs();
-		
-		datePickerStart = clusteringController.getDatePickerStart();
-		datePickerEnd = clusteringController.getDatePickerEnd();
-		
-		gridPaneReduce = clusteringController.getGridPaneReduce();
-		gridPaneIterations = clusteringController.getGridPaneIterations();
-		
-		spinnerReduce = clusteringController.getSpinnerReduce();
-		spinnerIterations = clusteringController.getSpinnerIterations();
-		
-		buttonExecute = clusteringController.getButtonExecute();
-		buttonAnalyze = clusteringController.getButtonAnalyze();
-		
-		rangeSlider = clusteringController.getRangeSlider();
-		
-		choiceBoxAnalyze = clusteringController.getChoiceBoxAnalyze();
-		
-		
-		choiceBoxDistance = clusteringController.getChoiceBoxDistance();
-		choiceBoxLinkage = clusteringController.getChoiceBoxLinkage();
-		
-	}
+	
 
 	@Override
 	public void exportCSV(String path) throws IOException {

@@ -71,34 +71,11 @@ public class WebViewTabsController {
 	public void init(MainController mainController, Course actualCourse, MainConfiguration mainConfiguration, Stage stage) {
 		this.mainController = mainController;
 		
-		
 		initWebViewTabs(actualCourse, mainConfiguration, stage);
 	}
 	
 	
 	private void initWebViewTabs(Course actualCourse, MainConfiguration mainConfiguration, Stage stage) {
-//		clusteringController.init(mainController);
-//		tabPane.getSelectionModel()
-//				.select(ConfigHelper.getProperty("webViewTab", tabPane.getSelectionModel()
-//						.getSelectedIndex()));
-//		tabPane.getSelectionModel()
-//				.selectedItemProperty()
-//				.addListener((ob, old, newValue) -> {
-//					mainController.getActions().onWebViewTabChange();
-//					SelectionController selectionController = mainController.getSelectionController();
-//					if (selectionController.getTabUbuLogs()
-//							.isSelected()) {
-//						mainController.getActions().onSetTabLogs();
-//					} else if (selectionController.getTabUbuGrades()
-//							.isSelected()) {
-//						mainController.getActions().onSetTabGrades();
-//					} else if (selectionController.getTabActivity()
-//							.isSelected()) {
-//						mainController.getActions().onSetTabActivityCompletion();
-//					}
-//				});
-
-		
 		add(visualizationController, mainController, visualizationTab, actualCourse, mainConfiguration, stage);
 		add(riskController, mainController, riskTab, actualCourse, mainConfiguration, stage);
 		add(forumController, mainController, forumTab, actualCourse, mainConfiguration, stage);

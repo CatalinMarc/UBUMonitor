@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.web.WebView?>
+
+<TabPane minWidth="0.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ubu.lsi.ubumonitor.controllers.tabs.clustering.GraphClassicController">
+   <tabs>
+      <Tab text="%clustering.2Dgraph">
+         <content>
+            <WebView fx:id="webViewScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />
+         </content>
+      </Tab>
+      <Tab text="%clustering.3Dgraph">
+         <content>
+            <WebView fx:id="webView3DScatter" prefHeight="200.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="%clustering.silhouetteAnalysis">
+         <content>
+            <WebView fx:id="webViewSilhouette" cache="true" cacheHint="SPEED" prefHeight="200.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>

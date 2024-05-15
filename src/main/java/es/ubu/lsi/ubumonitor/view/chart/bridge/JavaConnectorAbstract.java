@@ -93,6 +93,7 @@ public abstract class JavaConnectorAbstract implements JavaConnector {
 				.toLanguageTag() + "')");
 
 		updateOptionsImages();
+
 	}
 
 	@Override

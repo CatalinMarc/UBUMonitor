@@ -10,6 +10,7 @@ import org.apache.commons.math3.ml.clustering.Clusterer;
 import org.apache.commons.math3.ml.clustering.DoublePoint;
 
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
+import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import smile.clustering.CentroidClustering;
 import smile.clustering.PartitionClustering;
 
@@ -31,6 +32,10 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 	}
 
 	protected abstract PartitionClustering execute(double[][] data);
+	
+	protected double[][]execute(List<EnrolledUser> users) {
+		return null;
+	}
 
 	private List<? extends Cluster<UserData>> adaptSmile(Collection<UserData> points,
 			CentroidClustering<double[], double[]> centroidClustering) {

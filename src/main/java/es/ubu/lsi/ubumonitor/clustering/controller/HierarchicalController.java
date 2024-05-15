@@ -268,7 +268,7 @@ public class HierarchicalController {
 		if (hierarchicalClustering == null)
 			return;
 
-		Dendrogram dendrogram = new Dendrogram(hierarchicalClustering.getTree(), hierarchicalClustering.getHeight());
+		Dendrogram dendrogram = new Dendrogram(hierarchicalClustering.tree(), hierarchicalClustering.height());
 		Canvas canvas = dendrogram.canvas();
 		canvas.setMargin(0.05);
 		Image image = SwingFXUtils

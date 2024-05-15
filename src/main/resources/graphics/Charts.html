@@ -397,57 +397,6 @@
          }
       }
 
-      function generateClusteringButtons(buttons, innerButtons) {
-         for (const value of buttons) {
-            let button = document.createElement("BUTTON");
-            button.id = value.id;
-            button.innerText = value.text;
-            button.className = "btn";
-            button.setAttribute("onClick", "javaConnector.updateChartFromJS(this.id);");
-            type = document.getElementById(value.type)
-
-            if (!type) {
-               all_tabs = document.getElementById("all_tabs");
-
-               type = document.createElement("DIV");
-               type.id = value.type;
-               type.className = "pestañas";
-               all_tabs.insertBefore(type, document.getElementById("tabs_options"));
-            }
-
-
-            type.appendChild(button);
-         }
-
-         type.appendChild(document.createElement("br"));
-
-         div = document.createElement("DIV");
-         div.id = "innerButtons";
-
-         for (const value of innerButtons) {
-            let button = document.createElement("BUTTON");
-            button.id = value.id;
-            button.innerText = value.text;
-            button.className = "btn";
-            button.setAttribute("onClick", "clusteringInnerButtons(this.id)");
-
-            div.appendChild(button)
-         }
-
-         type.appendChild(div);
-      }
-
-      function clusteringInnerButtons(option) {
-
-         const contenedor = document.getElementById("innerButtons");
-         console.log(option)
-            if (option === "CLUSTERING_CLASSIC") {
-               contenedor.style.display = "block";
-            } else if (option === "CLUSTERING_HIERARCHICAL") {
-                contenedor.style.display = "none";
-            }
-      }
-
       // Modifica el valor de los inputs segun el idioma pasado
       function getI18n(item) {
          document.getElementById(item).value = javaConnector.getI18n(item);

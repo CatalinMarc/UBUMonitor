@@ -49,8 +49,6 @@ public abstract class Chart implements ExportableChart {
 	protected boolean useRangeDate;
 	protected boolean useLogs;
 
-	protected boolean clusteringClassic; // For grid pane classic or hierarchical
-	
 	protected boolean useNegativeValues;
 	protected boolean useOptions;
 	protected Controller controller = Controller.getInstance();
@@ -283,10 +281,6 @@ public abstract class Chart implements ExportableChart {
 
 	public boolean isUseRangeDate() {
 		return useRangeDate;
-	}
-	
-	public boolean isClusteringClassic() {
-		return clusteringClassic;
 	}
 
 	@Override

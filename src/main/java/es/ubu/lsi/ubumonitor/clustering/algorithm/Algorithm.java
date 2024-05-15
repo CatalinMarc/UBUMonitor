@@ -1,10 +1,14 @@
 package es.ubu.lsi.ubumonitor.clustering.algorithm;
 
+import java.util.List;
+
 import org.apache.commons.math3.ml.clustering.Clusterer;
 
+import es.ubu.lsi.ubumonitor.clustering.controller.collector.DataCollector;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.clustering.exception.IllegalParamenterException;
+import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 
 /**
  * Clase base de los algoritmos de clustering.
@@ -58,6 +62,19 @@ public abstract class Algorithm {
 	 */
 	public abstract Clusterer<UserData> getClusterer();
 
+	/**
+	 * Devuelve el mapa del algoritmo.
+	 * 
+	 * @return mapa del algoritmo
+	 */
+	public Clusterer<UserData> getMaps() {
+		return null;
+	}
+	
+	public double[][] getMaps(List<EnrolledUser> users, List<DataCollector> collectors) {
+		return null;
+	}
+	
 	/**
 	 * Establece el nombre del algoritmo.
 	 * 

@@ -207,6 +207,9 @@ public class LogCreator {
 
 		if (headers.contains(LogCreator.DESCRIPTION)) {
 			String description = csvRecord.get(LogCreator.DESCRIPTION);
+			 // RMS correct description
+		     description = description.replace("&#039;", "'"); // new line replace code with Moodle 4.4           
+		     // RMS correct description
 			List<Integer> ids = getIdsInDescription(description);
 			try {
 				ReferencesLog referencesLog = LogTypes.getReferenceLog(component, event);

@@ -4,7 +4,6 @@ import java.util.List;
 
 import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
-import es.ubu.lsi.ubumonitor.controllers.tabs.clustering.ClassicController;
 import javafx.scene.control.TableView;
 
 /**
@@ -15,16 +14,16 @@ import javafx.scene.control.TableView;
  */
 public class Connector {
 
-	private ClassicController clusteringController;
+	private PartitionalClusteringController clusteringController;
 	private List<ClusterWrapper> clusters;
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param classicController controladro
+	 * @param controller controladro
 	 */
-	public Connector(ClassicController classicController) {
-		this.clusteringController = classicController;
+	public Connector(PartitionalClusteringController controller) {
+		this.clusteringController = controller;
 	}
 
 	/**
@@ -36,9 +35,9 @@ public class Connector {
 	public void selectUser(int clusterIndex, int index) {
 		if (clusterIndex < clusters.size()) {
 			UserData userData = clusters.get(clusterIndex).get(index);
-//			TableView<UserData> tableView = clusteringController.getClusteringTable().getTableView();
-//			tableView.getSelectionModel().select(userData);
-//			tableView.scrollTo(userData);
+			TableView<UserData> tableView = clusteringController.getClusteringTable().getTableView();
+			tableView.getSelectionModel().select(userData);
+			tableView.scrollTo(userData);
 		}
 	}
 

@@ -134,7 +134,7 @@ public abstract class WebViewAction implements MainAction {
 					webViewCharts.toFront();
 					webViewController.getImageView().setVisible(false);
 					javaConnector.inititDefaultValues();
-				    
+
 					javaConnector.updateChart();
 
 				});
@@ -143,7 +143,6 @@ public abstract class WebViewAction implements MainAction {
 
 	}
 
-	//Click derecho
 	public ContextMenu initContextMenu() {
 		ContextMenu contextMenu = new ContextMenu();
 		contextMenu.setAutoHide(true);

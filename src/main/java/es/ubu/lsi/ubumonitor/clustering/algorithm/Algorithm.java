@@ -9,6 +9,7 @@ import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.clustering.exception.IllegalParamenterException;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
+import smile.vq.VectorQuantizer;
 
 /**
  * Clase base de los algoritmos de clustering.
@@ -63,19 +64,6 @@ public abstract class Algorithm {
 	public abstract Clusterer<UserData> getClusterer();
 
 	/**
-	 * Devuelve el mapa del algoritmo.
-	 * 
-	 * @return mapa del algoritmo
-	 */
-	public Clusterer<UserData> getMaps() {
-		return null;
-	}
-	
-	public double[][] getMaps(List<EnrolledUser> users, List<DataCollector> collectors) {
-		return null;
-	}
-	
-	/**
 	 * Establece el nombre del algoritmo.
 	 * 
 	 * @param name nombre del algoritmo
@@ -123,5 +111,10 @@ public abstract class Algorithm {
 	@Override
 	public String toString() {
 		return name + " (" + library + ")";
+	}
+	
+	public boolean equals(Algorithm algorithm) {
+		return (name.equals(algorithm.getName()) 
+				&& library.equals(algorithm.getLibrary()));
 	}
 }

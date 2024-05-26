@@ -1,5 +1,6 @@
 package es.ubu.lsi.ubumonitor.clustering.algorithm.smile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,10 +10,18 @@ import org.apache.commons.math3.ml.clustering.Cluster;
 import org.apache.commons.math3.ml.clustering.Clusterer;
 import org.apache.commons.math3.ml.clustering.DoublePoint;
 
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.BIRCHAlgorithm.BIRCHAdapter;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import smile.clustering.CentroidClustering;
 import smile.clustering.PartitionClustering;
+import smile.plot.swing.Canvas;
+import smile.vq.BIRCH;
+import smile.vq.NeuralGas;
+import smile.vq.NeuralMap;
+import smile.vq.SOM;
+import smile.vq.VectorQuantizer;
+import smile.vq.hebb.Neuron;
 
 public abstract class SmileAdapter extends Clusterer<UserData> {
 
@@ -23,15 +32,26 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<? extends Cluster<UserData>> cluster(Collection<UserData> points) {
-		double[][] data = points.stream().map(UserData::getPoint).toArray(double[][]::new);
-		PartitionClustering clustering = execute(data);
+		double[][] data = stream(points);
+		PartitionClustering clustering = (PartitionClustering) execute(data);
 		if (clustering instanceof CentroidClustering) {
 			return adaptSmile(points, (CentroidClustering<double[], double[]>) clustering);
 		}
 		return adaptSmile(points, clustering);
 	}
-
-	protected abstract PartitionClustering execute(double[][] data);
+	
+	public Canvas execute(Collection<UserData> points, boolean a) {
+		double[][] data = stream(points);
+		VectorQuantizer map = (VectorQuantizer) execute(data);
+		
+		return getCanvas(a);
+	}
+		
+	private double[][] stream(Collection<UserData> points) {
+		return points.stream().map(UserData::getPoint).toArray(double[][]::new);
+	}
+	
+	protected abstract Serializable execute(double[][] data);
 	
 	protected double[][]execute(List<EnrolledUser> users) {
 		return null;
@@ -75,5 +95,9 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 				point[i] = 0;
 		}
 		return point;
+	}
+
+	public Canvas getCanvas(boolean a) {
+		return null;
 	}
 }

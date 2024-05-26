@@ -13,7 +13,10 @@ public enum ClusteringParameter {
 	NUM_CLUSTER("numberOfClusters", 2), MAX_ITERATIONS("maxIterations", 1), DISTANCE_TYPE("distance", -1),
 	FUZZINESS("fuzziness", 1.1), EPS("eps", 0), MIN_POINTS("minPts", 1), NUM_TRIALS("numTrials", 1),
 	TOLERANCE("tol", 0), MAX_NUM_CLUSTER("maxNumberOfClusters", 2), ANNELING_CONTROL("anneling_control", 0, 1),
-	SPLIT_TOLERANCE("splitTol", 0), SMOOTH("smooth", 0);
+	SPLIT_TOLERANCE("splitTol", 0), SMOOTH("smooth", 0),
+	//MAPS
+	EPOCHS("epochs", 1), NUM_ROW("numberOfRows", 1), NUM_COL("numberOfColumns", 1), SOM_TYPE("type", -1),
+	;
 
 	private String name;
 	private double min;

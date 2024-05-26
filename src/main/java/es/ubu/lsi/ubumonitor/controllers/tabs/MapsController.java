@@ -1,24 +1,26 @@
 package es.ubu.lsi.ubumonitor.controllers.tabs;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.math3.ml.clustering.Cluster;
-import org.apache.commons.math3.ml.clustering.Clusterer;
+
 import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.PropertySheet;
+
 import es.ubu.lsi.ubumonitor.clustering.algorithm.Algorithm;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.HierarchicalAlgorithm;
-import es.ubu.lsi.ubumonitor.clustering.controller.AlgorithmExecuter;
 import es.ubu.lsi.ubumonitor.clustering.controller.MapsExecuter;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.UMatrix;
-import es.ubu.lsi.ubumonitor.clustering.controller.ClusteringTable;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.BIRCHAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.GrowingNeuralGasAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralGasAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralMapAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.SOMAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.ActivityCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.DataCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.GradesCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.LogCollector;
-import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
-import es.ubu.lsi.ubumonitor.clustering.data.LinkageMeasure;
-import es.ubu.lsi.ubumonitor.clustering.data.UserData;
+import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
+import es.ubu.lsi.ubumonitor.clustering.data.SOMType;
 import es.ubu.lsi.ubumonitor.clustering.util.JavaFXUtils;
 import es.ubu.lsi.ubumonitor.controllers.MainController;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
@@ -28,44 +30,36 @@ import es.ubu.lsi.ubumonitor.model.datasets.DataSetSection;
 import es.ubu.lsi.ubumonitor.model.datasets.DatasSetCourseModule;
 import es.ubu.lsi.ubumonitor.util.I18n;
 import es.ubu.lsi.ubumonitor.util.UtilMethods;
-import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.util.StringConverter;
-import smile.clustering.HierarchicalClustering;
-import smile.math.distance.ChebyshevDistance;
-import smile.math.distance.Distance;
-import smile.math.distance.EuclideanDistance;
-import smile.math.distance.ManhattanDistance;
+import smile.manifold.SammonMapping;
+import smile.math.MathEx;
 import smile.plot.swing.Canvas;
+import smile.plot.swing.Grid;
 import smile.plot.swing.Hexmap;
 import smile.plot.swing.ScatterPlot;
 import smile.plot.swing.Palette;
 import smile.plot.swing.Point;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralGasA;
-import java.awt.Color;
 
 public class MapsController {
 
 	@FXML
 	private ComboBox<Algorithm> comboBoxAlgorithm;
 
+	@FXML
+	private PropertySheet propertySheet;
+	
 	@FXML
 	private ImageView imageView;
 
@@ -156,12 +150,13 @@ public class MapsController {
 		    }
 		});
 		
-		List<Algorithm> algorithms = Arrays.asList(new UMatrix(), new NeuralGasA()
+		List<Algorithm> algorithms = Arrays.asList(new SOMAlgorithm(), new NeuralGasAlgorithm(),
+				new GrowingNeuralGasAlgorithm(), new BIRCHAlgorithm(), new NeuralMapAlgorithm()
 		/* ,new Spectral(), new DeterministicAnnealing() */);
 		
 		comboBoxAlgorithm.getItems().setAll(algorithms);			
-//		comboBoxAlgorithm.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> propertySheet
-//				.getItems().setAll(newValue.getParameters().getPropertyItems()));
+		comboBoxAlgorithm.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> propertySheet
+				.getItems().setAll(newValue.getParameters().getPropertyItems()));
 		comboBoxAlgorithm.getSelectionModel().selectFirst();
 	}
 
@@ -202,59 +197,22 @@ public class MapsController {
 		}
 
 		try {
-			//prueba varios algoritmos a la vez
+			
 			Algorithm algorithm = comboBoxAlgorithm.getSelectionModel().getSelectedItem();
 			
 			MapsExecuter mapsExecuter = new MapsExecuter(algorithm, users, collectors);
 			
-			double[][] matrix = mapsExecuter.getClusterer();
-		
-			setImage(matrix);
+			boolean a = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
+			Canvas canvas = mapsExecuter.execute(a);
+			setImage(canvas);
+			
 		} catch (IllegalStateException e) {
 			UtilMethods.infoWindow(I18n.get(e.getMessage()));
 		}
-				
-//		//prueba neural gas
-//		try {
-//			NeuralGasA a = new NeuralGasA();
-//			double[][] matrix  = a.execute(users, collectors);
-//			setImage(matrix);
-//		} catch (IllegalStateException e) {
-//			UtilMethods.infoWindow(I18n.get(e.getMessage()));
-//		}
-		
-		
-//		//prueba umatrix
-//		try {
-//			UMatrix umatrix = new UMatrix();
-//			double[][] matrix  = umatrix.execute(users, collectors);
-//			setImage(matrix);
-//		} catch (IllegalStateException e) {
-//			UtilMethods.infoWindow(I18n.get(e.getMessage()));
-//		}
-	}
 
-	private void setImage(double[][] matrix) {
-		if (matrix == null)
-			return;
-		
-//		Point points = new Point(matrix, '#', Color.BLUE);
-//		
-//		Point[] points = new Point[matrix.length];
-//		
-//		for (int i = 0; i < matrix.length; i++) {
-//			points[i] = new Point(new double[][]{matrix[i]}, '#', Color.BLUE);
-//		}
-//		
-//		ScatterPlot scatter = new ScatterPlot(points);
-//		Canvas canvas = scatter.canvas();
-//		canvas.setMargin(0.05);
-//		Image image = SwingFXUtils
-//				.toFXImage(canvas.toBufferedImage((int) pane.getWidth() + 1, (int) pane.getHeight() + 1), null);
-//		imageView.setImage(image);
-		
-		Hexmap hexmap = new Hexmap(matrix, Palette.jet(256), null);
-		Canvas canvas = hexmap.canvas();
+	}
+	
+	private void setImage(Canvas canvas) {
 		canvas.setMargin(0.05);
 		Image image = SwingFXUtils
 				.toFXImage(canvas.toBufferedImage((int) pane.getWidth() + 1, (int) pane.getHeight() + 1), null);

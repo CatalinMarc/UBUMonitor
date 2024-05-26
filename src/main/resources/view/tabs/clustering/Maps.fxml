@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.PropertySheet?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ubu.lsi.ubumonitor.controllers.tabs.MapsController">
    <top>
@@ -34,6 +35,7 @@
         </rowConstraints>
          <children>
             <ComboBox fx:id="comboBoxAlgorithm" prefWidth="175.0" />
+            <PropertySheet fx:id="propertySheet" modeSwitcherVisible="false" searchBoxVisible="false" GridPane.columnIndex="1" GridPane.rowSpan="2147483647" />
             <CheckBox fx:id="checkBoxGrades" mnemonicParsing="false" text="%tab.grades" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets />

@@ -15,7 +15,13 @@ public enum ClusteringParameter {
 	TOLERANCE("tol", 0), MAX_NUM_CLUSTER("maxNumberOfClusters", 2), ANNELING_CONTROL("anneling_control", 0, 1),
 	SPLIT_TOLERANCE("splitTol", 0), SMOOTH("smooth", 0),
 	//MAPS
-	EPOCHS("epochs", 1), NUM_ROW("numberOfRows", 1), NUM_COL("numberOfColumns", 1), SOM_TYPE("type", -1),
+	EPOCHS("epochs", 1), NUM_ROW("numberOfRows", 2), NUM_COL("numberOfColumns", 2), SOM_TYPE("type", -1),
+	//BIRCH
+	BRANCHING("branchingFactor", 0), CF_ENTRIES("clusteringFeatureEntries", 1), MAX_RADIUS("maxRadius", 0),
+	//GROWING_NEURAL_GAS
+	EPS_BEST("learnigRateBest", 0, 1), EPS_NEIGHBOR("learnigRateNeighbors", 0, 1), 
+	EDGE_LIFETIME("maxAgeEdges", 1), LAMBDA("lambda", 1), ALPHA("alpha", 0, 1), BETA("beta", 0, 1), 
+	DISTANCE("distanceThreshold", 1), NEURONS("neurons", 1),
 	;
 
 	private String name;

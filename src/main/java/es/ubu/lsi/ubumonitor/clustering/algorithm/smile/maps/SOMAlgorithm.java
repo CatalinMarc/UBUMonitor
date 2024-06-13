@@ -95,8 +95,8 @@ public class SOMAlgorithm extends Algorithm {
 		}
 		
 		@Override
-		public Canvas getCanvas(boolean a) {
-			if (a) {
+		public Canvas getCanvas(boolean SOMType) {
+			if (SOMType) {
 				 Grid grid = new Grid(som.neurons(), Color.black);
 				 return grid.canvas();
 			}

@@ -18,7 +18,21 @@
 <?import org.controlsfx.control.CheckComboBox?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ubu.lsi.ubumonitor.clustering.controller.HierarchicalController">
-   <top>
+   <center>
+      <SplitPane dividerPositions="0.7" BorderPane.alignment="CENTER">
+         <items>
+            <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            
+            <fx:include fx:id="clusteringTable" source="Table.fxml" />
+            
+         </items>
+      </SplitPane>
+   </center>
+   <bottom>
       <GridPane hgap="10.0" vgap="5.0" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="NEVER" />
@@ -45,7 +59,7 @@
                   <Insets />
                </GridPane.margin>
             </CheckBox>
-            <Button mnemonicParsing="false" onAction="#executeClustering" text="%clustering.execute" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#executeClustering" styleClass="accept_button" text="%clustering.execute" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin></Button>
@@ -85,19 +99,5 @@
             <DatePicker fx:id="datePickerEnd" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-   </top>
-   <center>
-      <SplitPane dividerPositions="0.7" BorderPane.alignment="CENTER">
-         <items>
-            <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </Pane>
-            
-            <fx:include fx:id="clusteringTable" source="Table.fxml" />
-            
-         </items>
-      </SplitPane>
-   </center>
+   </bottom>
 </BorderPane>

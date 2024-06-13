@@ -63,6 +63,66 @@ public abstract class Algorithm {
 	 */
 	public abstract Clusterer<UserData> getClusterer();
 
+	protected String getData2D(double[][] data) {
+		
+		StringBuilder xData = new StringBuilder();
+        StringBuilder yData = new StringBuilder();
+
+        xData.append("[");
+        yData.append("[");
+
+        for (int i = 0; i < data.length; i++) {
+            xData.append(data[i][0]);
+            yData.append(data[i][1]);
+            
+            if (i < data.length - 1) {
+                xData.append(",");
+                yData.append(",");
+            }
+        }
+
+        xData.append("]");
+        yData.append("]");
+
+        String json = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + "}";
+        return json + "2";
+	}
+	
+	protected String getData3D(double[][] data) {
+
+		 StringBuilder xData = new StringBuilder();
+		 StringBuilder yData = new StringBuilder();
+		 StringBuilder zData = new StringBuilder();
+
+		 xData.append("[");
+		 yData.append("[");
+		 zData.append("[");
+		 
+		 for (int i = 0; i < data.length; i++) {
+
+		     double xValue = data[i][0];
+		     double yValue = data[i][1];
+		     double zValue = data[i][2];
+
+		     xData.append(xValue);
+		     yData.append(yValue);
+		     zData.append(zValue);
+
+		     if (i < data.length - 1) {
+		    	 xData.append(",");
+		         yData.append(",");
+		         zData.append(",");
+		     }
+		 }
+
+		 xData.append("]");
+		 yData.append("]");
+		 zData.append("]");
+
+		 String json = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + ",\"z\":" + zData.toString() + "}";
+		 return json + "3";
+    }
+	
 	/**
 	 * Establece el nombre del algoritmo.
 	 * 

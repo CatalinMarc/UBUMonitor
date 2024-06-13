@@ -2,6 +2,7 @@ package es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import org.apache.commons.math3.ml.clustering.Clusterer;
@@ -30,26 +31,31 @@ public class NeuralGasAlgorithm extends Algorithm {
 	public NeuralGasAlgorithm() {
 		super(NAME, LIBRARY);
 		addParameter(ClusteringParameter.EPOCHS, 20);
+		addParameter(ClusteringParameter.NEURONS, 400);
 	}
 	
 	@Override
 	public Clusterer<UserData> getClusterer() {
 		int epochs = getParameters().getValue(ClusteringParameter.EPOCHS);
+		int neurons = getParameters().getValue(ClusteringParameter.NEURONS);
 		
 		checkParameter(ClusteringParameter.EPOCHS, epochs);
+		checkParameter(ClusteringParameter.NEURONS, neurons);
 		
-		return new NeuralGasAdapter(epochs);
+		return new NeuralGasAdapter(epochs, neurons);
 	}
 	
 	private class NeuralGasAdapter extends SmileAdapter {
 
 		private int epochs;
+		private int neurons;
 		
 		private double[][] data;
 		private NeuralGas gas;
 		
-		public NeuralGasAdapter(int epochs) {
+		public NeuralGasAdapter(int epochs, int neurons) {
 			this.epochs = epochs;
+			this.neurons = neurons;
 		}
 		
 		@Override
@@ -59,7 +65,7 @@ public class NeuralGasAlgorithm extends Algorithm {
 			
 			int T = data.length * epochs;
 			
-	        gas = new NeuralGas(NeuralGas.seed(400, data),
+	        gas = new NeuralGas(NeuralGas.seed(neurons, data),
 	                TimeFunction.exp(0.3, T / 2.0),
 	                TimeFunction.exp(30, T / 8.0),
 	                TimeFunction.constant(data.length * 2));
@@ -74,7 +80,18 @@ public class NeuralGasAlgorithm extends Algorithm {
 		}
 		
 		@Override
-		public Canvas getCanvas(boolean a) {
+		public String getData() {
+//			List<Object> result = new ArrayList<>();
+//	        result.add(data);
+//	        result.add(gas.neurons());
+			double[][] neurons = gas.neurons();
+			if(neurons[0].length == 2)
+		        return getData2D(neurons);
+	        return getData3D(neurons);
+		}
+		
+		@Override
+		public Canvas getCanvas(boolean SOMType) {
 			ScatterPlot scatter = ScatterPlot.of(gas.neurons(), '#', Color.BLUE);
 			ScatterPlot scatterData = ScatterPlot.of(data, '#', Color.BLACK);
 	        
@@ -83,6 +100,8 @@ public class NeuralGasAlgorithm extends Algorithm {
 	        
 			return canvas;
 		}
+		
+		
 		
 	}
 }

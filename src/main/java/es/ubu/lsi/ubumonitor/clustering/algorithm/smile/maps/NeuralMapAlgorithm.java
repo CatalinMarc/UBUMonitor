@@ -27,25 +27,48 @@ public class NeuralMapAlgorithm extends Algorithm {
 	
 	public NeuralMapAlgorithm() {
 		super(NAME, LIBRARY);
-//		addParameter(ClusteringParameter.EPOCHS, 20);
+		addParameter(ClusteringParameter.DISTANCE, 10);
+		addParameter(ClusteringParameter.EPS_BEST, 0.01);
+		addParameter(ClusteringParameter.EPS_NEIGHBOR, 0.002);
+		addParameter(ClusteringParameter.EDGE_LIFETIME, 50);
+		addParameter(ClusteringParameter.BETA, 0.995);
 	}
 
 	@Override
 	public Clusterer<UserData> getClusterer() {
-//		int epochs = getParameters().getValue(ClusteringParameter.EPOCHS);
-//		
-//		checkParameter(ClusteringParameter.EPOCHS, epochs);
+		int dist = getParameters().getValue(ClusteringParameter.DISTANCE);
+		double eps_best = getParameters().getValue(ClusteringParameter.EPS_BEST);
+		double eps_neighbor = getParameters().getValue(ClusteringParameter.EPS_NEIGHBOR);
+		int edge_lifetime = getParameters().getValue(ClusteringParameter.EDGE_LIFETIME);
+		double beta = getParameters().getValue(ClusteringParameter.BETA);
 		
-		return new NeuralMapAdapter();
+		checkParameter(ClusteringParameter.DISTANCE, dist);
+		checkParameter(ClusteringParameter.EPS_BEST, eps_best);
+		checkParameter(ClusteringParameter.EPS_NEIGHBOR, eps_neighbor);
+		checkParameter(ClusteringParameter.EDGE_LIFETIME, edge_lifetime);
+		checkParameter(ClusteringParameter.BETA, beta);
+		
+		return new NeuralMapAdapter(dist, eps_best, eps_neighbor, edge_lifetime, beta);
 	}
 	
 	private class NeuralMapAdapter extends SmileAdapter {
 
+		private int dist;
+		private double eps_best;
+		private double eps_neighbor;
+		private int edge_lifetime;
+		private double beta;
+		
 		private double[][] data;
 		private NeuralMap neuralmap;
 		
-		public NeuralMapAdapter() {
-			
+		public NeuralMapAdapter(int dist, double eps_best, double eps_neighbor,
+				int edge_lifetime, double beta) {
+			this.dist = dist;
+			this.eps_best = eps_best;
+			this.eps_neighbor = eps_neighbor; 
+			this.edge_lifetime = edge_lifetime; 
+			this.beta = beta;
 		}
 		
 		@Override
@@ -53,14 +76,13 @@ public class NeuralMapAlgorithm extends Algorithm {
 			
 			this.data = data;
 			
-			neuralmap = new NeuralMap(10, 0.01, 0.002, 50, 0.995);
+			neuralmap = new NeuralMap(dist, eps_best, eps_neighbor, edge_lifetime, beta);
 			
 			for (int e = 0; e < 5; e++) {
 		        for (int i : MathEx.permutate(data.length)) {
 		        	neuralmap.update(data[i]);
 		        }
 
-		        // Removes staled neurons and the edges beyond lifetime.
 		        neuralmap.clear(1E-7);
 		    }
 			
@@ -68,7 +90,16 @@ public class NeuralMapAlgorithm extends Algorithm {
 		}
 		
 		@Override
-		public Canvas getCanvas(boolean a) {
+		public String getData() {
+			Neuron[] neurons = neuralmap.neurons();
+			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new);  
+	        if(neuronsArray[0].length == 2)
+	        	return getData2D(neuronsArray);
+	        return getData3D(neuronsArray);
+		}
+		
+		@Override
+		public Canvas getCanvas(boolean SOMType) {
 			Neuron[] neurons = neuralmap.neurons();
 			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new);
 			

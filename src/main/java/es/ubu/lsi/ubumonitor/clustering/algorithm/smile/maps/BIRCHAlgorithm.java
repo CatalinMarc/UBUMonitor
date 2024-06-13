@@ -27,16 +27,23 @@ public class BIRCHAlgorithm extends Algorithm {
 	 */
 	public BIRCHAlgorithm() {
 		super(NAME, LIBRARY);
-//		addParameter(ClusteringParameter.EPOCHS, 20);
+		addParameter(ClusteringParameter.BRANCHING, 20);
+		addParameter(ClusteringParameter.CF_ENTRIES, 20);
+		addParameter(ClusteringParameter.MAX_RADIUS, 20);
+		
 	}
 	
 	@Override
 	public Clusterer<UserData> getClusterer() {
-//		int epochs = getParameters().getValue(ClusteringParameter.EPOCHS);
-//		
-//		checkParameter(ClusteringParameter.EPOCHS, epochs);
+		int branching = getParameters().getValue(ClusteringParameter.BRANCHING);
+		int cf = getParameters().getValue(ClusteringParameter.CF_ENTRIES);
+		int radius = getParameters().getValue(ClusteringParameter.MAX_RADIUS);
 		
-		adapter = new BIRCHAdapter(6, 3, 10);
+		checkParameter(ClusteringParameter.BRANCHING, branching);
+		checkParameter(ClusteringParameter.CF_ENTRIES, cf);
+		checkParameter(ClusteringParameter.MAX_RADIUS, radius);
+		
+		adapter = new BIRCHAdapter(branching, cf, radius);
 		
 		return adapter; 
 	}
@@ -71,7 +78,15 @@ public class BIRCHAlgorithm extends Algorithm {
 		}	
 		
 		@Override
-		public Canvas getCanvas(boolean a) {
+		public String getData() {
+			double[][] centroids = birch.centroids();
+			if(centroids[0].length == 2)
+		        return getData2D(birch.centroids());
+	        return getData3D(centroids);
+		}
+		
+		@Override
+		public Canvas getCanvas(boolean SOMType) {
 			ScatterPlot scatter = ScatterPlot.of(birch.centroids(), '#', Color.BLUE);
 			ScatterPlot scatterData = ScatterPlot.of(data, '#', Color.BLACK);
 	        

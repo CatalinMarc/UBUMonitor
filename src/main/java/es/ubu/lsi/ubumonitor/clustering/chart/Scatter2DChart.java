@@ -54,7 +54,7 @@ public class Scatter2DChart extends ClusteringChart {
 			netscape.javascript.JSObject window = (netscape.javascript.JSObject) webEngine.executeScript("window");
 			window.setMember("javaConnector", connector);
 		});
-		webEngine.load(getClass().getResource("/graphics/ClusterChart.html").toExternalForm());
+		webEngine.load(getClass().getResource("/graphics/MapsChart.html").toExternalForm());
 	}
 
 	/**

@@ -1,57 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Cluster 3D Chart</title>
-<script type="text/javascript" src="./lib/highcharts.js"></script>
-<script type="text/javascript" src="./lib/highcharts-3d.js"></script>
+    <meta charset="UTF-8">
+    <title>Highcharts 3D Scatter Example</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script>
+        var chart;
+
+		function renderChart2D(newData) {
+            var data = JSON.parse(newData);
+            var seriesData = [];
+
+            for (var i = 0; i < data.x.length; i++) {
+                seriesData.push([data.x[i], data.y[i]]);
+            }
+
+            chart = Highcharts.chart('chart', {
+                chart: {
+                    type: 'scatter',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: '2D Scatter Chart'
+                },
+                xAxis: {
+                    title: {
+                        enabled: true,
+                        text: 'X Axis'
+                    },
+                    startOnTick: true,
+                    endOnTick: true,
+                    showLastLabel: true
+                },
+                yAxis: {
+                    title: {
+                        text: 'Y Axis'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 100,
+                    y: 70,
+                    floating: true,
+                    backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
+                    borderWidth: 1
+                },
+                plotOptions: {
+                    scatter: {
+                        marker: {
+                            radius: 5,
+                            states: {
+                                hover: {
+                                    enabled: true,
+                                    lineColor: 'rgb(100,100,100)'
+                                }
+                            }
+                        },
+                        states: {
+                            hover: {
+                                marker: {
+                                    enabled: false
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{series.name}</b><br>',
+                            pointFormat: '{point.x}, {point.y}'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Data',
+                    color: 'rgba(223, 83, 83, .5)',
+                    data: seriesData
+                }]
+            });
+        }
+
+        function renderChart3D(newData) {
+            var data = JSON.parse(newData);
+            var seriesData = [];
+
+            for (var i = 0; i < data.x.length; i++) {
+                seriesData.push([data.x[i], data.y[i], data.z[i]]);
+            }
+
+            chart = Highcharts.chart('chart', {
+                chart: {
+                    renderTo: 'container',
+                    type: 'scatter',
+                    options3d: {
+                        enabled: true,
+                        alpha: 10,
+                        beta: 30,
+                        depth: 250,
+                        viewDistance: 5,
+                        frame: {
+                            bottom: { size: 1, color: 'rgba(0,0,0,0.02)' }
+                        }
+                    }
+                },
+                title: {
+                    text: '3D Scatter Chart'
+                },
+                plotOptions: {
+                    scatter: {
+                        width: 10,
+                        height: 10,
+                        depth: 10
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Y Axis'
+                    }
+                },
+                xAxis: {
+                    gridLineWidth: 1
+                },
+                zAxis: {
+                    showFirstLabel: false
+                },
+                legend: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Data',
+                    colorByPoint: true,
+                    accessibility: {
+                        exposeAsGroupOnly: true
+                    },
+                    data: seriesData
+                }]
+            });
+        }
+
+        function clearChart() {
+            if (chart) {
+                chart.destroy();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Highcharts.addEvent(Highcharts.Chart, 'afterGetContainer', function () {
+                const chart = this;
+
+                chart.renderer.boxWrapper.on('mousedown', function (e) {
+                    e = chart.pointer.normalize(e);
+
+                    const posX = e.chartX,
+                          posY = e.chartY;
+
+                    Highcharts.addEvent(document, 'mousemove', drag);
+                    Highcharts.addEvent(document, 'mouseup', drop);
+
+                    function drag(e) {
+                        e = chart.pointer.normalize(e);
+
+                        const newPosX = e.chartX,
+                              newPosY = e.chartY;
+
+                        chart.update({
+                            chart: {
+                                options3d: {
+                                    alpha: chart.options.chart.options3d.alpha + (newPosY - posY) / 5,
+                                    beta: chart.options.chart.options3d.beta + (posX - newPosX) / 5
+                                }
+                            }
+                        }, false, false, false);
+
+                        posX = newPosX;
+                        posY = newPosY;
+                    }
+
+                    function drop() {
+                        Highcharts.removeEvent(document, 'mousemove', drag);
+                        Highcharts.removeEvent(document, 'mouseup', drop);
+                    }
+                });
+            });
+        });
+        
+    </script>
 </head>
-
-<div id="container" style="height: 95vh"></div>
-
-<script type="text/javascript">
-	function generateChart(data) {
-		return Highcharts.chart('container', {
-			title : {
-				text : ''
-			},
-			legend : {
-				verticalAlign : 'top'
-			},
-			chart : {
-				type : 'scatter3d',
-				tooltip : {
-					valueDecimals : 2
-				},
-				options3d : {
-					enabled : true,
-					alpha : 20,
-					beta : 30,
-					depth : 500,
-					viewDistance : 10,
-					frame : {
-						bottom : {
-							size : 1,
-							color : 'rgba(0,0,0,0.05)'
-						}
-					}
-				}
-			},
-			series : data
-		});
-	}
-
-	var chart = generateChart([]);
-	var data = [];
-
-	function updateChart(series) {
-		chart.destroy();
-		data = series;
-		chart = generateChart(series);
-	}
-	
-	function rename(names) {
-		data.forEach((value, index, array) => value.name = names[index]);
-		chart = generateChart(data);
-	}
-</script>
+<body>
+    <div id="chart" style="width: 100%; height: 100%;"></div>
+</body>
 </html>

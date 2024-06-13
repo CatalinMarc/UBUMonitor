@@ -40,11 +40,11 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 		return adaptSmile(points, clustering);
 	}
 	
-	public Canvas execute(Collection<UserData> points, boolean a) {
+	public String execute(Collection<UserData> points, boolean SOMType) {
 		double[][] data = stream(points);
-		VectorQuantizer map = (VectorQuantizer) execute(data);
+		execute(data);
 		
-		return getCanvas(a);
+		return getData();
 	}
 		
 	private double[][] stream(Collection<UserData> points) {
@@ -98,6 +98,10 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 	}
 
 	public Canvas getCanvas(boolean a) {
+		return null;
+	}
+	
+	public String getData() {
 		return null;
 	}
 }

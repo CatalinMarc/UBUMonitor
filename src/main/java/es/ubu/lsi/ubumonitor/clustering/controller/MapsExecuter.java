@@ -3,6 +3,7 @@ package es.ubu.lsi.ubumonitor.clustering.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.ml.clustering.Clusterer;
 
 import es.ubu.lsi.ubumonitor.clustering.algorithm.Algorithm;
@@ -28,31 +29,15 @@ public class MapsExecuter {
 		dataCollectors.forEach(collector -> collector.collect(usersData));
 	}
 	
-	public Canvas execute(boolean a) {
-		checkData();
-
-		return map.execute(usersData, a);
-	}
-	
-//	public Canvas executeSOMGrid() {
-//		checkData();
-//
-//		return map.execute(usersData);
-//	}
-	
-//	public double[][][] execute3D() {
-//		
-//		checkData();
-//		
-//		return map.maps3D(usersData);
-//	}
-	
-	private void checkData() {
+	public String execute(boolean SOMType) {
 		if (usersData.size() < 2)
 			throw new IllegalStateException("clustering.error.notUsers");
 
 		if (usersData.get(0).getData().isEmpty())
 			throw new IllegalStateException("clustering.error.notData");
+	
+		return map.execute(usersData, SOMType);
+
 	}
 	
 	/**

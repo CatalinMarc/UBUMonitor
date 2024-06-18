@@ -1,6 +1,7 @@
 package es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import org.apache.commons.math3.ml.clustering.Clusterer;
 
@@ -14,6 +15,7 @@ import smile.plot.swing.Canvas;
 import smile.plot.swing.ScatterPlot;
 import smile.vq.BIRCH;
 import smile.vq.VectorQuantizer;
+import smile.vq.hebb.Neuron;
 
 public class BIRCHAlgorithm extends Algorithm {
 
@@ -74,15 +76,17 @@ public class BIRCHAlgorithm extends Algorithm {
 	            birch.update(x);
 	        }
 			
+			setData();
 			return birch;
 		}	
 		
-		@Override
-		public String getData() {
+		private void setData() {
 			double[][] centroids = birch.centroids();
-			if(centroids[0].length == 2)
-		        return getData2D(birch.centroids());
-	        return getData3D(centroids);
+			
+			setData2D(data, centroids);
+			clearData3D();
+			if(componentSize != 2)
+				setData3D(centroids);
 		}
 		
 		@Override

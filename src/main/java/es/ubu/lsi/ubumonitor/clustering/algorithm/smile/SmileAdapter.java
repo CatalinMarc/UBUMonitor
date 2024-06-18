@@ -25,6 +25,8 @@ import smile.vq.hebb.Neuron;
 
 public abstract class SmileAdapter extends Clusterer<UserData> {
 
+	protected int componentSize;
+	
 	protected SmileAdapter() {
 		super(null);
 	}
@@ -40,11 +42,9 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 		return adaptSmile(points, clustering);
 	}
 	
-	public String execute(Collection<UserData> points, boolean SOMType) {
-		double[][] data = stream(points);
-		execute(data);
-		
-		return getData();
+	public void executeMaps(Collection<UserData> points, boolean SOMType, int componentSize) {
+		this.componentSize = componentSize;
+		execute(stream(points));
 	}
 		
 	private double[][] stream(Collection<UserData> points) {
@@ -53,10 +53,6 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 	
 	protected abstract Serializable execute(double[][] data);
 	
-	protected double[][]execute(List<EnrolledUser> users) {
-		return null;
-	}
-
 	private List<? extends Cluster<UserData>> adaptSmile(Collection<UserData> points,
 			CentroidClustering<double[], double[]> centroidClustering) {
 		List<UserData> users = new ArrayList<>(points);
@@ -101,7 +97,4 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 		return null;
 	}
 	
-	public String getData() {
-		return null;
-	}
 }

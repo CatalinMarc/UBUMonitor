@@ -22,18 +22,12 @@ import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.DENCLUE;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.GMeans;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.KMeans;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.XMeans;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.BIRCHAlgorithm;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.GrowingNeuralGasAlgorithm;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralGasAlgorithm;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralMapAlgorithm;
-import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.SOMAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.analysis.AnalysisFactory;
 import es.ubu.lsi.ubumonitor.clustering.analysis.ElbowFactory;
 import es.ubu.lsi.ubumonitor.clustering.analysis.SilhouetteFactory;
 import es.ubu.lsi.ubumonitor.clustering.analysis.methods.AnalysisMethod;
 import es.ubu.lsi.ubumonitor.clustering.chart.Scatter2DChart;
 import es.ubu.lsi.ubumonitor.clustering.chart.Scatter3DChart;
-import es.ubu.lsi.ubumonitor.clustering.chart.ScatterMap;
 import es.ubu.lsi.ubumonitor.clustering.chart.SilhouetteChart;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.ActivityCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.DataCollector;
@@ -41,7 +35,6 @@ import es.ubu.lsi.ubumonitor.clustering.controller.collector.GradesCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.LogCollector;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
-import es.ubu.lsi.ubumonitor.clustering.data.SOMType;
 import es.ubu.lsi.ubumonitor.clustering.exception.IllegalParamenterException;
 import es.ubu.lsi.ubumonitor.clustering.util.JavaFXUtils;
 import es.ubu.lsi.ubumonitor.clustering.util.SimplePropertySheetItem;
@@ -163,10 +156,6 @@ public class PartitionalClusteringController {
 
 	private Service<Void> service;
 
-	private ListView<EnrolledUser> listParticipants;
-	
-	private ScatterMap scatterMap;
-	
 	/**
 	 * Inicializa el controlador.
 	 * 
@@ -175,50 +164,55 @@ public class PartitionalClusteringController {
 	public void init(MainController controller) {
 		mainController = controller;
 		clusteringTableController.init(controller);
-//		graph = new Scatter2DChart(this);
-//		silhouette = new SilhouetteChart(this);
-//		graph3D = new Scatter3DChart(this);
-		scatterMap = new ScatterMap(this);
+		graph = new Scatter2DChart(this);
+		silhouette = new SilhouetteChart(this);
+		graph3D = new Scatter3DChart(this);
 
 		rangeSlider.setHighValue(10.0);
 
 		choiceBoxAnalyze.getItems().setAll(new ElbowFactory(), new SilhouetteFactory());
 		choiceBoxAnalyze.getSelectionModel().selectFirst();
 
-		listParticipants = mainController.getSelectionUserController().getListParticipants();
-		
 		initAlgorithms();
 		initCollectors();
 		initService();
 	}
 
 	private void initAlgorithms() {
+		spinnerReduce.disableProperty().bind(checkBoxReduce.selectedProperty().not());
+		spinnerReduce.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999));
+		spinnerReduce.getEditor().textProperty().addListener(JavaFXUtils.getSpinnerListener(spinnerReduce));
+
+		spinnerIterations.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, 20));
+		spinnerIterations.getEditor().textProperty().addListener(JavaFXUtils.getSpinnerListener(spinnerIterations));
+
+		checkComboBoxLogs.disableProperty().bind(checkBoxLogs.selectedProperty().not());
+
 		comboBoxAlgorithm.setCellFactory(callback -> new ListCell<Algorithm>() {
-		    @Override
-		    protected void updateItem(Algorithm algorithm, boolean empty) {
-		        super.updateItem(algorithm, empty);
-		        if (empty || algorithm == null) {
-		            setText(null);
-		            setGraphic(null);
-		        } else {
-		            setText(algorithm.getName() + " (" + algorithm.getLibrary() + ")");
-//		            try {
-//		                Image image = new Image(AppInfo.IMG_DIR + algorithm.getLibrary().toLowerCase() + ".png", 24, 24,
-//		                        false, true);
-//		                ImageView imageView = new ImageView(image);
-//		                setGraphic(imageView);
-//		            } catch (Exception e) {
-//		                setGraphic(null);
-//		            }
-		        }
-		    }
+			@Override
+			public void updateItem(Algorithm algorithm, boolean empty) {
+				super.updateItem(algorithm, empty);
+				if (empty) {
+					setText(null);
+					setGraphic(null);
+				} else {
+					setText(algorithm.getName() + " (" + algorithm.getLibrary() + ")");
+					try {
+						Image image = new Image(AppInfo.IMG_DIR + algorithm.getLibrary().toLowerCase() + ".png", 24, 24,
+								false, true);
+						ImageView imageView = new ImageView(image);
+						setGraphic(imageView);
+					} catch (Exception e) {
+						setGraphic(null);
+					}
+				}
+			}
 		});
-		
-		List<Algorithm> algorithms = Arrays.asList(new SOMAlgorithm(), new NeuralGasAlgorithm(),
-				new GrowingNeuralGasAlgorithm(), new BIRCHAlgorithm(), new NeuralMapAlgorithm()
+
+		List<Algorithm> algorithms = Arrays.asList(new KMeansPlusPlus(), new FuzzyKMeans(), new DBSCAN(),
+				new MultiKMeansPlusPlus(), new KMeans(), new XMeans(), new GMeans(), new DBSCANSmile(), new DENCLUE()
 		/* ,new Spectral(), new DeterministicAnnealing() */);
-		
-		comboBoxAlgorithm.getItems().setAll(algorithms);			
+		comboBoxAlgorithm.getItems().setAll(algorithms);
 		comboBoxAlgorithm.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> propertySheet
 				.getItems().setAll(newValue.getParameters().getPropertyItems()));
 		comboBoxAlgorithm.getSelectionModel().selectFirst();
@@ -278,7 +272,7 @@ public class PartitionalClusteringController {
 			silhouette.updateChart(clusters);
 			clusteringTableController.updateTable(clusters);
 			updateRename();
-			//graph.updateChart(clusters);
+			graph.updateChart(clusters);
 			graph3D.updateChart(clusters);
 			service.reset();
 		});
@@ -294,43 +288,8 @@ public class PartitionalClusteringController {
 	 * Ejecuta el algoritmo de clustering.
 	 */
 	public void executeClustering() {
-		List<EnrolledUser> users = listParticipants.getSelectionModel().getSelectedItems();
-		List<DataCollector> collectors = getSelectedCollectors();
-
-		try {
-			
-			Algorithm algorithm = comboBoxAlgorithm.getSelectionModel().getSelectedItem();
-			
-			MapsExecuter mapsExecuter = new MapsExecuter(algorithm, users, collectors);
-			
-			boolean type = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
-			String data = mapsExecuter.execute(type);
-			scatterMap.updateChart(data);
-			//map.updateChart();
-			//setImage(canvas);
-			
-		} catch (IllegalStateException e) {
-			UtilMethods.infoWindow(I18n.get(e.getMessage()));
-		}
-
+		service.start();
 	}
-	
-	private List<DataCollector> getSelectedCollectors() {
-		List<DataCollector> collectors = new ArrayList<>();
-		if (checkBoxLogs.isSelected()) {
-			List<LogCollector<?>> logCollectors = checkComboBoxLogs.getCheckModel().getCheckedItems();
-			logCollectors.forEach(c -> c.setDate(datePickerStart.getValue(), datePickerEnd.getValue()));
-			collectors.addAll(logCollectors);
-		}
-		if (checkBoxGrades.isSelected()) {
-			collectors.add(gradesCollector);
-		}
-		if (checkBoxActivity.isSelected()) {
-			collectors.add(activityCollector);
-		}
-		return collectors;
-	}
-	
 
 	private void updateRename() {
 		List<PropertySheet.Item> items = IntStream.range(0, clusters.size())
@@ -344,7 +303,7 @@ public class PartitionalClusteringController {
 				clusteringTableController.getPropertyEditorLabel().add(name);
 			}
 			clusteringTableController.updateTable(clusters);
-			//graph.rename(clusters);
+			graph.rename(clusters);
 			graph3D.rename(clusters);
 			silhouette.rename(clusters);
 		});
@@ -372,7 +331,21 @@ public class PartitionalClusteringController {
 		controller.setUp(analysisMethod, users, collectors, start, end);
 	}
 
-
+	private List<DataCollector> getSelectedCollectors() {
+		List<DataCollector> collectors = new ArrayList<>();
+		if (checkBoxLogs.isSelected()) {
+			List<LogCollector<?>> logCollectors = checkComboBoxLogs.getCheckModel().getCheckedItems();
+			logCollectors.forEach(c -> c.setDate(datePickerStart.getValue(), datePickerEnd.getValue()));
+			collectors.addAll(logCollectors);
+		}
+		if (checkBoxGrades.isSelected()) {
+			collectors.add(gradesCollector);
+		}
+		if (checkBoxActivity.isSelected()) {
+			collectors.add(activityCollector);
+		}
+		return collectors;
+	}
 
 	/**
 	 * @return the clusteringTable

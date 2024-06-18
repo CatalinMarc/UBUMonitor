@@ -86,16 +86,19 @@ public class NeuralMapAlgorithm extends Algorithm {
 		        neuralmap.clear(1E-7);
 		    }
 			
+			setData();
 			return neuralmap;
 		}
 		
-		@Override
-		public String getData() {
+		private void setData() {
 			Neuron[] neurons = neuralmap.neurons();
-			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new);  
-	        if(neuronsArray[0].length == 2)
-	        	return getData2D(neuronsArray);
-	        return getData3D(neuronsArray);
+			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new); 
+			
+			
+			setData2D(data, neuronsArray);
+			clearData3D();
+			if(componentSize != 2)
+				setData3D(neuronsArray);
 		}
 		
 		@Override

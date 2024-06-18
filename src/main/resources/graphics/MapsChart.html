@@ -2,191 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Highcharts 3D Scatter Example</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <title>Maps</title>
+    <script src="./lib/plotly-latest.js"></script>
     <script>
         var chart;
 
-		function renderChart2D(newData) {
-            var data = JSON.parse(newData);
-            var seriesData = [];
+        function renderPlotlyChart(dataJson) {
+            var data = JSON.parse(dataJson);
+
+            var DataTrace = {
+                x: [],
+                y: [],
+                type: 'scatter',
+                mode: 'markers',
+                text: [],
+                textfont: {
+                    family: 'Raleway, sans-serif'
+                },
+                marker: { color: 'black', size: 12 },
+                name: 'Data'
+            };
+
+            var NeuronsTrace = {
+                x: [],
+                y: [],
+                type: 'scatter',
+                mode: 'markers',
+                marker: { color: 'blue', size: 12 },
+                name: 'Neurons'
+            };
+
+            var layout = {
+                title: 'Scatter Chart'
+            };
 
             for (var i = 0; i < data.x.length; i++) {
-                seriesData.push([data.x[i], data.y[i]]);
+                if (i < data.size) {
+                    DataTrace.x.push(data.x[i]);
+                    DataTrace.y.push(data.y[i]);
+                    DataTrace.text.push(data.labels[i]);
+                } else {
+                    NeuronsTrace.x.push(data.x[i]);
+                    NeuronsTrace.y.push(data.y[i]);
+                }
             }
 
-            chart = Highcharts.chart('chart', {
-                chart: {
-                    type: 'scatter',
-                    zoomType: 'xy'
-                },
-                title: {
-                    text: '2D Scatter Chart'
-                },
-                xAxis: {
-                    title: {
-                        enabled: true,
-                        text: 'X Axis'
-                    },
-                    startOnTick: true,
-                    endOnTick: true,
-                    showLastLabel: true
-                },
-                yAxis: {
-                    title: {
-                        text: 'Y Axis'
-                    }
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'left',
-                    verticalAlign: 'top',
-                    x: 100,
-                    y: 70,
-                    floating: true,
-                    backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
-                    borderWidth: 1
-                },
-                plotOptions: {
-                    scatter: {
-                        marker: {
-                            radius: 5,
-                            states: {
-                                hover: {
-                                    enabled: true,
-                                    lineColor: 'rgb(100,100,100)'
-                                }
-                            }
-                        },
-                        states: {
-                            hover: {
-                                marker: {
-                                    enabled: false
-                                }
-                            }
-                        },
-                        tooltip: {
-                            headerFormat: '<b>{series.name}</b><br>',
-                            pointFormat: '{point.x}, {point.y}'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Data',
-                    color: 'rgba(223, 83, 83, .5)',
-                    data: seriesData
-                }]
-            });
+
+            Plotly.newPlot('chart', [NeuronsTrace, DataTrace], layout);
         }
 
-        function renderChart3D(newData) {
-            var data = JSON.parse(newData);
-            var seriesData = [];
-
-            for (var i = 0; i < data.x.length; i++) {
-                seriesData.push([data.x[i], data.y[i], data.z[i]]);
-            }
-
-            chart = Highcharts.chart('chart', {
-                chart: {
-                    renderTo: 'container',
-                    type: 'scatter',
-                    options3d: {
-                        enabled: true,
-                        alpha: 10,
-                        beta: 30,
-                        depth: 250,
-                        viewDistance: 5,
-                        frame: {
-                            bottom: { size: 1, color: 'rgba(0,0,0,0.02)' }
-                        }
-                    }
-                },
-                title: {
-                    text: '3D Scatter Chart'
-                },
-                plotOptions: {
-                    scatter: {
-                        width: 10,
-                        height: 10,
-                        depth: 10
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Y Axis'
-                    }
-                },
-                xAxis: {
-                    gridLineWidth: 1
-                },
-                zAxis: {
-                    showFirstLabel: false
-                },
-                legend: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Data',
-                    colorByPoint: true,
-                    accessibility: {
-                        exposeAsGroupOnly: true
-                    },
-                    data: seriesData
-                }]
-            });
-        }
-
-        function clearChart() {
-            if (chart) {
-                chart.destroy();
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            Highcharts.addEvent(Highcharts.Chart, 'afterGetContainer', function () {
-                const chart = this;
-
-                chart.renderer.boxWrapper.on('mousedown', function (e) {
-                    e = chart.pointer.normalize(e);
-
-                    const posX = e.chartX,
-                          posY = e.chartY;
-
-                    Highcharts.addEvent(document, 'mousemove', drag);
-                    Highcharts.addEvent(document, 'mouseup', drop);
-
-                    function drag(e) {
-                        e = chart.pointer.normalize(e);
-
-                        const newPosX = e.chartX,
-                              newPosY = e.chartY;
-
-                        chart.update({
-                            chart: {
-                                options3d: {
-                                    alpha: chart.options.chart.options3d.alpha + (newPosY - posY) / 5,
-                                    beta: chart.options.chart.options3d.beta + (posX - newPosX) / 5
-                                }
-                            }
-                        }, false, false, false);
-
-                        posX = newPosX;
-                        posY = newPosY;
-                    }
-
-                    function drop() {
-                        Highcharts.removeEvent(document, 'mousemove', drag);
-                        Highcharts.removeEvent(document, 'mouseup', drop);
-                    }
-                });
-            });
-        });
-        
     </script>
 </head>
 <body>
-    <div id="chart" style="width: 100%; height: 100%;"></div>
+    <div id="chart" style="height: 100vh"></div>
 </body>
 </html>

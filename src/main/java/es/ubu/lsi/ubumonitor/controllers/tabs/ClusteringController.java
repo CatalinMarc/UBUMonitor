@@ -1,6 +1,7 @@
 package es.ubu.lsi.ubumonitor.controllers.tabs;
 
 import es.ubu.lsi.ubumonitor.clustering.controller.HierarchicalController;
+import es.ubu.lsi.ubumonitor.clustering.controller.MapsController;
 import es.ubu.lsi.ubumonitor.clustering.controller.PartitionalClusteringController;
 import es.ubu.lsi.ubumonitor.controllers.MainController;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ public class ClusteringController {
 	public void init(MainController mainController) {
 		classicController.init(mainController);
 		hierarchicalController.init(mainController);
-		mapsController.init(mainController, this);
+		mapsController.init(mainController);
 	}
 
 }

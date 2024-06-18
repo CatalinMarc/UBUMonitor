@@ -3,6 +3,7 @@ package es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps;
 import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.apache.commons.math3.ml.clustering.Clusterer;
@@ -19,6 +20,7 @@ import smile.plot.swing.Canvas;
 import smile.plot.swing.ScatterPlot;
 import smile.vq.NeuralGas;
 import smile.vq.VectorQuantizer;
+import smile.vq.hebb.Neuron;
 
 public class NeuralGasAlgorithm extends Algorithm {
 
@@ -76,20 +78,19 @@ public class NeuralGasAlgorithm extends Algorithm {
 		        }
 		    }
 	    
+		    setData();
 		    return gas;		
 		}
 		
-		@Override
-		public String getData() {
-//			List<Object> result = new ArrayList<>();
-//	        result.add(data);
-//	        result.add(gas.neurons());
+		private void setData() {
 			double[][] neurons = gas.neurons();
-			if(neurons[0].length == 2)
-		        return getData2D(neurons);
-	        return getData3D(neurons);
+			
+			setData2D(data, neurons);
+			clearData3D();
+			if(componentSize != 2)
+				setData3D(neurons);
 		}
-		
+				
 		@Override
 		public Canvas getCanvas(boolean SOMType) {
 			ScatterPlot scatter = ScatterPlot.of(gas.neurons(), '#', Color.BLUE);

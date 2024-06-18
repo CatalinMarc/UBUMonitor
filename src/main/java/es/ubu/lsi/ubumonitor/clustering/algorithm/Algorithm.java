@@ -22,7 +22,11 @@ public abstract class Algorithm {
 	private String name;
 	private String library;
 	private AlgorithmParameters parameters = new AlgorithmParameters();
-
+	
+	private List<EnrolledUser> users;
+	protected String data2D;
+	protected String data3D;
+	
 	/**
 	 * Constructor de un algoritmo.
 	 * 
@@ -63,32 +67,55 @@ public abstract class Algorithm {
 	 */
 	public abstract Clusterer<UserData> getClusterer();
 
-	protected String getData2D(double[][] data) {
-		
+	protected void setData2D(double[][] data, double[][] neurons) {
 		StringBuilder xData = new StringBuilder();
         StringBuilder yData = new StringBuilder();
+        StringBuilder labelData = new StringBuilder();
+        StringBuilder dataSize = new StringBuilder();
 
+        dataSize.append("[" + data.length  + "]");
+        
         xData.append("[");
         yData.append("[");
+        labelData.append("[");
 
+        // Data
         for (int i = 0; i < data.length; i++) {
             xData.append(data[i][0]);
             yData.append(data[i][1]);
+            labelData.append("\"").append(users.get(i).getFullName()).append("\"");
             
             if (i < data.length - 1) {
                 xData.append(",");
                 yData.append(",");
+                labelData.append(",");
             }
         }
 
+        xData.append(",");
+        yData.append(",");
+        
+        // Neurons
+        for (int i = 0; i < neurons.length; i++) {
+
+            xData.append(neurons[i][0]);
+            yData.append(neurons[i][1]);
+
+            if (i < neurons.length - 1) {
+                xData.append(",");
+                yData.append(",");
+            }
+        }
+        
         xData.append("]");
         yData.append("]");
+        labelData.append("]");
 
-        String json = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + "}";
-        return json + "2";
+        
+        data2D = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + ",\"labels\":" + labelData.toString() + ",\"size\":" + dataSize.toString() + "}";
 	}
 	
-	protected String getData3D(double[][] data) {
+	protected void setData3D(double[][] data) {
 
 		 StringBuilder xData = new StringBuilder();
 		 StringBuilder yData = new StringBuilder();
@@ -119,9 +146,24 @@ public abstract class Algorithm {
 		 yData.append("]");
 		 zData.append("]");
 
-		 String json = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + ",\"z\":" + zData.toString() + "}";
-		 return json + "3";
+		 data3D = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + ",\"z\":" + zData.toString() + "}";
     }
+	
+	public String getData2D() {
+		return data2D;	
+	}
+	
+	public String getData3D() {
+		return data3D;
+	}
+	
+	protected void clearData3D() {
+		data3D = null;
+	}
+	
+	public void setUsers(List<EnrolledUser> users) {
+		this.users = users;
+	}
 	
 	/**
 	 * Establece el nombre del algoritmo.

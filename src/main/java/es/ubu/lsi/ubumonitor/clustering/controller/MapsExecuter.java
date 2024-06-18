@@ -18,7 +18,7 @@ import smile.vq.VectorQuantizer;
 public class MapsExecuter {
 
 	private List<UserData> usersData;
-	private SmileAdapter map;
+	SmileAdapter map;
 	
 	public MapsExecuter(Algorithm algorithm, List<EnrolledUser> enrolledUsers,
 			List<DataCollector> dataCollectors) {
@@ -29,14 +29,19 @@ public class MapsExecuter {
 		dataCollectors.forEach(collector -> collector.collect(usersData));
 	}
 	
-	public String execute(boolean SOMType) {
+	public void execute(boolean SOMType) {
 		if (usersData.size() < 2)
 			throw new IllegalStateException("clustering.error.notUsers");
 
 		if (usersData.get(0).getData().isEmpty())
 			throw new IllegalStateException("clustering.error.notData");
-	
-		return map.execute(usersData, SOMType);
+		
+		int componentsSize = usersData.get(0).getData().size();
+		
+		if (componentsSize == 1)
+			throw new IllegalStateException("clustering.error.invalidComponents");
+
+		map.executeMaps(usersData, SOMType, componentsSize);
 
 	}
 	

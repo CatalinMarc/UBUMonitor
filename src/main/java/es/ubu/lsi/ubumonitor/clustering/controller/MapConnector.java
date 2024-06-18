@@ -3,9 +3,6 @@ package es.ubu.lsi.ubumonitor.clustering.controller;
 import java.util.List;
 
 import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
-import es.ubu.lsi.ubumonitor.clustering.data.UserData;
-import es.ubu.lsi.ubumonitor.controllers.tabs.MapsController;
-import javafx.scene.control.TableView;
 
 /**
  * Conector entre JavaScript y Java.
@@ -15,16 +12,16 @@ import javafx.scene.control.TableView;
  */
 public class MapConnector {
 
-	private PartitionalClusteringController controller;
+	private MapsController controller;
 	private List<ClusterWrapper> clusters;
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param partitionalClusteringController controlador
+	 * @param mapsController controlador
 	 */
-	public MapConnector(PartitionalClusteringController partitionalClusteringController) {
-		this.controller = partitionalClusteringController;
+	public MapConnector(MapsController mapsController) {
+		this.controller = mapsController;
 	}
 
 //	/**

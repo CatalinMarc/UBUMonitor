@@ -1,66 +1,88 @@
-package es.ubu.lsi.ubumonitor.controllers.tabs;
+package es.ubu.lsi.ubumonitor.clustering.controller;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.PropertySheet;
+import org.controlsfx.control.RangeSlider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.ubu.lsi.ubumonitor.clustering.algorithm.Algorithm;
-import es.ubu.lsi.ubumonitor.clustering.controller.MapsExecuter;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.apache.DBSCAN;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.apache.FuzzyKMeans;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.apache.KMeansPlusPlus;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.apache.MultiKMeansPlusPlus;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.DBSCANSmile;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.DENCLUE;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.GMeans;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.KMeans;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.XMeans;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.BIRCHAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.GrowingNeuralGasAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralGasAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralMapAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.SOMAlgorithm;
-import es.ubu.lsi.ubumonitor.clustering.chart.ScatterMap;
+import es.ubu.lsi.ubumonitor.clustering.analysis.AnalysisFactory;
+import es.ubu.lsi.ubumonitor.clustering.analysis.ElbowFactory;
+import es.ubu.lsi.ubumonitor.clustering.analysis.SilhouetteFactory;
+import es.ubu.lsi.ubumonitor.clustering.analysis.methods.AnalysisMethod;
+import es.ubu.lsi.ubumonitor.clustering.chart.Scatter2DChart;
+import es.ubu.lsi.ubumonitor.clustering.chart.Scatter3DChart;
+import es.ubu.lsi.ubumonitor.clustering.chart.MapScatter2D;
+import es.ubu.lsi.ubumonitor.clustering.chart.MapScatter3D;
+import es.ubu.lsi.ubumonitor.clustering.chart.SilhouetteChart;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.ActivityCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.DataCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.GradesCollector;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.LogCollector;
+import es.ubu.lsi.ubumonitor.clustering.data.ClusterWrapper;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
 import es.ubu.lsi.ubumonitor.clustering.data.SOMType;
+import es.ubu.lsi.ubumonitor.clustering.exception.IllegalParamenterException;
 import es.ubu.lsi.ubumonitor.clustering.util.JavaFXUtils;
+import es.ubu.lsi.ubumonitor.clustering.util.SimplePropertySheetItem;
+import es.ubu.lsi.ubumonitor.AppInfo;
+import es.ubu.lsi.ubumonitor.controllers.Controller;
+import es.ubu.lsi.ubumonitor.util.I18n;
 import es.ubu.lsi.ubumonitor.controllers.MainController;
-import es.ubu.lsi.ubumonitor.controllers.configuration.ConfigHelper;
-import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import es.ubu.lsi.ubumonitor.model.datasets.DataSetComponent;
 import es.ubu.lsi.ubumonitor.model.datasets.DataSetComponentEvent;
 import es.ubu.lsi.ubumonitor.model.datasets.DataSetSection;
 import es.ubu.lsi.ubumonitor.model.datasets.DatasSetCourseModule;
-import es.ubu.lsi.ubumonitor.util.I18n;
+import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import es.ubu.lsi.ubumonitor.util.UtilMethods;
-import javafx.embed.swing.SwingFXUtils;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
-import smile.manifold.SammonMapping;
-import smile.math.MathEx;
-import smile.plot.swing.Canvas;
-import smile.plot.swing.Grid;
-import smile.plot.swing.Hexmap;
-import smile.plot.swing.ScatterPlot;
-import smile.plot.swing.Palette;
-import smile.plot.swing.Point;
 
+/**
+ * Controlador del clustering particional.
+ * 
+ * @author Ionut Catalin Marc
+ *
+ */
 public class MapsController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(PartitionalClusteringController.class);
 
 	private MainController mainController;
 	
@@ -71,15 +93,6 @@ public class MapsController {
 
 	@FXML
 	private PropertySheet propertySheet;
-	
-//	@FXML
-//	private ImageView imageView;
-
-	@FXML
-	private WebView webViewMaps2;
-
-//	@FXML
-//	private Pane pane;
 	
 	@FXML
 	private CheckBox checkBoxLogs;
@@ -99,30 +112,40 @@ public class MapsController {
 	@FXML
 	private DatePicker datePickerEnd;
 	
+	@FXML
+	private WebView webViewScatter;
+
+	@FXML
+	private WebView webView3DScatter;
+	
 	private GradesCollector gradesCollector;
 
 	private ActivityCollector activityCollector;
 
 	private ListView<EnrolledUser> listParticipants;
 	
-	private ScatterMap scatterMap;
+	private MapScatter2D mapScatter2D;
 	
+	private MapScatter3D mapScatter3D;
+		
 	/**
 	 * Inicializa el controlador.
 	 * 
 	 * @param controller controlador general
 	 */
-	public void init(MainController mainController, ClusteringController clusteringController) {
+	public void init(MainController controller) {
+		mainController = controller;
+//		clusteringTableController.init(controller);
 
-		this.mainController = mainController;
-//		this.clusteringController = clusteringController;
-		
-		//scatterMap = new ScatterMap(this);
+		mapScatter2D = new MapScatter2D(this);
+		mapScatter3D = new MapScatter3D(this);
+
+		listParticipants = mainController.getSelectionUserController().getListParticipants();
 		
 		initAlgorithms();
 		initCollectors();
 	}
-	
+
 	private void initAlgorithms() {
 		comboBoxAlgorithm.setCellFactory(callback -> new ListCell<Algorithm>() {
 		    @Override
@@ -154,10 +177,8 @@ public class MapsController {
 				.getItems().setAll(newValue.getParameters().getPropertyItems()));
 		comboBoxAlgorithm.getSelectionModel().selectFirst();
 	}
-	
-	private void initCollectors() {
-		listParticipants = mainController.getSelectionUserController().getListParticipants();
 
+	private void initCollectors() {
 		gradesCollector = new GradesCollector(mainController);
 		activityCollector = new ActivityCollector(mainController);
 		List<LogCollector<?>> list = new ArrayList<>();
@@ -169,36 +190,12 @@ public class MapsController {
 				t -> t.isVisible() ? "visible" : "not_visible"));
 		list.add(new LogCollector<>("coursemodule", mainController.getSelectionController().getListViewCourseModule(),
 				DatasSetCourseModule.getInstance(), t -> t.getModuleType().getModName()));
-
 		checkComboBoxLogs.getItems().setAll(list);
 		checkComboBoxLogs.getCheckModel().checkAll();
-		checkComboBoxLogs.disableProperty().bind(checkBoxLogs.selectedProperty().not());
-
-//		ChangeListener<? super Number> listener = (obs, newValue, oldValue) -> setImage();
-//		pane.widthProperty().addListener(listener);
-//		pane.heightProperty().addListener(listener);
-
-//		initContextMenu(imageView);
+		
 		JavaFXUtils.initDatePickers(datePickerStart, datePickerEnd, checkBoxLogs);
 	}
-	
-	private void initContextMenu(ImageView imageView) {
-		ContextMenu contextMenu = new ContextMenu();
-		contextMenu.setAutoHide(true);
 
-		MenuItem exportPNG = new MenuItem(I18n.get("text.exportpng"));
-//		exportPNG.setOnAction(e -> exportPNG());
-
-		contextMenu.getItems().setAll(exportPNG);
-		imageView.setOnMouseClicked(e -> {
-			if (e.getButton() == MouseButton.SECONDARY) {
-				contextMenu.show(imageView, e.getScreenX(), e.getScreenY());
-			} else {
-				contextMenu.hide();
-			}
-		});
-	}
-	
 	/**
 	 * Ejecuta el clustering.
 	 */
@@ -209,15 +206,15 @@ public class MapsController {
 		try {
 			
 			Algorithm algorithm = comboBoxAlgorithm.getSelectionModel().getSelectedItem();
-//			
-//			MapsExecuter mapsExecuter = new MapsExecuter(algorithm, users, collectors);
-//			
-//			boolean type = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
-//			double[][] data = mapsExecuter.execute(type);
-//			System.out.println(data);
-//			scatterMap.updateChart(data);
-			//map.updateChart();
-			//setImage(canvas);
+			algorithm.setUsers(users);
+			
+			MapsExecuter mapsExecuter = new MapsExecuter(algorithm, users, collectors);
+			
+			boolean type = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
+			mapsExecuter.execute(type);
+
+			mapScatter2D.updateChart(algorithm.getData2D());
+			mapScatter3D.updateChart(algorithm.getData3D());
 			
 		} catch (IllegalStateException e) {
 			UtilMethods.infoWindow(I18n.get(e.getMessage()));
@@ -240,26 +237,20 @@ public class MapsController {
 		}
 		return collectors;
 	}
-	
-//	private void setImage(Canvas canvas) {
-//		canvas.setMargin(0.05);
-//		Image image = SwingFXUtils
-//				.toFXImage(canvas.toBufferedImage((int) pane.getWidth() + 1, (int) pane.getHeight() + 1), null);
-//		webView.getImageView().setImage(image);
+
+
+//	/**
+//	 * @return the clusteringTable
+//	 */
+//	public ClusteringTable getClusteringTable() {
+//		return clusteringTableController;
 //	}
-	
+
 	/**
 	 * @return the mainController
 	 */
 	public MainController getMainController() {
 		return mainController;
-	}
-
-	/**
-	 * @return the comboBoxAlgorithm
-	 */
-	public ComboBox<Algorithm> getComboBoxAlgorithm() {
-		return comboBoxAlgorithm;
 	}
 
 	/**
@@ -270,17 +261,10 @@ public class MapsController {
 	}
 
 	/**
-	 * @return the webView
+	 * @return the checkComboBoxLogs
 	 */
-	public WebView getWebView() {
-		return webViewMaps2;
-	}
-
-	/**
-	 * @return the pane
-	 */
-	public Pane getPane() {
-		return null;//pane;
+	public CheckComboBox<LogCollector<?>> getCheckComboBoxLogs() {
+		return checkComboBoxLogs;
 	}
 
 	/**
@@ -305,24 +289,17 @@ public class MapsController {
 	}
 
 	/**
-	 * @return the checkComboBoxLogs
+	 * @return the webViewScatter
 	 */
-	public CheckComboBox<LogCollector<?>> getCheckComboBoxLogs() {
-		return checkComboBoxLogs;
+	public WebView getWebViewScatter() {
+		return webViewScatter;
 	}
 
 	/**
-	 * @return the datePickerStart
+	 * @return the webView3DScatter
 	 */
-	public DatePicker getDatePickerStart() {
-		return datePickerStart;
+	public WebView getWebView3DScatter() {
+		return webView3DScatter;
 	}
 
-	/**
-	 * @return the datePickerEnd
-	 */
-	public DatePicker getDatePickerEnd() {
-		return datePickerEnd;
-	}
-	
 }

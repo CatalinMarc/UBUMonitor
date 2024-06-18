@@ -105,18 +105,20 @@ public class GrowingNeuralGasAlgorithm extends Algorithm {
 		        }
 		    }
 		    
+		    setData();
 		    return gng;		
 		}
 		
-		@Override
-		public String getData() {
+		private void setData() {
 			Neuron[] neurons = gng.neurons();
 			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new);
-	        if(neuronsArray[0].length == 2)
-	        	return getData2D(neuronsArray);
-	        return getData3D(neuronsArray);
+			
+			setData2D(data, neuronsArray);
+			clearData3D();
+			if(componentSize != 2)
+				setData3D(neuronsArray);
 		}
-		
+				
 		public Canvas getCanvas(boolean SOMType) {
 			Neuron[] neurons = gng.neurons();
 			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new);

@@ -85,7 +85,7 @@ public class NeuralGasAlgorithm extends Algorithm {
 		private void setData() {
 			double[][] neurons = gas.neurons();
 			
-			setData2D(data, neurons);
+			setData2D(data, neurons, null);
 			clearData3D();
 			if(componentSize != 2)
 				setData3D(neurons);

@@ -49,7 +49,33 @@
 
 
             Plotly.newPlot('chart', [NeuronsTrace, DataTrace], layout);
+            connectNeurons(data.edges)
         }
+
+        function connectNeurons(edges) {
+        	var update = {
+                shapes: []
+            };
+
+			for (var i = 0; i < edges.length; i++) {
+                var edge = edges[i];
+                var line = {
+                    type: 'line',
+                    x0: edge[0][0],
+                    y0: edge[0][1],
+                    x1: edge[1][0],
+                    y1: edge[1][1],
+                    line: {
+                        color: 'blue',
+                        width: 1,
+                        dash: 'dashdot'
+                    }
+                };
+                update.shapes.push(line);
+            }
+
+            Plotly.relayout('chart', update);	
+		}
 
     </script>
 </head>

@@ -10,6 +10,8 @@ import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.clustering.exception.IllegalParamenterException;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
 import smile.vq.VectorQuantizer;
+import smile.vq.hebb.Edge;
+import smile.vq.hebb.Neuron;
 
 /**
  * Clase base de los algoritmos de clustering.
@@ -67,14 +69,13 @@ public abstract class Algorithm {
 	 */
 	public abstract Clusterer<UserData> getClusterer();
 
-	protected void setData2D(double[][] data, double[][] neurons) {
+	protected void setData2D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		StringBuilder xData = new StringBuilder();
         StringBuilder yData = new StringBuilder();
         StringBuilder labelData = new StringBuilder();
         StringBuilder dataSize = new StringBuilder();
-
-        dataSize.append("[" + data.length  + "]");
-        
+        String edges = "[]";
+    
         xData.append("[");
         yData.append("[");
         labelData.append("[");
@@ -96,12 +97,12 @@ public abstract class Algorithm {
         yData.append(",");
         
         // Neurons
-        for (int i = 0; i < neurons.length; i++) {
+        for (int i = 0; i < neuronsArray.length; i++) {
 
-            xData.append(neurons[i][0]);
-            yData.append(neurons[i][1]);
+            xData.append(neuronsArray[i][0]);
+            yData.append(neuronsArray[i][1]);
 
-            if (i < neurons.length - 1) {
+            if (i < neuronsArray.length - 1) {
                 xData.append(",");
                 yData.append(",");
             }
@@ -110,9 +111,45 @@ public abstract class Algorithm {
         xData.append("]");
         yData.append("]");
         labelData.append("]");
-
         
-        data2D = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + ",\"labels\":" + labelData.toString() + ",\"size\":" + dataSize.toString() + "}";
+        dataSize.append("[" + data.length  + "]");
+        
+        if(neurons != null) 
+        	edges = edgesToJSON(neurons);
+        
+        data2D = "{\"x\":" + xData.toString() 
+        			+ ",\"y\":" + yData.toString() 
+        			+ ",\"labels\":" + labelData.toString()
+        			+ ",\"size\":" + dataSize.toString() 
+        			+ ",\"edges\":" + edges
+        			+ "}";
+        
+        System.out.println(data2D);
+        System.out.println(edges);
+	}
+	
+	private String edgesToJSON(Neuron[] neurons) {
+		String neuronA = "";
+		String neuronB = "";
+        StringBuilder edges = new StringBuilder();
+        
+        edges.append("[");
+        
+		for (Neuron neuron : neurons) {
+            for (Edge edge : neuron.edges) {
+                double[] coordA = neuron.w;
+                double[] coordB = edge.neighbor.w;
+                
+                neuronA = "[" + coordA[0] + "," + coordA[1] + "]";
+                neuronB = "[" + coordB[0] + "," + coordB[1] + "]";
+            }
+            edges.append("[" + neuronA + "," + neuronB + "],");
+        }
+		
+		edges.deleteCharAt(edges.length() - 1);
+		edges.append("]");
+        
+        return edges.toString();
 	}
 	
 	protected void setData3D(double[][] data) {

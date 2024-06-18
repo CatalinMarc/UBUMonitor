@@ -113,7 +113,7 @@ public class GrowingNeuralGasAlgorithm extends Algorithm {
 			Neuron[] neurons = gng.neurons();
 			double[][] neuronsArray = Arrays.stream(neurons).map(n -> n.w).toArray(double[][]::new);
 			
-			setData2D(data, neuronsArray);
+			setData2D(data, neuronsArray, neurons);
 			clearData3D();
 			if(componentSize != 2)
 				setData3D(neuronsArray);

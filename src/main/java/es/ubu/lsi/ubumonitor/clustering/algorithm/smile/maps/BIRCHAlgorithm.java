@@ -83,7 +83,7 @@ public class BIRCHAlgorithm extends Algorithm {
 		private void setData() {
 			double[][] centroids = birch.centroids();
 			
-			setData2D(data, centroids);
+			setData2D(data, centroids, null);
 			clearData3D();
 			if(componentSize != 2)
 				setData3D(centroids);

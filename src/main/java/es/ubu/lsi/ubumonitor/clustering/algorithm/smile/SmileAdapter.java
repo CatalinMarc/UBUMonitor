@@ -42,7 +42,7 @@ public abstract class SmileAdapter extends Clusterer<UserData> {
 		return adaptSmile(points, clustering);
 	}
 	
-	public void executeMaps(Collection<UserData> points, boolean SOMType, int componentSize) {
+	public void executeMaps(Collection<UserData> points, int componentSize) {
 		this.componentSize = componentSize;
 		execute(stream(points));
 	}

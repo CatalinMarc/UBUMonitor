@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.apache.commons.math3.ml.clustering.Clusterer;
 
+import com.jujutsu.tsne.PrincipalComponentAnalysis;
+
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.BIRCHAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralMapAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.DataCollector;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
@@ -70,6 +74,15 @@ public abstract class Algorithm {
 	public abstract Clusterer<UserData> getClusterer();
 
 	protected void setData2D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
+		
+		if(data[0].length > 2) {
+			PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
+			
+			data = pca.pca(data, 2);
+			if (!(this instanceof BIRCHAlgorithm))
+				neuronsArray = pca.pca(neuronsArray, 2);
+		}
+
 		StringBuilder xData = new StringBuilder();
         StringBuilder yData = new StringBuilder();
         StringBuilder labelData = new StringBuilder();
@@ -153,7 +166,14 @@ public abstract class Algorithm {
 	}
 	
 	protected void setData3D(double[][] data) {
-
+		
+		 if(data[0].length > 3 
+				 // if algorithm isn't BIRCH or NeuralMap
+				 && !((this instanceof BIRCHAlgorithm) || (this instanceof NeuralMapAlgorithm))) {
+			 PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
+			 data = pca.pca(data, 3);
+		 }
+		
 		 StringBuilder xData = new StringBuilder();
 		 StringBuilder yData = new StringBuilder();
 		 StringBuilder zData = new StringBuilder();

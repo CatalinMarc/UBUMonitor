@@ -29,7 +29,7 @@ public class MapsExecuter {
 		dataCollectors.forEach(collector -> collector.collect(usersData));
 	}
 	
-	public void execute(boolean SOMType) {
+	public void execute() {
 		if (usersData.size() < 2)
 			throw new IllegalStateException("clustering.error.notUsers");
 
@@ -41,8 +41,13 @@ public class MapsExecuter {
 		if (componentsSize == 1)
 			throw new IllegalStateException("clustering.error.invalidComponents");
 
-		map.executeMaps(usersData, SOMType, componentsSize);
+		map.executeMaps(usersData, componentsSize);
 
+	}
+	
+	public Canvas executeSOM(boolean SOMType) {
+		execute();
+		return map.getCanvas(SOMType);
 	}
 	
 	/**

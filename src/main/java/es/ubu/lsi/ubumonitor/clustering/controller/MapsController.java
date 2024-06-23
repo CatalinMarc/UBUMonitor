@@ -50,6 +50,7 @@ import es.ubu.lsi.ubumonitor.AppInfo;
 import es.ubu.lsi.ubumonitor.controllers.Controller;
 import es.ubu.lsi.ubumonitor.util.I18n;
 import es.ubu.lsi.ubumonitor.controllers.MainController;
+import es.ubu.lsi.ubumonitor.controllers.WebViewController;
 import es.ubu.lsi.ubumonitor.model.datasets.DataSetComponent;
 import es.ubu.lsi.ubumonitor.model.datasets.DataSetComponentEvent;
 import es.ubu.lsi.ubumonitor.model.datasets.DataSetSection;
@@ -73,6 +74,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
+import javafx.scene.control.Tab;
+import javafx.embed.swing.SwingFXUtils;
+import smile.plot.swing.Canvas;
 
 /**
  * Controlador del clustering particional.
@@ -117,6 +121,14 @@ public class MapsController {
 
 	@FXML
 	private WebView webView3DScatter;
+	
+	@FXML
+	private ImageView imageViewScatter;
+//	@FXML
+//	protected WebViewController webView2DScatter;
+	
+	@FXML
+	private Tab tab2D;
 	
 	private GradesCollector gradesCollector;
 
@@ -170,7 +182,7 @@ public class MapsController {
 		
 		List<Algorithm> algorithms = Arrays.asList(new SOMAlgorithm(), new NeuralGasAlgorithm(),
 				new GrowingNeuralGasAlgorithm(), new BIRCHAlgorithm(), new NeuralMapAlgorithm()
-		/* ,new Spectral(), new DeterministicAnnealing() */);
+		);
 		
 		comboBoxAlgorithm.getItems().setAll(algorithms);			
 		comboBoxAlgorithm.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> propertySheet
@@ -210,16 +222,39 @@ public class MapsController {
 			
 			MapsExecuter mapsExecuter = new MapsExecuter(algorithm, users, collectors);
 			
-			boolean type = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
-			mapsExecuter.execute(type);
+			if(algorithm instanceof SOMAlgorithm) {		
+				imageViewScatter.setVisible(true);
+				webViewScatter.setVisible(false);
+				
+				boolean type = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
+				Canvas canvas = mapsExecuter.executeSOM(type);
+				setImage(canvas);
+				
+				return;
+			} 
+			
+			imageViewScatter.setVisible(false);
+			webViewScatter.setVisible(true);
+			
+			mapsExecuter.execute();
 
+			int componentsSize = mapsExecuter.getUserData().get(0).getData().size();
+			
 			mapScatter2D.updateChart(algorithm.getData2D());
-			mapScatter3D.updateChart(algorithm.getData3D());
+			if(componentsSize >= 3)
+				mapScatter3D.updateChart(algorithm.getData3D());
 			
 		} catch (IllegalStateException e) {
 			UtilMethods.infoWindow(I18n.get(e.getMessage()));
 		}
 
+	}
+	
+	private void setImage(Canvas canvas) {
+		canvas.setMargin(0.05);
+		Image image = SwingFXUtils
+				.toFXImage(canvas.toBufferedImage((int) imageViewScatter.getFitWidth(), (int) imageViewScatter.getFitHeight()), null);
+		imageViewScatter.setImage(image);
 	}
 	
 	private List<DataCollector> getSelectedCollectors() {
@@ -292,6 +327,7 @@ public class MapsController {
 	 * @return the webViewScatter
 	 */
 	public WebView getWebViewScatter() {
+		//return null;// webView2DScatter.getWebViewCharts();
 		return webViewScatter;
 	}
 

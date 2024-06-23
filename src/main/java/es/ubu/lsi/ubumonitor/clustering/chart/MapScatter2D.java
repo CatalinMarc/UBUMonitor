@@ -40,7 +40,6 @@ public class MapScatter2D extends AbstractChart {
 		JSObject window = (JSObject) webEngine.executeScript("window");
 		
 		window.call("renderPlotlyChart", data);
-		//window.call("connectNeurons", adjacencyMatrix);
         
 	}
 	

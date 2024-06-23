@@ -8,10 +8,12 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.PropertySheet?>
@@ -22,14 +24,19 @@
          <items>
             <TabPane minWidth="0.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab text="%clustering.2Dgraph">
+                  <Tab fx:id="tab2D" text="%clustering.2Dgraph">
                      <content>
-                        <WebView fx:id="webViewScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageViewScatter" fitHeight="422.0" fitWidth="695.0" pickOnBounds="true" preserveRatio="true" />
+                              <WebView fx:id="webViewScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />
+                           </children>
+                        </StackPane>
                      </content>
                   </Tab>
                   <Tab text="%clustering.3Dgraph">
                      <content>
-                        <WebView fx:id="webView3DScatter" prefHeight="200.0" prefWidth="200.0" />
+                        <WebView fx:id="webView3DScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />                     
                      </content>
                   </Tab>
                </tabs>

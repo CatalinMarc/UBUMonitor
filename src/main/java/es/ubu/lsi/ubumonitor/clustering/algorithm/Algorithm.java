@@ -28,6 +28,7 @@ public abstract class Algorithm {
 	private String name;
 	private String library;
 	private AlgorithmParameters parameters = new AlgorithmParameters();
+	private PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
 	
 	private List<EnrolledUser> users;
 	protected String data2D;
@@ -76,8 +77,6 @@ public abstract class Algorithm {
 	protected void setData2D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		
 		if(data[0].length > 2) {
-			PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
-			
 			data = pca.pca(data, 2);
 			if (!(this instanceof BIRCHAlgorithm))
 				neuronsArray = pca.pca(neuronsArray, 2);
@@ -111,10 +110,10 @@ public abstract class Algorithm {
         
         // Neurons
         for (int i = 0; i < neuronsArray.length; i++) {
-
+        	
             xData.append(neuronsArray[i][0]);
             yData.append(neuronsArray[i][1]);
-
+            
             if (i < neuronsArray.length - 1) {
                 xData.append(",");
                 yData.append(",");
@@ -149,12 +148,25 @@ public abstract class Algorithm {
         edges.append("[");
         
 		for (Neuron neuron : neurons) {
-            for (Edge edge : neuron.edges) {
-                double[] coordA = neuron.w;
-                double[] coordB = edge.neighbor.w;
-                
-                neuronA = "[" + coordA[0] + "," + coordA[1] + "]";
-                neuronB = "[" + coordB[0] + "," + coordB[1] + "]";
+			// if the dimension is > 2 and we have to apply dimension reduction
+			if(neuron.w.length > 2) {
+	            for (Edge edge : neuron.edges) {
+	                double[] coordA = pca.sampleToEigenSpace(neuron.w);
+	                double[] coordB = pca.sampleToEigenSpace(edge.neighbor.w);
+	                
+	                neuronA = "[" + changeSign(coordA[0]) + "," + changeSign(coordA[1]) + "]";
+	                neuronB = "[" + changeSign(coordB[0]) + "," + changeSign(coordB[1]) + "]";
+	            }
+            } 
+			else {
+            	for (Edge edge : neuron.edges) {
+                    double[] coordA = neuron.w;
+                    double[] coordB = edge.neighbor.w;
+                    
+                    neuronA = "[" + coordA[0] + "," + coordA[1] + "]";
+                    neuronB = "[" + coordB[0] + "," + coordB[1] + "]";
+                }
+            	
             }
             edges.append("[" + neuronA + "," + neuronB + "],");
         }
@@ -165,13 +177,16 @@ public abstract class Algorithm {
         return edges.toString();
 	}
 	
+	private double changeSign(double value) {
+		return value * -1;
+	}
+	
 	protected void setData3D(double[][] data) {
 		
 		 if(data[0].length > 3 
-				 // if algorithm isn't BIRCH or NeuralMap
-				 && !((this instanceof BIRCHAlgorithm) || (this instanceof NeuralMapAlgorithm))) {
-			 PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
-			 data = pca.pca(data, 3);
+			// if algorithm isn't BIRCH or NeuralMap
+			&& !((this instanceof BIRCHAlgorithm) || (this instanceof NeuralMapAlgorithm))) {
+			 	data = pca.pca(data, 3);
 		 }
 		
 		 StringBuilder xData = new StringBuilder();

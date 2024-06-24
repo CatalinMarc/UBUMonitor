@@ -135,9 +135,7 @@ public abstract class Algorithm {
         			+ ",\"size\":" + dataSize.toString() 
         			+ ",\"edges\":" + edges
         			+ "}";
-        
-        System.out.println(data2D);
-        System.out.println(edges);
+
 	}
 	
 	private String edgesToJSON(Neuron[] neurons) {

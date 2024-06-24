@@ -90,8 +90,6 @@ public class MapsController {
 
 	private MainController mainController;
 	
-//	private  ClusteringController clusteringController;
-	
 	@FXML
 	private ComboBox<Algorithm> comboBoxAlgorithm;
 
@@ -124,11 +122,6 @@ public class MapsController {
 	
 	@FXML
 	private ImageView imageViewScatter;
-//	@FXML
-//	protected WebViewController webView2DScatter;
-	
-	@FXML
-	private Tab tab2D;
 	
 	private GradesCollector gradesCollector;
 

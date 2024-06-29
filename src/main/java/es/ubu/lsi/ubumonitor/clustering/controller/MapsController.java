@@ -73,6 +73,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.scene.control.Tab;
 import javafx.embed.swing.SwingFXUtils;
@@ -123,6 +124,9 @@ public class MapsController {
 	@FXML
 	private ImageView imageViewScatter;
 	
+	@FXML
+	private Pane pane;
+	
 	private GradesCollector gradesCollector;
 
 	private ActivityCollector activityCollector;
@@ -140,7 +144,6 @@ public class MapsController {
 	 */
 	public void init(MainController controller) {
 		mainController = controller;
-//		clusteringTableController.init(controller);
 
 		mapScatter2D = new MapScatter2D(this);
 		mapScatter3D = new MapScatter3D(this);
@@ -151,6 +154,9 @@ public class MapsController {
 		initCollectors();
 	}
 
+	/**
+	 * Inicializa los algoritmos de los mapas
+	 */
 	private void initAlgorithms() {
 		comboBoxAlgorithm.setCellFactory(callback -> new ListCell<Algorithm>() {
 		    @Override
@@ -161,14 +167,6 @@ public class MapsController {
 		            setGraphic(null);
 		        } else {
 		            setText(algorithm.getName() + " (" + algorithm.getLibrary() + ")");
-//		            try {
-//		                Image image = new Image(AppInfo.IMG_DIR + algorithm.getLibrary().toLowerCase() + ".png", 24, 24,
-//		                        false, true);
-//		                ImageView imageView = new ImageView(image);
-//		                setGraphic(imageView);
-//		            } catch (Exception e) {
-//		                setGraphic(null);
-//		            }
 		        }
 		    }
 		});
@@ -183,6 +181,9 @@ public class MapsController {
 		comboBoxAlgorithm.getSelectionModel().selectFirst();
 	}
 
+	/**
+	 * Inicializa todos los dato collectors.
+	 */
 	private void initCollectors() {
 		gradesCollector = new GradesCollector(mainController);
 		activityCollector = new ActivityCollector(mainController);
@@ -243,13 +244,23 @@ public class MapsController {
 
 	}
 	
+	/**
+	 * Establece la imagen del mapa.
+	 * 
+	 * @param canvas canvas
+	 */
 	private void setImage(Canvas canvas) {
 		canvas.setMargin(0.05);
 		Image image = SwingFXUtils
-				.toFXImage(canvas.toBufferedImage((int) imageViewScatter.getFitWidth(), (int) imageViewScatter.getFitHeight()), null);
+				.toFXImage(canvas.toBufferedImage((int) pane.getWidth(), (int) pane.getHeight()), null);
 		imageViewScatter.setImage(image);
 	}
 	
+	/**
+	 * Get selected collectors
+	 * 
+	 * @return collectors
+	 */
 	private List<DataCollector> getSelectedCollectors() {
 		List<DataCollector> collectors = new ArrayList<>();
 		if (checkBoxLogs.isSelected()) {
@@ -265,14 +276,6 @@ public class MapsController {
 		}
 		return collectors;
 	}
-
-
-//	/**
-//	 * @return the clusteringTable
-//	 */
-//	public ClusteringTable getClusteringTable() {
-//		return clusteringTableController;
-//	}
 
 	/**
 	 * @return the mainController
@@ -320,7 +323,6 @@ public class MapsController {
 	 * @return the webViewScatter
 	 */
 	public WebView getWebViewScatter() {
-		//return null;// webView2DScatter.getWebViewCharts();
 		return webViewScatter;
 	}
 

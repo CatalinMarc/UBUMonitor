@@ -139,47 +139,44 @@ public abstract class Algorithm {
 	}
 	
 	private String edgesToJSON(Neuron[] neurons) {
-		String neuronA = "";
-		String neuronB = "";
-        StringBuilder edges = new StringBuilder();
-        
-        edges.append("[");
-        
-		for (Neuron neuron : neurons) {
-			// if the dimension is > 2 and we have to apply dimension reduction
-			if(neuron.w.length > 2) {
-	            for (Edge edge : neuron.edges) {
-	                double[] coordA = pca.sampleToEigenSpace(neuron.w);
-	                double[] coordB = pca.sampleToEigenSpace(edge.neighbor.w);
-	                
-	                neuronA = "[" + changeSign(coordA[0]) + "," + changeSign(coordA[1]) + "]";
-	                neuronB = "[" + changeSign(coordB[0]) + "," + changeSign(coordB[1]) + "]";
+	    String neuronA = "";
+	    String neuronB = "";
+	    StringBuilder edges = new StringBuilder();
+
+	    edges.append("[");
+
+	    for (Neuron neuron : neurons) {
+	        for (Edge edge : neuron.edges) {
+	            double[] coordA;
+	            double[] coordB;
+
+	            // if the dimension is > 2 and we have to apply dimension reduction
+	            if (neuron.w.length > 2) {
+	                coordA = pca.sampleToEigenSpace(neuron.w);
+	                coordB = pca.sampleToEigenSpace(edge.neighbor.w);
+	            } else {
+	                coordA = neuron.w;
+	                coordB = edge.neighbor.w;
 	            }
-            } 
-			else {
-            	for (Edge edge : neuron.edges) {
-                    double[] coordA = neuron.w;
-                    double[] coordB = edge.neighbor.w;
-                    
-                    neuronA = "[" + coordA[0] + "," + coordA[1] + "]";
-                    neuronB = "[" + coordB[0] + "," + coordB[1] + "]";
-                }
-            	
-            }
-            edges.append("[" + neuronA + "," + neuronB + "],");
-        }
-		
-		edges.deleteCharAt(edges.length() - 1);
-		edges.append("]");
-        
-        return edges.toString();
+
+	            neuronA = "[" + changeSign(coordA[0]) + "," + changeSign(coordA[1]) + "]";
+	            neuronB = "[" + changeSign(coordB[0]) + "," + changeSign(coordB[1]) + "]";
+
+	            edges.append("[" + neuronA + "," + neuronB + "],");
+	        }
+	    }
+
+	    edges.deleteCharAt(edges.length() - 1);
+	    edges.append("]");
+
+	    return edges.toString();
 	}
 	
 	private double changeSign(double value) {
 		return value * -1;
 	}
 	
-	protected void setData3D(double[][] data) {
+	protected void setData3D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		
 		 if(data[0].length > 3 
 			// if algorithm isn't BIRCH or NeuralMap
@@ -190,10 +187,14 @@ public abstract class Algorithm {
 		 StringBuilder xData = new StringBuilder();
 		 StringBuilder yData = new StringBuilder();
 		 StringBuilder zData = new StringBuilder();
+	     StringBuilder labelData = new StringBuilder();
+	     StringBuilder dataSize = new StringBuilder();
+	     String edges = "[]";
 
 		 xData.append("[");
 		 yData.append("[");
 		 zData.append("[");
+		 labelData.append("[");
 		 
 		 for (int i = 0; i < data.length; i++) {
 
@@ -204,20 +205,69 @@ public abstract class Algorithm {
 		     xData.append(xValue);
 		     yData.append(yValue);
 		     zData.append(zValue);
+	         labelData.append("\"").append(users.get(i).getFullName()).append("\"");
 
 		     if (i < data.length - 1) {
 		    	 xData.append(",");
 		         yData.append(",");
 		         zData.append(",");
+		         labelData.append(",");
 		     }
 		 }
 
 		 xData.append("]");
 		 yData.append("]");
 		 zData.append("]");
+		 labelData.append("]");
+	        
+	     dataSize.append("[" + data.length  + "]");
 
-		 data3D = "{\"x\":" + xData.toString() + ",\"y\":" + yData.toString() + ",\"z\":" + zData.toString() + "}";
-    }
+		 if(neurons != null) 
+	        	edges = edgesToJSON3D(neurons);
+		 
+		 data3D = "{\"x\":" + xData.toString() 
+		 	+ ",\"y\":" + yData.toString() 
+		 	+ ",\"z\":" + zData.toString()
+			+ ",\"labels\":" + labelData.toString()
+			+ ",\"size\":" + dataSize.toString() 
+			+ ",\"edges\":" + edges
+		 	+ "}";
+		 System.out.println(data3D);
+	}
+	
+	private String edgesToJSON3D(Neuron[] neurons) {
+	    String neuronA = "";
+	    String neuronB = "";
+	    StringBuilder edges = new StringBuilder();
+
+	    edges.append("[");
+
+	    for (Neuron neuron : neurons) {
+	        for (Edge edge : neuron.edges) {
+	            double[] coordA;
+	            double[] coordB;
+
+	            // if the dimension is > 3 and we have to apply dimension reduction
+	            if (neuron.w.length > 3) {
+	                coordA = pca.sampleToEigenSpace(neuron.w);
+	                coordB = pca.sampleToEigenSpace(edge.neighbor.w);
+	            } else {
+	                coordA = neuron.w;
+	                coordB = edge.neighbor.w;
+	            }
+
+	            neuronA = "[" + changeSign(coordA[0]) + "," + changeSign(coordA[1]) + "," + changeSign(coordA[2]) + "]";
+	            neuronB = "[" + changeSign(coordB[0]) + "," + changeSign(coordB[1]) + "," + changeSign(coordB[2]) + "]";
+
+	            edges.append("[" + neuronA + "," + neuronB + "],");
+	        }
+	    }
+
+	    edges.deleteCharAt(edges.length() - 1);
+	    edges.append("]");
+
+	    return edges.toString();
+	}
 	
 	public String getData2D() {
 		return data2D;	

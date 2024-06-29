@@ -11,9 +11,30 @@
         function renderChart3D(newData) {
             var data = JSON.parse(newData);
             var seriesData = [];
+            var lineData = []; 
 
             for (var i = 0; i < data.x.length; i++) {
-                seriesData.push([data.x[i], data.y[i], data.z[i]]);
+                seriesData.push({
+                    x: data.x[i],
+                    y: data.y[i],
+                    z: data.z[i],
+                    name: data.labels[i] // Añadir el label al punto de datos
+                });
+            }
+
+            var edges = data.edges;
+            for (var i = 0; i < edges.length; i++) {
+                var edge = edges[i];
+                lineData.push({
+                    type: 'line',
+                    data: [
+                        [edge[0][0], edge[0][1], edge[0][2]],
+                        [edge[1][0], edge[1][1], edge[1][2]]
+                    ],
+                    lineWidth: 1,
+                    color: 'blue',
+                    dashStyle: 'dashdot'
+                });
             }
 
             chart = Highcharts.chart('chart', {
@@ -29,7 +50,8 @@
                         frame: {
                             bottom: { 
                                 size: 1, 
-                                color: 'rgba(0,0,0,0.02)' }
+                                color: 'rgba(0,0,0,0.02)' 
+                            }
                         }
                     }
                 },
@@ -40,7 +62,12 @@
                     scatter: {
                         width: 10,
                         height: 10,
-                        depth: 10
+                        depth: 10,
+                        tooltip: {
+                            pointFormatter: function() {
+                                return this.name;
+                            }
+                        }
                     }
                 },
                 yAxis: {
@@ -57,14 +84,29 @@
                 legend: {
                     enabled: false
                 },
-                series: [{
-                    name: 'Data',
-                    colorByPoint: true,
-                    accessibility: {
-                        exposeAsGroupOnly: true
+                series: [
+                    {
+                        name: 'Data',
+                        colorByPoint: true,
+                        accessibility: {
+                            exposeAsGroupOnly: true
+                        },
+                        data: seriesData,
+                        tooltip: {
+                            pointFormatter: function() {
+                                return this.name;
+                            }
+                        }
                     },
-                    data: seriesData
-                }]
+                    ...lineData.map(line => ({
+                        ...line,
+                        tooltip: {
+                            pointFormatter: function() {
+                                return '';
+                            }
+                        }
+                    }))
+                ]
             });
         }
 
@@ -73,7 +115,6 @@
                 chart.destroy();
             }
         }
-        
     </script>
 </head>
 <body>

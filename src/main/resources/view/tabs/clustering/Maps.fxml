@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,6 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
@@ -28,7 +30,11 @@
                      <content>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="imageViewScatter" fitHeight="422.0" fitWidth="695.0" pickOnBounds="true" preserveRatio="true" />
+                              <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fx:id="imageViewScatter" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </Pane>
                               <WebView fx:id="webViewScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />
                            </children>
                         </StackPane>
@@ -48,11 +54,12 @@
    <bottom>
       <GridPane hgap="10.0" vgap="5.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" maxWidth="300.0" minWidth="197.0" percentWidth="20.0" prefWidth="251.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" percentWidth="30.0" prefWidth="229.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="300.0" minWidth="158.0" percentWidth="15.0" prefWidth="168.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="322.0" minWidth="10.0" percentWidth="25.0" prefWidth="312.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
@@ -75,7 +82,7 @@
                   <Insets />
                </GridPane.margin>
             </CheckBox>
-            <Button mnemonicParsing="false" onAction="#executeClustering" styleClass="accept_button" text="%clustering.execute" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#executeClustering" styleClass="accept_button" text="%clustering.execute" GridPane.columnIndex="5" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin></Button>
@@ -85,8 +92,9 @@
                </GridPane.margin>
             </CheckComboBox>
             <CheckBox fx:id="checkBoxLogs" mnemonicParsing="false" text="%tab.logs" GridPane.columnIndex="2" />
-            <DatePicker fx:id="datePickerStart" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <DatePicker fx:id="datePickerEnd" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <DatePicker fx:id="datePickerStart" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <DatePicker fx:id="datePickerEnd" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Label text="%clustering.dataFilter" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </bottom>

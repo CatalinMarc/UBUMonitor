@@ -86,7 +86,7 @@ public class BIRCHAlgorithm extends Algorithm {
 			setData2D(data, centroids, null);
 			clearData3D();
 			if(componentSize != 2)
-				setData3D(centroids);
+				setData3D(data, centroids, null);
 		}
 		
 		@Override

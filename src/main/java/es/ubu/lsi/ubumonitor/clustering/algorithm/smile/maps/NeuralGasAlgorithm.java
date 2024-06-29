@@ -33,7 +33,7 @@ public class NeuralGasAlgorithm extends Algorithm {
 	public NeuralGasAlgorithm() {
 		super(NAME, LIBRARY);
 		addParameter(ClusteringParameter.EPOCHS, 20);
-		addParameter(ClusteringParameter.NEURONS, 400);
+		addParameter(ClusteringParameter.NEURONS, 50);
 	}
 	
 	@Override
@@ -88,7 +88,7 @@ public class NeuralGasAlgorithm extends Algorithm {
 			setData2D(data, neurons, null);
 			clearData3D();
 			if(componentSize != 2)
-				setData3D(neurons);
+				setData3D(data, neurons, null);
 		}
 				
 		@Override

@@ -98,7 +98,7 @@ public class NeuralMapAlgorithm extends Algorithm {
 			setData2D(data, neuronsArray, neurons);
 			clearData3D();
 			if(componentSize != 2)
-				setData3D(neuronsArray);
+				setData3D(data, neuronsArray, neurons);
 		}
 		
 		@Override

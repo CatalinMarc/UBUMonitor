@@ -21,7 +21,7 @@ public enum ClusteringParameter {
 	//GROWING_NEURAL_GAS
 	EPS_BEST("learnigRateBest", 0, 1), EPS_NEIGHBOR("learnigRateNeighbors", 0, 1), 
 	EDGE_LIFETIME("maxAgeEdges", 1), LAMBDA("lambda", 1), ALPHA("alpha", 0, 1), BETA("beta", 0, 1), 
-	DISTANCE("distanceThreshold", 1), NEURONS("neurons", 1),
+	DISTANCE("distanceThreshold", 1), NEURONS("neurons", 2),
 	;
 
 	private String name;
@@ -75,6 +75,15 @@ public enum ClusteringParameter {
 		return min;
 	}
 
+	/**
+	 * Devuelde el valor máximo que puede ser este parametro.
+	 * 
+	 * @return valor máximo
+	 */
+	public double getMax() {
+		return max;
+	}
+	
 	@Override
 	public String toString() {
 		return getName();

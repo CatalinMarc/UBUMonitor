@@ -268,14 +268,20 @@ public class PartitionalClusteringController {
 		};
 		buttonExecute.disableProperty().bind(service.runningProperty());
 		progressExecute.visibleProperty().bind(service.runningProperty());
-		service.setOnSucceeded(e -> {
-			silhouette.updateChart(clusters);
-			clusteringTableController.updateTable(clusters);
-			updateRename();
-			graph.updateChart(clusters);
-			graph3D.updateChart(clusters);
-			service.reset();
-		});
+		 service.setOnSucceeded(e -> {
+             try { // RMS FIXME temporal solution but the data validation should be improved...
+                             silhouette.updateChart(clusters);
+                             clusteringTableController.updateTable(clusters);
+                             updateRename();
+                             graph.updateChart(clusters);
+                             graph3D.updateChart(clusters);
+                             service.reset();
+             } catch (Exception exception) {
+                             service.reset(); // RMS should be really in a finally clause avoiding duplication...
+                             LOGGER.error("Exception updating charts in clustering, review validation data: {}",
+                                                            exception);
+             }
+});
 		service.setOnFailed(e -> {
 			Throwable exception = service.getException();
 			UtilMethods.infoWindow(exception instanceof IllegalParamenterException ? exception.getMessage()

@@ -34,8 +34,11 @@ public class IllegalParamenterException extends IllegalArgumentException {
 	 */
 	@Override
 	public String getMessage() {
-		return MessageFormat.format(I18n.get("clustering.error.parameter"), parameter.getName(), wrong,
-				parameter.getMin());
+		if (parameter.getMax() == Double.POSITIVE_INFINITY)
+			return MessageFormat.format(I18n.get("clustering.error.parameter"), parameter.getName(), wrong,
+					parameter.getMin());
+		return MessageFormat.format(I18n.get("clustering.error.parameter2"), parameter.getName(), wrong,
+				parameter.getMin(), parameter.getMax());
 	}
 
 }

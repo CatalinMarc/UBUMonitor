@@ -127,6 +127,9 @@ public class MapsController {
 	@FXML
 	private Pane pane;
 	
+	@FXML
+	private Tab tab3D;
+	
 	private GradesCollector gradesCollector;
 
 	private ActivityCollector activityCollector;
@@ -219,6 +222,7 @@ public class MapsController {
 			if(algorithm instanceof SOMAlgorithm) {		
 				imageViewScatter.setVisible(true);
 				webViewScatter.setVisible(false);
+				tab3D.setDisable(true);
 				
 				boolean type = algorithm.getParameters().getValue(ClusteringParameter.SOM_TYPE) == SOMType.SOM_NEURONS;
 				Canvas canvas = mapsExecuter.executeSOM(type);
@@ -228,7 +232,8 @@ public class MapsController {
 			} 
 			
 			imageViewScatter.setVisible(false);
-			webViewScatter.setVisible(true);
+			webViewScatter.setVisible(true);		
+			tab3D.setDisable(false);
 			
 			mapsExecuter.execute();
 
@@ -239,6 +244,8 @@ public class MapsController {
 				mapScatter3D.updateChart(algorithm.getData3D());
 			
 		} catch (IllegalStateException e) {
+			UtilMethods.infoWindow(I18n.get(e.getMessage()));
+		} catch (IllegalParamenterException e) {
 			UtilMethods.infoWindow(I18n.get(e.getMessage()));
 		}
 

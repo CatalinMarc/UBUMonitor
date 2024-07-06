@@ -13,6 +13,7 @@ import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
 import es.ubu.lsi.ubumonitor.clustering.data.UserData;
 import es.ubu.lsi.ubumonitor.clustering.exception.IllegalParamenterException;
 import es.ubu.lsi.ubumonitor.model.EnrolledUser;
+import es.ubu.lsi.ubumonitor.util.I18n;
 import smile.vq.VectorQuantizer;
 import smile.vq.hebb.Edge;
 import smile.vq.hebb.Neuron;
@@ -134,6 +135,8 @@ public abstract class Algorithm {
         			+ ",\"labels\":" + labelData.toString()
         			+ ",\"size\":" + dataSize.toString() 
         			+ ",\"edges\":" + edges
+        			+ ",\"dataName\":\"" + I18n.get("clustering.data") + "\""
+        			+ ",\"neuronsName\":\"" + I18n.get("clustering.neurons") + "\""
         			+ "}";
 
 	}
@@ -231,6 +234,7 @@ public abstract class Algorithm {
 			+ ",\"labels\":" + labelData.toString()
 			+ ",\"size\":" + dataSize.toString() 
 			+ ",\"edges\":" + edges
+			+ ",\"dataName\":\"" + I18n.get("clustering.data") + "\""
 		 	+ "}";
 		 System.out.println(data3D);
 	}

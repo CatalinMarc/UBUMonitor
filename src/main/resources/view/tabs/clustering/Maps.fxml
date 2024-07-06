@@ -40,7 +40,7 @@
                         </StackPane>
                      </content>
                   </Tab>
-                  <Tab text="%clustering.3Dgraph">
+                  <Tab fx:id="tab3D" text="%clustering.3Dgraph">
                      <content>
                         <WebView fx:id="webView3DScatter" cache="true" cacheHint="SPEED" minHeight="-1.0" prefHeight="-1.0" />                     
                      </content>

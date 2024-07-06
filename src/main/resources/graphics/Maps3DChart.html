@@ -11,15 +11,27 @@
         function renderChart3D(newData) {
             var data = JSON.parse(newData);
             var seriesData = [];
+            var neuronsData = [];
             var lineData = []; 
 
             for (var i = 0; i < data.x.length; i++) {
-                seriesData.push({
+                if (i < data.size) {
+                    seriesData.push({
+                        x: data.x[i],
+                        y: data.y[i],
+                        z: data.z[i],
+                        name: data.labels[i]
+                    });
+                } else if(data.show == "false") {
+                    break;
+                } else {
+                    neuronsData.push({
                     x: data.x[i],
                     y: data.y[i],
-                    z: data.z[i],
-                    name: data.labels[i]
+                    z: data.z[i]
                 });
+                }
+
             }
 
             var edges = data.edges;
@@ -98,6 +110,19 @@
                                 return this.name;
                             }
                         }
+                    },
+                    {
+                        color: 'blue',
+                        colorByPoint: false,
+                        accessibility: {
+                            exposeAsGroupOnly: true
+                        },
+                        data: neuronsData,
+                        tooltip: {
+                            pointFormatter: function() {
+                                return this.name;
+                            }
+                        }    
                     },
                     ...lineData.map(line => ({
                         ...line,

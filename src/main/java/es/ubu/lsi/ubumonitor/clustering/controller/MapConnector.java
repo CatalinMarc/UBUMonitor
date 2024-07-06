@@ -24,21 +24,6 @@ public class MapConnector {
 		this.controller = mapsController;
 	}
 
-//	/**
-//	 * Marca un usuario en la tabla.
-//	 * 
-//	 * @param clusterIndex indice de la agrupación
-//	 * @param index        indice del usuario dentro de la agrupación
-//	 */
-//	public void selectUser(int clusterIndex, int index) {
-//		if (clusterIndex < clusters.size()) {
-//			UserData userData = clusters.get(clusterIndex).get(index);
-//			TableView<UserData> tableView = controller.getClusteringTable().getTableView();
-//			tableView.getSelectionModel().select(userData);
-//			tableView.scrollTo(userData);
-//		}
-//	}
-
 	/**
 	 * Establece los clusters.
 	 * 

@@ -7,6 +7,8 @@ import org.apache.commons.math3.ml.clustering.Clusterer;
 import com.jujutsu.tsne.PrincipalComponentAnalysis;
 
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.BIRCHAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.GrowingNeuralGasAlgorithm;
+import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralGasAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.algorithm.smile.maps.NeuralMapAlgorithm;
 import es.ubu.lsi.ubumonitor.clustering.controller.collector.DataCollector;
 import es.ubu.lsi.ubumonitor.clustering.data.ClusteringParameter;
@@ -75,6 +77,15 @@ public abstract class Algorithm {
 	 */
 	public abstract Clusterer<UserData> getClusterer();
 
+	/**
+	 * Convierte los datos de los gráficos a un JSON indicando 
+	 * las coordenadas de los datos, de las neuronas, sus etiquetas
+	 * y sus conexiones. Este JSON se envia al gráfico 2D de los mapas.
+	 * 
+	 * @param data datos alumnos
+	 * @param neuronsArray array de las neuronas
+	 * @param neurons neuronas
+	 */
 	protected void setData2D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		
 		if(data[0].length > 2) {
@@ -141,6 +152,12 @@ public abstract class Algorithm {
 
 	}
 	
+	/**
+	 * Convierte las conexiones de las neuronas 2D a un JSON.
+	 * 
+	 * @param neurons neuronas
+	 * @return String con las coordenadas de las conexiones.
+	 */
 	private String edgesToJSON(Neuron[] neurons) {
 	    String neuronA = "";
 	    String neuronB = "";
@@ -175,17 +192,37 @@ public abstract class Algorithm {
 	    return edges.toString();
 	}
 	
+	/**
+	 * Cambia el signo de un valor.
+	 * 
+	 * @param value value
+	 * @return valor cambiado de signo
+	 */
 	private double changeSign(double value) {
 		return value * -1;
 	}
 	
+	/**
+	 * Convierte los datos de los gráficos a un JSON indicando 
+	 * las coordenadas de los datos, de las neuronas, sus etiquetas
+	 * y sus conexiones. Este JSON se envia al gráfico 3D de los mapas.
+	 * 
+	 * @param data datos alumnos
+	 * @param neuronsArray array de las neuronas
+	 * @param neurons neuronas
+	 */
 	protected void setData3D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		
-		 if(data[0].length > 3 
-			// if algorithm isn't BIRCH or NeuralMap
-			&& !((this instanceof BIRCHAlgorithm) || (this instanceof NeuralMapAlgorithm))) {
+		String showNeurons = "true";
+		
+		 if(data[0].length > 3) 
 			 	data = pca.pca(data, 3);
-		 }
+		 
+		 if((this instanceof NeuralGasAlgorithm) || (this instanceof GrowingNeuralGasAlgorithm)) 
+			 neuronsArray = pca.pca(neuronsArray, 3);
+		 
+		 if((this instanceof NeuralMapAlgorithm) || (this instanceof GrowingNeuralGasAlgorithm))
+			 showNeurons = "false";
 		
 		 StringBuilder xData = new StringBuilder();
 		 StringBuilder yData = new StringBuilder();
@@ -199,6 +236,7 @@ public abstract class Algorithm {
 		 zData.append("[");
 		 labelData.append("[");
 		 
+		 //Data
 		 for (int i = 0; i < data.length; i++) {
 
 		     double xValue = data[i][0];
@@ -218,6 +256,21 @@ public abstract class Algorithm {
 		     }
 		 }
 
+	     xData.append(",");
+	     yData.append(",");
+	        
+	     // Neurons
+	     for (int i = 0; i < neuronsArray.length; i++) {
+	        	
+	    	 xData.append(neuronsArray[i][0]);
+	         yData.append(neuronsArray[i][1]);
+	            
+	         if (i < neuronsArray.length - 1) {
+	        	 xData.append(",");
+	             yData.append(",");
+	         }
+	     }
+
 		 xData.append("]");
 		 yData.append("]");
 		 zData.append("]");
@@ -235,10 +288,17 @@ public abstract class Algorithm {
 			+ ",\"size\":" + dataSize.toString() 
 			+ ",\"edges\":" + edges
 			+ ",\"dataName\":\"" + I18n.get("clustering.data") + "\""
+			+ ",\"show\":\"" + showNeurons + "\""
 		 	+ "}";
 		 System.out.println(data3D);
 	}
 	
+	/**
+	 * Convierte las conexiones de las neuronas 2D a un JSON.
+	 * 
+	 * @param neurons neuronas
+	 * @return String con las coordenadas de las conexiones.
+	 */
 	private String edgesToJSON3D(Neuron[] neurons) {
 	    String neuronA = "";
 	    String neuronB = "";
@@ -273,18 +333,36 @@ public abstract class Algorithm {
 	    return edges.toString();
 	}
 	
+	/**
+	 * Devuelve los datos JSON para gráfico 2D.
+	 * 
+	 * @return data2D
+	 */
 	public String getData2D() {
 		return data2D;	
 	}
 	
+	/**
+	 * Devuelve los datos JSON para gráfico 3D.
+	 * 
+	 * @return data3D
+	 */
 	public String getData3D() {
 		return data3D;
 	}
 	
+	/**
+	 * Elimina los datos del gráfico 3D
+	 */
 	protected void clearData3D() {
 		data3D = null;
 	}
 	
+	/**
+	 * Estable los usuarios.
+	 * 
+	 * @param users usuarios
+	 */
 	public void setUsers(List<EnrolledUser> users) {
 		this.users = users;
 	}
@@ -334,11 +412,22 @@ public abstract class Algorithm {
 		return parameters;
 	}
 
+	/**
+	 * Convierte el agoritmo a String.
+	 * 
+	 * @return algoritmo en String
+	 */
 	@Override
 	public String toString() {
 		return name + " (" + library + ")";
 	}
 	
+	/**
+	 * Compara si el algoritmo proporciado es igual a este.
+	 * 
+	 * @param algorithm algoritmo
+	 * @return true si el algoritmo coincide con este
+	 */
 	public boolean equals(Algorithm algorithm) {
 		return (name.equals(algorithm.getName()) 
 				&& library.equals(algorithm.getLibrary()));

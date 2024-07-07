@@ -288,6 +288,7 @@ public abstract class Algorithm {
 			+ ",\"size\":" + dataSize.toString() 
 			+ ",\"edges\":" + edges
 			+ ",\"dataName\":\"" + I18n.get("clustering.data") + "\""
+			+ ",\"neuronsName\":\"" + I18n.get("clustering.neurons") + "\""
 			+ ",\"show\":\"" + showNeurons + "\""
 		 	+ "}";
 		 System.out.println(data3D);

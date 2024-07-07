@@ -94,11 +94,11 @@
                     showFirstLabel: false
                 },
                 legend: {
-                    enabled: false
+                    enabled: true
                 },
                 series: [
                     {
-                        name: data.nameData,
+                        name: data.dataName,
                         color: 'black',
                         colorByPoint: false,
                         accessibility: {
@@ -112,6 +112,7 @@
                         }
                     },
                     {
+                        name: data.neuronsName,
                         color: 'blue',
                         colorByPoint: false,
                         accessibility: {

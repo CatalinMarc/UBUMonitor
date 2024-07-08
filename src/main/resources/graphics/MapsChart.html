@@ -35,14 +35,14 @@
             };
 
             var layout = {
-                title: 'Scatter Chart'
+                title: data.scatterName
             };
 
             for (var i = 0; i < data.x.length; i++) {
                 if (i < data.size) {
                     DataTrace.x.push(data.x[i]);
                     DataTrace.y.push(data.y[i]);
-                    DataTrace.text.push(data.labels[i]);
+                    DataTrace.text.push(`${data.labels[i]}<br>x:${data.x[i].toFixed(2)}, y:${data.y[i].toFixed(2)})`);
                 } else {
                     NeuronsTrace.x.push(data.x[i]);
                     NeuronsTrace.y.push(data.y[i]);

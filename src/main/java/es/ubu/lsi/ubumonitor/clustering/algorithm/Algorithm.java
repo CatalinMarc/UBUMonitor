@@ -88,6 +88,7 @@ public abstract class Algorithm {
 	 */
 	protected void setData2D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		
+		// dimension reduction if necesary
 		if(data[0].length > 2) {
 			data = pca.pca(data, 2);
 			if (!(this instanceof BIRCHAlgorithm))
@@ -148,6 +149,7 @@ public abstract class Algorithm {
         			+ ",\"edges\":" + edges
         			+ ",\"dataName\":\"" + I18n.get("clustering.data") + "\""
         			+ ",\"neuronsName\":\"" + I18n.get("clustering.neurons") + "\""
+        			+ ",\"scatterName\":\"" + I18n.get("clustering.scatterName") + "\""
         			+ "}";
 
 	}
@@ -214,13 +216,15 @@ public abstract class Algorithm {
 	protected void setData3D(double[][] data, double[][] neuronsArray, Neuron[] neurons) {
 		
 		String showNeurons = "true";
-		
+
+		// dimension reduction if necesary
 		 if(data[0].length > 3) 
 			 	data = pca.pca(data, 3);
 		 
 		 if((this instanceof NeuralGasAlgorithm) || (this instanceof GrowingNeuralGasAlgorithm)) 
 			 neuronsArray = pca.pca(neuronsArray, 3);
 		 
+		 // show only connection
 		 if((this instanceof NeuralMapAlgorithm) || (this instanceof GrowingNeuralGasAlgorithm))
 			 showNeurons = "false";
 		
@@ -247,6 +251,7 @@ public abstract class Algorithm {
 		     yData.append(yValue);
 		     zData.append(zValue);
 	         labelData.append("\"").append(users.get(i).getFullName()).append("\"");
+	         
 
 		     if (i < data.length - 1) {
 		    	 xData.append(",");
@@ -289,6 +294,7 @@ public abstract class Algorithm {
 			+ ",\"edges\":" + edges
 			+ ",\"dataName\":\"" + I18n.get("clustering.data") + "\""
 			+ ",\"neuronsName\":\"" + I18n.get("clustering.neurons") + "\""
+			+ ",\"scatterName\":\"" + I18n.get("clustering.scatter3DName") + "\""
 			+ ",\"show\":\"" + showNeurons + "\""
 		 	+ "}";
 		 System.out.println(data3D);

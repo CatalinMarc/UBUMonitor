@@ -68,7 +68,7 @@
                     }
                 },
                 title: {
-                    text: '3D Scatter Chart'
+                    text: data.scatterName
                 },
                 plotOptions: {
                     scatter: {
@@ -107,7 +107,7 @@
                         data: seriesData,
                         tooltip: {
                             pointFormatter: function() {
-                                return this.name;
+                                return `${this.name}<br>x:${this.x.toFixed(2)}, y:${this.y.toFixed(2)}, z:${this.z.toFixed(2)})`;
                             }
                         }
                     },

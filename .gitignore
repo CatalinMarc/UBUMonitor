@@ -17,3 +17,5 @@ bin
 /.settings/
 /configuration.json
 .factorypath
+/.metadata/
+

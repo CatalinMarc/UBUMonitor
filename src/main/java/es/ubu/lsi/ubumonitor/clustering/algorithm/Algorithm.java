@@ -297,7 +297,6 @@ public abstract class Algorithm {
 			+ ",\"scatterName\":\"" + I18n.get("clustering.scatter3DName") + "\""
 			+ ",\"show\":\"" + showNeurons + "\""
 		 	+ "}";
-		 System.out.println(data3D);
 	}
 	
 	/**

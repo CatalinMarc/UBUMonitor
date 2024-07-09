@@ -54,10 +54,8 @@ public class SOMAlgorithm extends Algorithm {
 		checkParameter(ClusteringParameter.EPOCHS, epochs);
 		checkParameter(ClusteringParameter.NUM_ROW, nrow);
 		checkParameter(ClusteringParameter.NUM_COL, ncol);
-		
-		adapter =  new SOMAdapter(epochs, nrow, ncol);
-		
-		return adapter;
+			
+		return new SOMAdapter(epochs, nrow, ncol);
 	}
 	
 	protected class SOMAdapter extends SmileAdapter {

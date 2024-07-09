@@ -130,6 +130,9 @@ public class MapsController {
 	@FXML
 	private Tab tab3D;
 	
+	@FXML
+	private ClusteringTable clusteringTableController;
+	
 	private GradesCollector gradesCollector;
 
 	private ActivityCollector activityCollector;
@@ -148,6 +151,7 @@ public class MapsController {
 	public void init(MainController controller) {
 		mainController = controller;
 
+		clusteringTableController.init(controller);
 		mapScatter2D = new MapScatter2D(this);
 		mapScatter3D = new MapScatter3D(this);
 
@@ -338,6 +342,10 @@ public class MapsController {
 	 */
 	public WebView getWebView3DScatter() {
 		return webView3DScatter;
+	}
+	
+	public ClusteringTable getClusteringTableController() {
+		return clusteringTableController;
 	}
 
 }

@@ -22,8 +22,6 @@ public class BIRCHAlgorithm extends Algorithm {
 	private static final String NAME = "BIRCH";
 	private static final String LIBRARY = "Smile";
 
-	private BIRCHAdapter adapter;
-	
 	/**
 	 * Constructor del algoritmo UMatrix.
 	 */
@@ -45,9 +43,7 @@ public class BIRCHAlgorithm extends Algorithm {
 		checkParameter(ClusteringParameter.CF_ENTRIES, cf);
 		checkParameter(ClusteringParameter.MAX_RADIUS, radius);
 		
-		adapter = new BIRCHAdapter(branching, cf, radius);
-		
-		return adapter; 
+		return new BIRCHAdapter(branching, cf, radius);
 	}
 	
 	public class BIRCHAdapter extends SmileAdapter {

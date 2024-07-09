@@ -155,15 +155,18 @@ public class PartitionalClusteringController {
 	private Scatter3DChart graph3D;
 
 	private Service<Void> service;
+	
+	private MapsController mapsController;
 
 	/**
 	 * Inicializa el controlador.
 	 * 
 	 * @param controller controlador general
 	 */
-	public void init(MainController controller) {
+	public void init(MainController controller, MapsController mapsController) {
 		mainController = controller;
 		clusteringTableController.init(controller);
+		this.mapsController = mapsController;
 		graph = new Scatter2DChart(this);
 		silhouette = new SilhouetteChart(this);
 		graph3D = new Scatter3DChart(this);
@@ -272,6 +275,7 @@ public class PartitionalClusteringController {
              try { // RMS FIXME temporal solution but the data validation should be improved...
                              silhouette.updateChart(clusters);
                              clusteringTableController.updateTable(clusters);
+                             mapsController.getClusteringTableController().updateTable(clusters);
                              updateRename();
                              graph.updateChart(clusters);
                              graph3D.updateChart(clusters);

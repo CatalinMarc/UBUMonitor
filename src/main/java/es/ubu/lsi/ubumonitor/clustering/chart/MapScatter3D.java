@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import es.ubu.lsi.ubumonitor.clustering.controller.Connector;
-import es.ubu.lsi.ubumonitor.clustering.controller.MapConnector;
 import es.ubu.lsi.ubumonitor.clustering.controller.MapsController;
 import es.ubu.lsi.ubumonitor.clustering.controller.PartitionalClusteringController;
 import es.ubu.lsi.ubumonitor.clustering.util.ExportUtil;
@@ -19,8 +18,6 @@ import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
 public class MapScatter3D extends AbstractChart {
-
-	private MapConnector connector;
 	
 	private String data;
 	
@@ -29,12 +26,9 @@ public class MapScatter3D extends AbstractChart {
 		
 		WebEngine webEngine = getWebEngine();
 
-		connector = new MapConnector(mapsController);
 		webEngine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
 			if (Worker.State.SUCCEEDED != newState)
 				return;
-			netscape.javascript.JSObject window = (netscape.javascript.JSObject) webEngine.executeScript("window");
-			window.setMember("javaConnector", connector);
 		});
 		webEngine.load(getClass().getResource("/graphics/Maps3DChart.html").toExternalForm());
 			

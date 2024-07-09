@@ -29,7 +29,7 @@ public class ClusteringController {
 	 * @param mainController controlador general de la aplicación
 	 */
 	public void init(MainController mainController) {
-		classicController.init(mainController, mapsController);
+		classicController.init(mainController);
 		hierarchicalController.init(mainController);
 		mapsController.init(mainController);
 	}

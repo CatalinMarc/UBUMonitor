@@ -9,7 +9,7 @@
 <p align="center"><img height="300" src="src/main/resources/img/logo.png" />
 
 ## Release
-Release of application is available: [Here](https://github.com/CatalinMarc/UBUMonitorLauncher/releases)
+Release of application is available: [Here](https://github.com/CatalinMarc/UBUMonitor/releases)
 
 ## Monitoring of students on the Moodle platform
 ### Description:
@@ -24,7 +24,7 @@ This project is an extension of the clustering module of [Xing Long Ji](https://
 
 ## Dependencies:
 The application requires **Java 8**.
-External **JavaScript** libraries are included in  [resources/graphics/lib/](resources/graphics/lib/).
+External **JavaScript** libraries are included in  [src/main/resources/graphics/lib](src/main/resources/graphics/lib).
 
 ### Java dependencies:
 * [Apache Commons CSV](https://commons.apache.org/proper/commons-csv/)

@@ -1,0 +1,393 @@
+\apendice{Documentación técnica de programación}
+
+\section{Introducción}
+
+Esta sección contiene toda la información que una persona externa debería tener para poder trabajar con las diferentes partes de este proyecto, incluyendo la estructura de directorios, el manual del programador, la compilación, instalación y ejecución del proyecto y las pruebas del sistema.
+
+\section{Estructura de directorios}
+
+Como este proyecto se integra dentro de otro, solo se van a enumerar los directorios utilizados en este proyecto.
+
+\newpage
+
+\dirtree{%
+    .1 / \\
+    \hphantom{0cm}{}
+    \begin{minipage}[t]{10cm}
+        \normalfont
+        Directorio raíz donde se esncuentra el fichero pom{.}xml de Maven{.}
+    \end{minipage}.
+        .2 src/main/java/ \\
+        \hphantom{0cm}{}
+        \begin{minipage}[t]{10cm}
+            \normalfont
+            Contiene todo el código de la aplicación{.}
+        \end{minipage}. 
+            .3 es/ubu/lsi/ubumonitor/clustering/ \\
+            \hphantom{0cm}{}
+            \begin{minipage}[t]{10cm}
+                \normalfont
+                Contiene la mayoría del código de la parte de \emph{clustering}{.} Dentro de esta directorio se ha añadido la parte de cuantificación vectorial{.}
+            \end{minipage}.
+                .4 algorithm/smile/maps/ \\
+                \hphantom{0cm}{}
+                \begin{minipage}[t]{10cm}
+                    \normalfont
+                    Contiene todos los algoritmos nuevos que se han integrado en este proyecto{.} Todos ellos son de la biblioteca SMILE{.}
+                \end{minipage}.
+                .4 chart/ \\
+                \hphantom{0cm}{}
+                \begin{minipage}[t]{10cm}
+                    \normalfont
+                    Contiene todos los gráficos nuevos que se han implementado para la cuantificación vectorial además de los gráficos de clustering ya integrados anteriormente{.}
+                \end{minipage}.
+                .4 controller/ \\
+                \hphantom{0cm}{}
+                \begin{minipage}[t]{10cm}
+                    \normalfont
+                    Contiene el nuevo controlador de los mapas junto a los demás controladores del módulo de \emph{clustering}{.}
+                \end{minipage}.
+                    .5 collector/ \\
+                    \hphantom{0cm}{}
+                    \begin{minipage}[t]{10cm}
+                        \normalfont
+                        Contiene las clases que se utilizan para recopilar los datos de los alumnos como por ejemplo las notas y demás datos relacionados{.}
+                    \end{minipage}.
+                .4 data/ \\
+                \hphantom{0cm}{}
+                \begin{minipage}[t]{10cm}
+                    \normalfont
+                    Contiene las clases y enumeraciones de los datos utilizados en el módulo de \emph{clustering} como por ejemplo \emph{ClusteringParameter} mencionada anteriormente{.}
+                \end{minipage}.
+            .3 es/ubu/lsi/ubumonitor/controllers/ \\
+            \hphantom{0cm}{}
+            \begin{minipage}[t]{10cm}
+                \normalfont
+                Directorio con todos los controladores de la aplicación, destacaremos el controlador de \emph{WebView} que es el que hemos modificado para su posterior uso en este proyecto{.}
+            \end{minipage}.
+                .4 tabs/ \\
+                \hphantom{0cm}{}
+                \begin{minipage}[t]{10cm}
+                    \normalfont
+                    Directorio con todos los controladores de las pestañas, aquí hemo modificado el \emph{Clusteringcontroller} para añadir el controlador de la pestaña de cuantificación vectorial dentro de este{.}
+                \end{minipage}.
+            .3 es/ubu/lsi/ubumonitor/util/ \\
+            \hphantom{0cm}{}
+            \begin{minipage}[t]{10cm}
+                \normalfont
+                Directorio con diferentes clases muy utiles para el proyecto{.} Aquí destacaremos la clase I18n que es la encargada de las traducciones al idioma seleccionado{.} Actualmente solo se dispone del inglés y español{.}
+            \end{minipage}.
+}
+
+Se ha tenido que dividir el árbol en dos partes ya que no cambia en la misma página.
+\\ \\ \\
+
+\dirtree{%
+    .1 / \\
+    .
+        .2 src/main/java/ \\
+        \dots
+        . 
+        .2 src/main/resources/ \\
+        \hphantom{0cm}{}
+        \begin{minipage}[t]{10cm}
+            \normalfont
+            Directorio con todos los recursos necesarios para la aplicación{.}
+        \end{minipage}.
+            .3 graphics/ \\
+            \hphantom{0cm}{}
+            \begin{minipage}[t]{10cm}
+                \normalfont
+                Directorio con los ficheros {.}html que se utilizan para los gráficos en los \emph{WebView}{.} Aquí se han añadido ficheros para los gráficos 2D y 3D de la cuantificación vectorial{.}
+            \end{minipage}.
+                .4 lib/ \\
+                \hphantom{0cm}{}
+                \begin{minipage}[t]{10cm}
+                    \normalfont
+                    Contiene las librerías utilizadas con las versiones que se han integrado y se sabe que funcionan correctamente y que si hay alguna actualización en alguna de ellas no haya problemas para nuestra aplicación{.}
+                \end{minipage}.
+            .3 messages/ \\
+            \hphantom{0cm}{}
+            \begin{minipage}[t]{10cm}
+                \normalfont
+                Contiene los ficheros {.}properties que se utilizan para las traducciones{.} Existe un fichero para cada idioma, en este caso inglés y español{.}
+            \end{minipage}.
+}
+
+\newpage
+
+Veremos un resumen con las clases más importantes que se han utilizado en este proyecto.
+\\ \\ \\
+
+\dirtree{%
+    .1 / \\
+    .
+        .2 src/main/java/ \\
+        .
+            .3 es/ubu/lsi/ubumonitor/clustering/ \\
+            .
+                .4 algorithm/smile/maps/ \\
+                \begin{minipage}[t]{10cm}
+                    \begin{itemize}
+                        \item BIRCHAlgorithm{.}java
+                        \item GrowingNeuralGasAlgorithm{.}java
+                        \item NeuralGasAlgorithm{.}java
+                        \item NeuralMapAlgorithm{.}java
+                        \item SOMAlgorithm{.}java
+                    \end{itemize}
+                \end{minipage}
+                .
+                .4 chart/ \\
+                \begin{minipage}[t]{10cm}
+                    \begin{itemize}
+                        \item MapScatter2D{.}java
+                        \item MapScatter3D{.}java
+                    \end{itemize}
+                \end{minipage}
+                .
+                .4 controller/ \\
+                \begin{minipage}[t]{10cm}
+                    \begin{itemize}
+                        \item MapConnector{.}java
+                        \item MapController{.}java
+                    \end{itemize}
+                \end{minipage}
+                .
+                .4 data/ \\
+                \begin{minipage}[t]{10cm}
+                    \begin{itemize}
+                        \item ClusteringParameter{.}java
+                        \item SOMType{.}java
+                    \end{itemize}
+                \end{minipage}
+                .
+            .3 es/ubu/lsi/ubumonitor/controllers/ \\
+                \begin{minipage}[t]{10cm}
+                    \begin{itemize}
+                        \item WebViewController{.}java
+                    \end{itemize}
+                \end{minipage}
+            .
+                .4 tabs/ \\
+                \begin{minipage}[t]{10cm}
+                    \begin{itemize}
+                        \item ClusteringContoller{.}java
+                    \end{itemize}
+                \end{minipage}
+                .
+        .2 src/main/resources/ \\
+        \dots
+        .
+}
+
+\newpage
+
+\dirtree{%
+    .1 / \\
+    .
+        .2 src/main/java/ \\
+        \dots
+        .
+        .2 src/main/resources/ \\
+        .
+            .3 graphics/ \\
+                \begin{itemize}
+                    \item MapsChart{.}html
+                    \item MapsChart3D{.}html
+                \end{itemize}
+            .
+                .4 lib/ \\
+                \begin{itemize}
+                    \item plotly{.}js
+                    \item plotly-latest{.}js
+                \end{itemize}
+                .
+            .3 messages/ \\
+                \begin{itemize}
+                    \item Messages\_en{.}properties
+                    \item Messages\_es{.}properties
+                \end{itemize}
+            .
+}
+
+\section{Manual del programador}
+
+En esta sección se presenta una guía que actúa como referencia para los futuros desarrolladores que trabajen en este proyecto. Primero, se detallará el proceso para descargar e instalar Java, seguido de las instrucciones para descargar e instalar el entorno de desarrollo Eclipse, y finalmente, se explicará cómo descargar e instalar Scene Builder.
+
+\subsection{Java}
+
+Para que UBUMonitor funcione correctamente, necesitamos Java 8 ya que con versiones más actuales da error. Por ello usaremos la distribución de Zulu que contiene las funcionalidades de JavaFX necesarias para este proyecto. A continuación se muestran los pasos detalladamente para la correcta instalación.
+
+Primero de todo accederemos a la \href{https://www.azul.com/downloads/#zulu}{página oficial} de Zulu donde encontraremos todas las distribuciones que tienen.
+
+\imagen{anexos/versionZulu}{Versión de Zulu a descargar}{1}
+
+Para descargar la misma versión usaremos los siguientes filtros:
+\begin{description}
+    \item[Java Version:] Java 8 (LTS) 
+    \item[Java Package:] JDK FX
+    \item[Include older versions] seleccionado
+\end{description}
+
+También elegiremos el sistema operativo y la arquitectura del equipo que utilicemos para desarrollar el proyecto. En mi caso:
+\begin{description}
+    \item[Operating System:] Windows
+    \item[Architecture:] x86 64-bit
+\end{description}
+
+Con estos filtros elegiremos la distribución 8u402b06 y comprobaremos que la versión Azul Zulu sea 8.76.0.17 al igual que la figura \ref{fig:anexos/versionZulu}.
+
+Procederemos a descargar y descomprimir el fichero .zip \ref{fig:anexos/descargaZip}.
+
+\imagen{anexos/descargaZip}{Descarga .zip}{.5}
+
+Posteriormente añadiremos esta distribución de Java al \emph{path} del sistema, para ello, podemos buscar ``Editar las Variables de entorno del sistema'' en el buscador de Windows y lo seleccionamos como podemos ver en la figura \ref{fig:anexos/varEntorno}.
+
+\imagen{anexos/varEntorno}{Variables de entorno del sistema}{.5}
+
+Dentro de propiedades del sistema presionamos ``Variables de entorno\dots'' \ref{fig:anexos/varEntornO2}.
+
+\imagen{anexos/varEntornO2}{Variables de entorno del sistema}{.5}
+
+Creamos una nueva variable de sistema aunque en la figura \ref{fig:anexos/varEntornO3} ya se muestra configurada.
+
+\imagen{anexos/varEntornO3}{Variables de entorno del sistema}{.8}
+
+Indicamos un nombre de la variable, en este caso ``JAVA\_HOME'' y la ruta donde hayamos descomprimido el fichero .zip previamente y aceptamos al igual que \ref{fig:anexos/varEntornO4}.
+
+\imagen{anexos/varEntornO4}{Variables de entorno del sistema}{.9}
+
+Posteriormente nos dirigimos a la variable del sistema \emph{Path} y presionamos ``Editar\dots'' como en la figura \ref{fig:anexos/varEntornO5}.
+
+\imagen{anexos/varEntorno5}{Variables de entorno del sistema}{.9}
+
+Creamos una nueva entrada presionando ``Nuevo'' y utilizamos la variable JAVA\_HOME que acabamos de crear, para ello, haces referencia utilizado ``\%JAVA\_HOME\%'' e indicamos la carpeta ``\textbackslash{}bin'' de la siguiente manera \ref{fig:anexos/varEntornO6}.
+
+\imagen{anexos/varEntorno6}{Variables de entorno del sistema}{.9}
+
+Para terminar, aceptamos todo y habriamos terminado de instalar Java.
+
+\subsection{Eclipse IDE}
+
+Posteriormente, se procede a descargar e instalar el entorno de desarrollo de Eclipse IDE desde su \href{https://www.eclipse.org/downloads/packages/}{página oficial}. En este caso podemos descargar la última versión sin ningún problema.
+
+Seleccionamos el sistema operativo que utilizamos, en este caso Windows y lo descargamos.
+
+\imagen{anexos/eclipseide}{Eclipse IDE a descargar.}{1}
+
+Por último, descomprimimos el fichero en la ruta deseada y ejecutamos el fichero eclipse.exe para utilizar la aplicación.
+
+\subsection{Scene Builder}
+
+Para terminar, necesitaremos instalar Scene Builder que lo podemos descargar desde la página de \href{https://gluonhq.com/products/scene-builder/}{Gluon}.
+
+Buscaremos la versión para Java 8 y descargamos la versión de nuestro sistema operativo.
+
+\imagen{anexos/scenebuilder}{Eclipse IDE a descargar.}{.8}
+
+Ejecutamos el instalador, aceptamos la licencia y presionamos ``Next >''.
+
+\imagen{anexos/scenebuilder2}{Licencia Scene Builder para aceptar.}{.8}
+
+Indicamos la ruta donde lo queremos instalar y presionamos ``Next >'' igual que en \ref{fig:anexos/scenebuilder3}.
+
+\imagen{anexos/scenebuilder3}{Ruta instalación Scene Builder.}{.8}
+
+Una vez instalado, se debe incluir la biblioteca de ControlFX en el Scene builder. Para ello, accedemos al repositorio de \href{https://mvnrepository.com/artifact/org.controlsfx/controlsfx}{ControlFX} y buscamos la versión 8.40.17 para no tener ningún problema.
+
+\imagen{anexos/controlfx}{Versión ControlFX.}{1}
+
+Descargamos el archivo jar como podemos ver en la figura \ref{fig:anexos/controlfx2}.
+
+\imagen{anexos/controlfx2}{ControlFX jar.}{1}
+
+Accedemos a Scene builder y presionamos ``JAR/FXML Manager'' como en la figura \ref{fig:anexos/controlfx3}.
+
+\imagen{anexos/controlfx3}{JAR manager.}{1}
+
+Presionamos ``Add Library/FXML from file system'' al igual que en la figura \ref{fig:anexos/controlfx4} y seleccionamos el fichero .jar que acabamos de descargar.
+
+\imagen{anexos/controlfx4}{Add library.}{.8}
+
+Por último, dejamos todos los componentes seleccionados y presionamos ``Import Components'' como en \ref{fig:anexos/controlfx5}.
+
+\imagen{anexos/controlfx5}{Componentes.}{.8}
+
+Con esto, tendremos todas las herramientas necesarias para proceder con la instalación del proyecto y su ejecución.
+
+\section{Compilación, instalación y ejecución del proyecto}
+
+En esta sección se describirá como importar el proyecto de GitHub a Eclipse y los pasos a seguir para su compilación y ejecución.
+
+\subsection{Importación del proyecto.}
+
+El proyecto se encuentra en el repositorio de GitHub: \href{https://github.com/CatalinMarc/UBUMonitor}{CatalinMarc/UBUMonitor}. Para importarlo podremos hacer un \emph{git clone} desde consola con el enlace del repositorio o descargando el fichero zip como en la figura \ref{fig:anexos/clonegit}.
+
+\imagen{anexos/clonegit}{Repositorio GitHub.}{.7}
+
+Posteriormente, descomprimimos el fichero zip en el \emph{workspace} que estemos utilizando de Eclipse.
+
+Para importar el fichero debemos acceder en la parte superior izquierda de Eclipse a \textbf{File > Import} como en la imagen \ref{fig:anexos/importEclipse}.
+
+\imagen{anexos/importEclipse}{Importar proyecto en Eclipse}{.7}
+
+Dentro de esto vamos a la carpeta \textbf{Maven > Existing Maven Projects} y seleccionamos la carpeta descomprimida anteriormente, marcamos el pom.xml en caso de no estar seleccionado y finalizamos la importación del proyecto.
+
+\imagen{anexos/importEclipse2}{Importar proyecto en Eclipse}{.7}
+
+\subsection{Gerneración del ejecutable de la aplicación}
+
+Para generar el ejecutable JAR se utilizará Maven.
+
+Para ello, simplemente click derecho sobre el proyecto, \textbf{Run as > Maven build} como podemos ver en la figura \ref{fig:anexos/build}.
+
+\imagen{anexos/build}{Build de la aplicación en Eclipse}{.8}
+
+Para terminar, ponemos ``package'' en ``Goals'' y presionamos Run como al igual que en la imagen \ref{fig:anexos/build2}. 
+
+\imagen{anexos/build2}{Build de la aplicación en Eclipse}{1}
+
+Esperamos a que termine y podremos ejecutar el proyecto, esto lo podremos ver en la consola integrada de eclipse.
+ 
+\subsection{Ejecución del proyecto}
+
+Para ejecutar UBUMonitor, muy parecido al paso anterior, click derecho sobre el proyecto, \textbf{Run as > Java Application} como podemos ver en la figura \ref{fig:anexos/ejecutar}.
+
+\imagen{anexos/ejecutar}{Ejecutar aplicación en Eclipse}{.8}
+
+Después buscamos y seleccionamos la clase es.ubu.lsi.ubumonitor.controllers.UBUMonitor y ejecutamos.
+
+\section{Pruebas del sistema}
+
+Para realizar pruebas del funcionamiento de este proyecto se ha utilizado un servidor de prueba de Moodle llamado Mount Orange School~\cite{mountorange:moodle} en el que podemos acceder como cualquier usuario y modificar las diferentes asignaturas y tareas a nuestro interés.
+
+Para ello se han seguido los siguientes pasos:
+
+\begin{enumerate}
+    \item Ejecutar la aplicación e introducir los siguientes datos:
+    \begin{itemize}
+        \item Usuario: teacher
+        \item Contraseña: moodle
+        \item Host: https://school.moodledemo.net/
+    \end{itemize}
+    \item Elegir una asignatura y entrar a ella.
+    \item Dentro de la pestaña ``\emph{Clustering}'' acceder a ``Mapas''.
+    \item Seleccionar alumnos.
+    \item Seleccionar componentes.
+    \item Elegir algoritmo SelfOrganizingMap (SMILE).
+    \item Cambiar parámetros si se desea.
+    \item Seleccionar registros.
+    \item Ejecutar.
+    \item Comprobar que se muestra correctamente el gráfico 2D.
+    \item Repetir los pasos del 4 al 10 modificando los parámetros.
+    \item Repetir paso 11 seleccionando 1 componente, 2 componente y 3 o más componentes.
+    \item Repetir paso 11 y 12 cambiando el algoritmo, además de.
+    \item Comprobar que se muestra correctamente el gráfico 3D cuando se seleccionan 3 o más componentes.
+\end{enumerate}
+
+En las figuras \ref{fig:anexos/noData} y \ref{fig:anexos/incorrectParameter}, se muestran algunos de los errores controlados, diseñadas para asegurar la robustez de la aplicación.
+
+\imagen{anexos/noData}{Error al no seleccionar datos para el algoritmo}{.8}
+\imagen{anexos/incorrectParameter}{Error al introducir parámetros no válidos}{.8}
+
+Además, en el apartado \ref{sec:manual} podremos ver varias imágenes sobre las pruebas realizadas para el correcto funcionamiento de la aplicación y de los algoritmos. 

@@ -1,0 +1,173 @@
+\capitulo{4}{Técnicas y herramientas}
+
+En el área del desarrollo de una aplicación, y en general en la informática, es muy complicado y contraproducente desarrollar algo por completo desde cero, por ello, siempre se utilizan herramientas, librerías o frameworks que han sido creadas previamente por otras personas para facilitar y acelerar el trabajo y permitir que el programador se centre en la parte importante que quiere implementar.
+
+Este capítulo enumera las técnicas y herramientas que se han utilizado durante la realización del proyecto.
+
+\section{Técnicas aplicadas en el desarrollo}
+
+\subsection{Metodología SCRUM}
+
+Durante el desarrollo del proyecto se ha utilizado una medología ágil, más especificamente SCRUM~\cite{wearemarketing:scrum}, para la gestión y planificación de este proyecto.
+
+Está metodología se caracteriza por su enfoque iterativo e incremental, diviediendo el tiempo disponible en lo que se conoce como \emph{sprints}, que suelen tener una duración entre dos y cuatro semanas.
+
+A su vez, cada \emph{sprint} tiene diferentes etápas en las que se realiza una reunión para planificar las tareas que se quieren realizar ádemas de especificar el responsable y una estimación de la complejidad de esta.
+
+Algunos beneficios de esta técnica son:
+\begin{itemize}
+    \item Flexibilidad y adaptabilidad.
+    \item Transparencia.
+    \item Facilita la colaboración.
+    \item Entregas incrementales.
+\end{itemize}
+
+Además, las tareas que, por cualquier motivo no se finalicen durante su \emph{sprint} asignado, pasarán al siguiente.
+
+\subsection{Control de versiones}
+
+El control de versiones~\cite{atlassian:controldeversiones} es una práctica esencial en el desarrollo de software moderno. Permite gestionar los cambios a lo largo del tiempo facilitando la reversión a versiones funcionales anteriores en caso de problemas y la colaboración entre desarrolladores. Para este proyecto he utilizado Git ya que actualmente es la herramienta más extendida y robusta.
+
+A diferencia de los sistemas de control de versiones centralizados, Git permite que cada programador tenga una copia completa del repositorio de forma local proporcionando mayor flexibilidad y fiabilidad.
+
+También se ha utilizado GitHub que es una plataforma de alojamiento de repositorios Git facilitando el seguimiento del progreso y la revisión de código.
+
+Aunque existen varias herramientas con interfaces gráficas que envuelven el funcionamiento de Git (GitKraken, GitHub Desktop, etc.) para este proyecto se utilizó directamente tanto la consola como el IDE de Eclipse (que veremos después) con un complemento llamado EGit, que integra las capacidades de Git directamente en Eclipse, permitiendo el control de versiones desde el propio entorno de desarrollo.
+
+\section{Herramientas de desarrollo}
+
+\subsection{Eclipse IDE}
+
+Eclipse IDE (Integrated Development Environment) es un entorno de desarrollo integrado ampliamente utilizado para el desarrollo de aplicaciones. Es conocido por su extensibilidad, lo que permite a los desarrolladores personalizar y ampliar sus funcionalidades a través de complementos~(plugins). Principalmente fue diseñado para el desarrollo en Java aunque actualmante soporta numerosos lenguajes de programación.
+
+Se ha utilizado para desarrollar la mayor parte del proyecto en Java.
+
+\subsection{Sublime Text}
+
+Sublime Text es un editor de texto sofisticado de alto rendimiento deseñado para la edición de código fuente y texto en general. Es utilizado debido a su velocidad, eficiencia y capacidad de personalización. A diferencia de los IDEs, Sublime Text es ligero.
+
+En este proyecto lo he utilizado principalmente para los ficheros HTML y JavaScript de los gráficos implementados además de editar archivos .fxml directamente desde el código.
+
+\subsection{Scene Builder}
+
+Scene Builder es una herramienta de diseño gráfico para crear interfaces de usuario(UI) en aplicaciones JavaFX. Permite diseñar interfaces gráficas de manera interactiva, sin necesidad de escribir código, aunque, también podemos hacer esto simplemente abriendo los ficheros que crea con un editor de texto. Scene Builder genera archivos FXML que pueden ser utilizados directamenta en proyectos JavaFX, lo que facilita la división entre el diseño de las interfaces gráficas y la lógica del programa.
+
+Aunque tiene algunas limitaciones en diseños complejos, es una herramienta muy importante para cualquiera proyecto que utilice JavaFX sobre trodo porque ahorra tiempo al construir interfaces rápidamente de forma visual. 
+
+\subsection{Maven}
+
+Maven es una herramienta de gestión y construcción de proyectos en Java desarrollada por Apache Software Foundation. Se utiliza principalmente para la gestión de dependencias, la construcción y empaquetado de proyecto y la aumatización de partes del desarrollo de software como por ejemplo la compilación y los tests entre otros. Es ampliamente empleado por su capacidad de simplificar y estandarizar la gestión de proyectos.
+
+Algunos inconvenientes de esta herramienta serían la configuración de proyectos complejos ya que el archivo pom.xml se vuelve muy extenso al contener todas las dependencias y plugins del proyecto. Esto a su vez, puede originar problemas de rendimiento al tener que resolver todas las dependencias.
+
+\section{Lenguajes de programación}
+
+\subsection{Java}
+
+Jave es un lenguaje de programación de propósito general orientado a objetos lanzado en 1995 por Sun Microsystems aunque a partir de 2010 pertenece a Oracle Corporation que es el encargado del desarrolllo y mantenimiento de este lenguaje. Java se ha convertido en uno de los lenguajes más populares y utilizados en el mundo sobretodo en el desarrollo de aplicaciones empresariales, desarrollo web, aplicaciones móviles para android y sistemas embebidos.
+
+Algunas de sus caraterísticas son:
+\begin{itemize}
+    \item Independiente de plataforma, es decir, puede ejecutarse en cualquier dispositivo que tenga instalada una Máquina Virtual de Java(JVM). Es una de las caracteristísticas más destacadas.
+    \item Está basado en el paradigma de la progamación orientada a objetos(OOP) facilitando la modularización y reutilización de programas.
+    \item La seguridad gracias al manejo de excepciones y a la gestión automática de memoria(sistema de recolección de basura).
+    \item Tiene tipado estático, es decir, se comprueba la tipificación de las variables en el proceso de compilación.
+    \item Rendimiento y eficiencia ya que puede ejecutarse incluso en dispositivos con recursos limitados.
+\end{itemize}
+
+\subsection{JavaScript}
+
+JavaScript es un lenguaje de programación que se utiliza principalmente para contenido interactivo en páginas web. Fue desarrollado en 1995 por Netscape y se ha vuelto uno de los lenguajes más importantes en el desarrollo web.
+
+Destaca por las siguientes características entre otras:
+\begin{itemize}
+    \item Se ejecuta en el lado del usuario, por lo tanto, permite interacciones dinámicas sin necesidad de recargar la página.
+    \item Es un lenguaje multiparadigma, es decir, soporta varios estilos de programación incluyendo programación orientada a objetos, funcional o imperativa.
+    \item Esta dirigido por eventos, lo cual permite programar código que responde a las interacciones del usuario como clics o teclas presionadas.
+    \item Tiene tipado dinámico, por lo tanto, la comprobación del tipificado se realiza en el proceso de ejecución.
+    \item Puede integrarse fácilmente con otros lenguajes y tecnologías, como HTML, CSS o diversas APIs.
+\end{itemize}
+
+En este proyecto se ha utilizado fundamentalmente para los gráficos ya que estan implementados en un componente del Scene Builder que actua al igual que una página web.
+
+\section{Lenguaje de etiquetas}
+
+\subsection{HTML}
+
+Lenguaje de marcado de hipertexto, más conocido por sus siglas en inglés HTML es un lenguaje de marcado o etiquetas utilizado para crear la estructura del contenido web. Fue desarrollado por el Consorcio World Wide Web y es una de las tecnologías más fundamentales para el desarrollo web ya que todas las páginas web utilizan HTML. 
+
+Destaca por su estructura jerárquica y por el uso de etiquetas que generalmente vienen en pares, una de apertura ``<etiqueta>'', y otra de cierre ``</etiqueta>''. Las etiquetas pueden contener atributos que proporcionan información adicional del elemento.
+
+\section{Librerías}
+
+\subsection{SMILE}
+
+La librería Statistical Machine Intelligence and Learning Engine~\cite{haifengl:VectorQuantization} es una biblioteca de aprendizaje automático para Java y Scala. Ofrece una alta gama de algoritmos y destaca por su rendimiento, eficiencia y facilidad de uso.
+
+Es la librería principal en la que me he basado para la implementación de todos los algoritmos de la parte de cuantificación vectorial. También se ha utilizado previamante para algunos algoritmos en la parte de clustering que ya se habían implementado en versiones anteriores. 
+
+Por otra parte, tiene un paquete de gráficos que aunque sea muy fácil de utilizar, sobre todo porque los algoritmos utilizados son de la misma biblioteca, solamente se ha utilizado para el algoritmo de Self-Organizing Map ya que ofrecía unas carácteristicas limitadas en cuanto a su visualización, veremos esto con más detalle en el apartado de aspectos relevantes.
+
+\subsection{Plotly}
+
+Plotly.js~\cite{plotly} es una biblioteca de gráficos de código abierto utilizada para visualizar datos de forma interactiva en JavaScript. Es conocida por su facilidad de uso, versatilidad y la capacidad de generar gráficos de alta calidad.
+
+Destaca por características tales como la capacidad de hacer zoom, mover el gráfico, obtener información adicional sobre los puntos al colocar el cursor encima, y seleccionar subconjuntos directamente en los gráficos. También ofrece una gran variedad de tipos de gráficos aunque pricipalmente la he utilizado para los de dispersión o en inglés \emph{scatter} en 2D.
+
+La biblioteca permite una personalización detallada de los aspectos gráficos. He empleado esta funcionalidad para representar los puntos de datos en color negro y las neuronas en color azul. Adicionalmente, he añadido etiquetas a los puntos de datos, indicando los nombres de los estudiantes, y he conectado las neuronas mediante líneas en los algoritmos pertinentes.
+
+\subsection{Highcharts}
+
+Highchart.jsº~\cite{highcharts} también es una biblioteca de gráficos en JavaScript para gráficos interactivos y de alta calidad en aplicaciones web.
+
+Aunque destaca por características iguales que las de Plotly.js lo he utilizado para los gráficos 3D y no he conseguido que funcione de manera interactiva, sobre todo, para hacer zoom o girar el gráfico, posiblemente sea porque el navegador integrado que utiliza WebView no soporte correctamente el renderizado 3D ya que es un poco anticuado.
+
+\subsection{JavaFX}
+
+JavaFX~\cite{javafx} es una biblioteca de software en Java para la creación de aplicaciones de escritorio y aplicaciones de internet enriquecidas(RIA), es decir, aplicaciones web que tienen las características y capacidades de aplicaciones de escritorio. Se diseñó para reemplazar a Swing como la biblioteca principal de las interfaces gráficas de usuario de Java.
+
+Proporciona una alta gama de componentes de interfaz de usuario como botones, desplegables, tablas entre muchos otros. También permite el uso de CSS para el diseño de las interfaces y FXML para definir las interfaces de usuario. Además, JavaFX puede ejecutarse tanto en Windows como en Linux y MacOS y permite la integración fluida con el código Java.
+
+Otro aspecto relevante es que está basado en el patrón de diseño Modelo-Vista-Controlador(MVC), lo cual ayuda mucho al separar las clases en los diferentes paquetes.
+
+\section{Herramientas para documentación}
+
+\subsection{\LaTeX}
+
+\LaTeX es un sistema de elaboración de documentación ampliamente utilizado en las áreas de matemáticas, ciencias e ingeniería para la generación de artículos y documentos científicos. Destaca por su capacidad de producir documentos de alta calidad tipográfica, especialmente para las fórmulas matemáticas complejas.
+
+\LaTeX dispone de varios comandos para estructurar el documento de forma correcta, crear secciones y subsecciones, incluir ecuaciones, referencias bibliográficas e imágenes.
+
+\subsection{Overleaf}
+
+Overleaf es una plataforma en línea para la creación y edición de documentos \LaTeX. Se ha convertido en una herramienta muy popular sobre todo entre investigadores, académicos y estudiantes debido a la fácilidad para la colaboración al preparar los documentos.
+
+Algunas de sus características principales son:
+\begin{itemize}
+    \item Permite que múltiples usuarios trabajen en el mismo documento simultáneamente con los cambios en tiempo reales.
+    \item Integra funcionalidades de chat entre los colaboradores.
+    \item Facilidad de uso gracias a una interfaz intuitiva y plantillas predefinidas para varios tipos de documentos.
+    \item Compila el documento automáticamente a medida que se realizan cambios y muestra una vista previa del documento final.
+    \item Contiene un control de versiones permitiendo revertir a versiones anteriores además de mostrar los cambios entre ellas.
+    \item Accesible desde cualquier navegador web.
+\end{itemize}
+
+\section{Otras herramientas}
+
+\subsection{Moodle}
+
+Moodle~\cite{moodle} es una plataforma de aprendizaje en línea de código abierto utilizado para crear y gestionar cursos de aprendizaje de forma virtual. Es popular en instituciones educativas por su flexibilidad, escalabilidad y capacidad de personalizarse.
+
+En el presente proyecto, he utilizado un entorno de pruebas denominado Mount Orange School, el cual opera como un servidor ejecutando Moodle. En este entorno, se pueden realizar diversas pruebas accediendo con diferentes roles como los de profesor o estudiante, entre otros. Mount Orange School proporciona cursos de prueba preconfigurados que pueden ser modificados según nuestras necesidades, además de permitir la creación de cursos desde cero. Un pequeño inconveniente es que los cambios realizados se restablecen cada hora debido a la naturaleza en línea del entorno, lo cual implica que todos los usuarios visualizan los mismos cambios durante su sesión.
+
+\subsection{Zube}
+
+Zube es una plataforma diseñada para la gestión ágil de proyectos software que permite a los equipos de desarrollo colaborar de manera efectiva en la planificación, ejecución y entrega de proyecto que utilizan metodologías ágiles como Scrum o Kanban.
+
+También permite la integración con herramientas de desarrollo como GitHub facilitando relacionar tares con los commits del repositorio, además proporciona herramientas de análisis y reportes para evaluar el rendimiento del equipo y la evolución del proyecto.
+
+\subsection{Codacy}
+
+Codacy es una plataforma de análisis estático de código que ayuda a los desarrolladores a mantener y mejorar la calidad del código de sus proyectos. Su objetivo principal es automatizar la revisión del código, permitiendo detectar problemas y errores comunes antes de que lleguen a producción.
+
+Es muy fácil de utilizar, simplemente accedemos a la página de \href{https://www.codacy.com/}{Codacy}, nos conectamos con nuestra cuenta del proveedor de git, en mi caso Github y podemos hacer pruebas de la calidad del código.

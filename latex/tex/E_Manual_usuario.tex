@@ -1,0 +1,92 @@
+\apendice{Documentación de usuario}
+
+\section{Introducción}
+
+En esta sección se detallarán los requisitos necesarios para ejecutar la aplicación, se proporcionarán las instrucciones para su instalación y, finalmente, se incluirá un manual del usuario que explicará cómo utilizar la herramienta y aprovechar sus funcionalidades.
+
+\section{Requisitos de usuarios}
+
+\begin{itemize}
+    \item Tener el JRE de Java 8. Se recomienda la distribución de \href{https://www.azul.com/downloads/?version=java-8-lts&os=windows&architecture=x86-64-bit&package=jre#zulu}{Zulu}.
+    \item Tener conexión a internet o tener descargados los cursos en la cache.
+    \item Tener acceso a un servidor de Moodle con rol de profesor. 
+\end{itemize}
+
+\section{Instalación}
+
+Para la instalación de UBUMonitor se deberán seguir los siguientes pasos.
+
+\begin{enumerate}
+    \item Descargar release del \href{https://github.com/CatalinMarc/UBUMonitor}{repositorio} de GitHub.
+    \item Descomprimir el fichero zip.
+    \item Ejecutar el archivo ejecutable.bat o ejecutable.sh según nuestro sistema operativo.
+    \item Utilizar UBUMonitor.
+\end{enumerate}
+
+\section{Manual del usuario} \label{sec:manual}
+
+En este apartado, se presenta una guía o manual del usuario. Este documento proporciona toda la información necesaria para que el usuario pueda utilizar todas las funcionalidades de la aplicación.
+
+Al ejecutar la aplicación, lo primero que se muestra es una ventana de inicio de sesión con la que podremos acceder al servidor de Moodle con nuestras credenciales. Para hacer pruebas de la aplicación, se ha utilizado el servidor de \href{https://school.moodledemo.net/}{Mount Orange School} que nos ofrece unas credencial para todo tipo de roles. En este caso entramos como ``teacher'' con la contraseña ``moodle''. Podemos recordar estos datos que se guardarán en la cache para conexiones posteriores.
+
+\imagen{anexos/inicioSesion}{Inicio de sesión en UBUMonitor}{1}
+
+Una vez accedamos al servidor, se mostrarán todos los cursos de los que disponemos con nuestro usuario. También ofrece un filtro de cursos y nos permite buscar uno en específico. 
+
+\imagen{anexos/cursos}{Selección de curso en UBUMonitor}{1}
+
+Seleccionamos el curso deseado y presionamos ``Entrar'' para acceder a la aplicación principal donde disponemos de todos los datos y herramientas de análisis. En este caso nos centraremos en la pestaña de \emph{Clustering} y más especificamente en la cuantificación vectorial siendo esta la parte que se ha desarrollado en este proyecto.
+
+\imagen{anexos/ubumonitor}{UBUMonitor}{1}
+
+Una vez dentro de este módulo, primero deberemos seleccionar los alumnos con los que queremos ejecutar el algoritmo como el la figura \ref{fig:anexos/selUsers}
+
+\imagen{anexos/selUsers}{Selección de usuarios}{.5}
+
+Y los componentes, podemos seleccionar tanto actividades y foros como calificaciones del alumno. Podemos verlo en la figura \ref{fig:anexos/selComp}.
+
+\imagen{anexos/selComp}{Selección de componentes}{.5}
+
+Tmabién elegiremos el algoritmo, en este caso se han integrado los 5 de la figura \ref{fig:anexos/selAlg}, todos ellos de la libreria SMILE~\cite{haifengl:VectorQuantization}.
+
+\imagen{anexos/selAlg}{Selección de algoritmo}{.5}
+
+Se pueden cambiar los parámetros por defecto, dependiendo del algoritmo tenemos diferentes parámetros posibles.
+
+\imagen{anexos/selParametros}{Selección de parámetros}{1}
+
+Por último, podremos utilizar los datos de un solo tipo o varios seleccionando las casillas correspondientes. También podremos filtrar estos datos por fechas.
+
+\imagen{anexos/selLogs}{Selección de datos a utilizar y filtro}{1}
+
+Para concluir, se llevarán a cabo diversas ejecuciones empleando distintos algoritmos. Es importante destacar que los datos utilizados no son reales, si no que, se trata de un conjunto reducido de datos de prueba. Por lo tanto, estos resultados no son óptimos, aunque son útiles para observar el funcionamiento de los algoritmos.
+
+En el primer algoritmo \ref{fig:anexos/prueba} con estos datos, se observan principalmente dos agrupaciones en las esquinas. Con muchos datos reales, se pueden identificar dos franjas en las partes inferior y superior. En estas áreas, debemos enfocarnos en los grupos de neuronas de color amarillo o rojo, ya que indican donde las neuronas están más distanciadas, señalando una posible división entre \emph{clusters}. Por el contrario, las zonas azul oscuro indican que las neuronas están muy cercanas entre sí, representando los \emph{clusters}. Las áreas de color negro indican la ausencia de neuronas.
+
+\imagen{anexos/prueba}{Algoritmo SOM}{1}
+
+En cuanto al algoritmo ``Neural Gas'' representado en las figuras \ref{fig:anexos/prueba1} y \ref{fig:anexos/prueba2} tanto en 2D y 3D, las neuronas tienen la misma forma y vemos que se adaptan correctamente a los datos aunque en este caso haya pocos.
+
+\imagen{anexos/prueba1}{Algoritmo Neural Gas 2D}{1}
+\imagen{anexos/prueba2}{Algoritmo Neural Gas 3D}{1}
+
+Uno de los problemas del algoritmo "Neural Gas" radica en la necesidad de especificar a priori la cantidad de neuronas a emplear, lo cual puede conducir a errores en su determinación. Para abordar esta limitación, el algoritmo ``Growing Neural Gas''~(GNG) de las imágenes \ref{fig:anexos/prueba3} y \ref{fig:anexos/prueba4} presenta una solución al problema, permitiendo la adición o eliminación dinámica de neuronas según sea requerido. Además, este algoritmo tiene la capacidad de visualizar las conexiones entre las neuronas vecinas, proporcionando una representación más precisa y adaptativa de la red neuronal.
+
+\imagen{anexos/prueba3}{Algoritmo Growing Neural Gas 2D}{1}
+\imagen{anexos/prueba4}{Algoritmo Growing Neural Gas 3D}{1}
+
+También podemos ver en el excel \ref{fig:anexos/pruebaExcel} que hay un punto en el que se solapan varios datos, por ello, las neuronas estan más cercanas a ese punto.
+
+\imagen{anexos/pruebaExcel}{Excel del Growing Neural Gas 2D}{1}
+
+En el caso del algoritmo ``BIRCH'' solo se muestra el centroide de las neuronas, esto puede ser útil para saber cual es el punto central de los datos.
+
+\imagen{anexos/prueba5}{Algoritmo BIRCH 2D}{1}
+\imagen{anexos/prueba6}{Algoritmo BIRCH 3D}{1}
+
+Con ``Neura Map'' en las figuras \ref{fig:anexos/prueba7} y \ref{fig:anexos/prueba8} sucede algo parecido al ser una combinación de GNG y de BIRCH.
+
+\imagen{anexos/prueba7}{Algoritmo Neural Map 2D}{1}
+\imagen{anexos/prueba8}{Algoritmo Neural Map 3D}{1}
+
+En todas estas pruebas se han empleado los mismos conjuntos de datos para cada algoritmo, lo cual se puede corroborar observando que los puntos de datos se encuentran en las mismas posiciones. A partir de los resultados obtenidos, podemos concluir que los algoritmos más adecuados para analizar estos datos son SOM, Neural Gas y GNG, ya que proporcionan información más exhaustiva. Además, resulta particularmente interesante comparar estos resultados con los obtenidos mediante técnicas de clustering particional.

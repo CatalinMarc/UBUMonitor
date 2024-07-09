@@ -1,0 +1,26 @@
+\capitulo{7}{Conclusiones y Líneas de trabajo futuras}
+
+Por último, esta sección recopila las conclusiones a las que se ha llegado durante la realización del proyecto. Además de algunas líneas de trabajo futuras.
+
+\section{Conclusiones}
+
+\begin{itemize}
+    \item Debido a que este proyecto es solo una extensión de un módulo previamente implementado en una aplicación tan grande, uno de los principales desafíos fue analizar y entender la estructura de la aplicación completa, ya que hay que tener un conocimiento mínimo general antes de empezar a trabajar en cualquier proyecto. Esta tarea resultó más costosa de lo esperado.
+    \item Hay que comentar el código sobre todo en un proyecto grande o cuando otras personas trabajarán sobre el mismo ya que hay partes que han resultado complicadas de entender por no tener comentarios. 
+    \item El éxito de los mapas autoorganizado depende en gran medidad de la calidad del preprocesamiento de los datos. Es crucial realizar una limpieza exhaustiva, normalización y selección adecuada de características para obtener resultados útiles.
+    \item La selección de algoritmos de clustering y mapas autoorganizados impacta directamente en la eficacia y eficiencia del sistema. Es fundamental evaluar diferentes opciones y considerar las características específicas de los datos y los requisitos del proyecto para tomar decisiones informadas.
+    \item La creación de interfaces gráficas bien diseñadas facilita la interacción con los resultados del análisis. Una interfaz intuitiva y amigable permite a los usuarios explorar y comprender los datos de manera efectiva, mejorando la usabilidad y la adopción del sistema. También hay que implementar la interfaz para que sea igual en todos los módulos existentes para que no desentone.
+    \item A medida que los conjuntos de datos crecen en tamaño y complejidad, es crucial considerar el rendimiento y la escalabilidad de la aplicación. La optimización del código y el uso de técnicas eficientes de procesamiento de datos son clave para garantizar un rendimiento óptimo y una experiencia de usuario fluida
+    \item Siempre hay controlar lo que se hace que cada momento y como se conecta cada clase que creamos para dejar un código limpio y bien estructurado, sobre todo cuando trabajamos con varías tecnologías simultáneamente.
+\end{itemize}
+
+\section{Líneas de trabajo futuras}
+
+\begin{itemize}
+    \item Un cambio interesante sería cambiar la interfaz gráfica para que el módulo de clustering sea igual que los demás módulos. Esto se ha intentado al principio, pero debido al problema de que no se conseguían mostrar los gráficos se tuvo que revertir los cambios. Con más tiempo y cambios en la estructura general del módulo se puede conseguir.
+    \item Buscar alternativas para los gráficos 3D ya que no permiten interactividad en cuanto a girar el gráfico o hacer zoom.
+    \item Redimensionar la imagen de los mapas según se cambie el tamaño de la ventana ya que actualmente se establece el tamaño según el momento de la ejecución del algoritmo.
+    \item Implementar otras técnicas de analítica de aprendizaje y minería de datos como la predicción.
+    \item Mejorar la interfaz y la usabilidad de la aplicación.
+    \item Implementar nuevas técnicas de aprendizaje no supervisado como la minería de reglas de asociación~(\emph{Association Rule Mining}) o el escalamiento multidimensional~(\emph{Multi-Dimensional Scaling}) que incluye la librería SMILE.
+\end{itemize}

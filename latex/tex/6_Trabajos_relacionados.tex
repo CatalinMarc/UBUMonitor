@@ -1,0 +1,29 @@
+\capitulo{6}{Trabajos relacionados}
+
+\section{UBUMonitor}
+
+Este proyecto ha sido implementado en el módulo de clustering~\cite{github:clustering}, desarrollado originalmente por Xing Long Ji como parte de su Trabajo de Fin de Grado (TFG) en el año 2020. Al principio, este módulo fue independiente pero posteriormente se integró en la aplicación UBUMonitor~\cite{github:ubumonitor} cuyo desarrollador principal fue Yi Peng Ji.
+
+\imagen{memoria/UBUMonitorClustering}{Módulo Clustering}{.5}
+
+UBUMonitor es una aplicación que permite la monitorización de la actividad de los alumnos. Los datos de los alumnos se extraen de un servidor Moodle al que nos conectamos previamente y podemos ver todas las asignaturas a las que pertenecemos.
+
+Estos datos incluyen calificaciones, contribuciones a los foros y finalización de las actividades entre otros. Podemos visualizarlos de manera gráfica y comparar el desempeño de diferentes estudiantes.
+
+Xing Long Ji se encargó del desarrollo inicial de las funcionalidades de clustering clásico y jerárquico. En el contexto de mi contribución, he realizado modificaciones y reestructurado el diseño inicial de algunos aspectos del módulo existente y he añadido una nueva pestaña dedicada a la cuantificación vectorial. Esta nueva sección incluye gráficos adicionales que ilustran diferentes algoritmos.
+
+\section{Mapas Autoorganizados}
+
+En el TFG de Daniel Carpio~\cite{tfg:som} sobre los mapas autoorganizados en la universidad de Valladolid podemos ver el funcionamiento de los SOM desde un punto de vista más teórico y matemático detallando todos los pasos de su utilización.
+
+Posteriormente también prueba su funcionamiento utilizando varias librerías en R que permiten su implementación de una manera sencilla.
+
+Finalmente tenemos dos ejemplos sobre aplicaciones de los SOM que muestran la utilidad de estos mapas. Uno es un caso más real y reciente sobre el COVID-19 y resulta muy interesante ya que muestra gráficos sobre los países y los clústers construidos.
+
+\imagen{memoria/COVID-19map}{Mapa autoorganizado de los países y el COVID-19~\cite{tfg:som} }{.5}
+
+\section{Residual Vector Product Quantization for approximate nearest neighbor search}
+
+Es un artículo~\cite{elsevier:vectorquantiaztion} en el que se aborda sobre el problema de la búsqueda de vecinos más cercanos aproximados, principalmente la de la cuantificación vectorial ya que es la técnica más popular en este ámbito.
+
+En este artículo se propone un método denominado ``Residual Vector Product Quantization''~(RVPQ) que mejora la precisión y la enficiencia en la búsqueda de vecinos más cercanos y tras varios resultados experimentales concluyen que es una técnica prometedora y puede ser una herramienta muy valiosa en aplicaciones que manejan gramdes volúmenes de datos de alta dimensión.

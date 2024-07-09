@@ -1,0 +1,77 @@
+\apendice{Especificación de diseño}
+
+\section{Introducción}
+
+La especificación de diseño describe cómo se debe desarrollar la aplicación. Estas especificaciones actúan como una guía para las personas involucradas en el proyecto, asegurando que todos los aspectos del diseño cumplan con los requisistos y expectativas establecidos.
+
+En este anexo se busca definir claramente cómo se almacenarán los datos, las diferentes interacciones que deberán existir entre las partes de la aplicación y la manera en que el usuario final deberá interactuar con ellas.
+
+\section{Diseño de datos}
+
+Para la extensión del módulo de \emph{clustering} se han utilizado principalmente datos ya creados previamente aunque se han modificado y también se han añadido nuevos. Todas estas clases se encuentrán en el paquete src/main/java/es/ubu/lsi/ubumonitor/clustering/data a excepción de \emph{EnrolledUser} que está en el paquete src/main/java/es/ubu/lsi/ubumonitor/model.
+
+\begin{description}
+    
+    \item[\emph{Datum\footnotemark[1]:}] Clase que contiene los datos de Moodle, el nombre del elemento, su icono representativo y un valor numérico.
+    
+    \item[\emph{UserData\footnotemark[1]:}] Contiene toda la información de los usuarios que se utilizan en los algoritmos junto a una lista con todos sus datos. También almacena los valores de estos datos normalizados.
+    
+    \item[\emph{EnrolledUser\footnotemark[1]:}] Clase que almacena información sobre un usuario de un curso como el id, el nombre, los apellidos, el email, la dirección\dots~entre otros atributos que aportan información sobre el usuario.
+
+    \footnotetext[1]{Estas clases estában implementadas en versiones anteriores y no se han modificado.}
+
+    \imagen{anexos/userData}{Diagrama clase de los datos de usuario}{1}
+
+    \item[\emph{SOMType:}] Nueva enumeración que contiene el tipo del mapa autoorganizado e indica qué gráfico mostrar.
+
+    \imagen{anexos/SOMType}{Diagrama enumeración SOMType}{.5}
+    
+    \item[\emph{ClusteringParameter:}] Esta enumeración contiene todos los parámetros posibles de los algoritmos integrados, además, se indica el mínimo y el máximo valor posible para ejecutar el algoritmo correctamente. Si superamos estos límites, nos saldra un aviso para cambiar el valor.
+    
+    \imagen{anexos/clusteringParameter}{Diagrama enumeración de los parámetros}{.5}
+
+\end{description}
+
+Además, se ha creado una clase abstracta de algoritmo. Cada algoritmo tiene una clase propia que hereda de \emph{Algorithm} y dentro de esta, tienen una clase privada que sigue el patrón de diseño Adaptador~\cite{libro:patrones} y extiende de \emph{SmileAdapter}. Esto se ha hecho asi para hacer posible el uso de la biblioteca Smile en la aplicación.
+
+\imagen{anexos/diagramaAlgoritmos}{Diagrama de clases de los algoritmos}{.8}
+
+\section{Diseño procedimental}
+
+En esta sección se especificarán los aspectos más relevantes al ejecutar un algoritmo de cuantificación vectorial. El diagrama de secuencia la figura \ref{anexos/diagramaSecuencia} muestra los pasos que se siguen además de los objectos que intervienen y como interaccionan entre ellos.
+
+\imagen{anexos/diagramaSecuencia}{Diagrama de secuencia}{1}
+
+Los pasos generales que se siguen son los siguientes:
+\begin{enumerate}
+    \item Cada vez que ejecutamos un algoritmo recolectamos todos los datos de los alumnos seleccionados en ese momento.
+    \item Instanciamos un nuevo \emph{MapsExecuter} al que le pasamos los datos y crea el adaptador del algoritmo seleccionado.
+    \item Ejecutamos el adaptador.
+    \item El \emph{MapController} recibe los datos.
+    \item Se actualizan los gráficos necesarios con los datos recibidos.
+    \item Se muestra el resultado al usuario.
+\end{enumerate}
+
+\section{Diseño arquitectónico}
+
+Para el diseño arquitectónico se ha empleado el patrón de diseño Modelo-Vista-Controlador~(MVC)~\cite{codigofacilito:mvc} para separar la lógica de la aplicación en tres componentes interconectados. Esta separación facilita la gestión, escalabilidad y mantenimiento del software.
+
+Los tres componentes son:
+
+\begin{description}
+    \item[Modelo:] Gestiona los datos de la aplicación. Es responsable de acceder a la base de datos y actualizar los datos.
+    \item[Vista:] Su función es la representación visual de los datos. También se encarga de las entradas de datos por parte del usuario.
+    \item[Controlador:] Actúa como intermediario entre la vista y el controlador. Recibe las entradas del usuario desde la vista, procesa estas entradas utilizando el modelo, y devuelve la salida a la vista.
+\end{description} 
+
+\imagen{anexos/mvc}{Patrón Modelo-Vista-Controlador}{.8}
+
+A continuación tenemos un diagrama de los paquetes simplificado de este proyecto para entender la estructura general del módulo de \emph{clustering}.
+
+\imagen{anexos/diagramaPaquetes}{Diagrama de paquetes simplificado}{1}
+
+También podemos ver como se despliega la aplicación de UBUMonitor para su uso. 
+
+\imagen{anexos/despliegue}{Diagrama de despliegue}{1}
+
+El usuario necesitara el .jar de la aplicación junto al JRE utilizado, en este caso la distribución Zulu. Posteriormente solo tendremos que ejecutar el fichero corresponiente a nustro sistema operativo, es decir, .bat para Windows y .sh para Linux. Una vez dentro de la aplicación, se descargarán los datos de Moodle de la asignatura que hemos elegido y podremos utilizar la aplicación para visualizar los distintos gráficos.

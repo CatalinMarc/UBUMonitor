@@ -1,0 +1,302 @@
+\newcommand{\cu}[9]{
+    \begin{table}[p]
+        \centering
+        \begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+            \toprule
+            \textbf{CU-#1}      & \textbf{#2} \\
+            \toprule
+            \textbf{Versión}              & 1.0          \\
+            \textbf{Autor}                & \theauthor  \\
+            \textbf{Requisitos asociados} & #3          \\
+            \textbf{Descripción}          & #4          \\
+            \textbf{Precondición}         & #5          \\
+            \textbf{Acciones}             & #6          \\
+            \textbf{Postcondición}        & #7          \\
+            \textbf{Excepciones}          & #8          \\
+            \textbf{Importancia}          & #9          \\
+            \bottomrule
+        \end{tabularx}
+        \caption{CU-#1 #2.}
+    \end{table}
+}
+
+\apendice{Especificación de Requisitos}
+
+\section{Introducción}
+
+Antes de comenzar a crear un programa es importante detallar las características y restricciones que deberá tener (quiénes son los usuarios, qué acciones pueden realizar, de qué manera deberá responder el programa, etc.).
+
+Estos requisitos se obtienen del cliente o de los usuarios y es lo que esperan tener cuando finalice el proyecto. Esto es fundamental para guiar el desarrollo de la aplicación proporcionando una base sólida con la que se puede empezar el proyecto.
+
+\section{Objetivos generales}
+
+Los objetivos generales de este proyecto son los siguientes:
+
+\begin{itemize}
+    \item Reestructurar la interfaz gráfica del módulo de clustering para que sea similar a la de los demás módulos.
+    \item Incluir los mapas autoorganizado para ayudar a interpretar los \emph{clusters}.
+    \item Permitir al usuario elegir los datos, el algoritmo y sus parámetros para la ejecución.
+    \item Visualizar los resultados en gráficos tanto 2D como 3D.
+    \item Permitir la exportación de los gráficos en formato CSV y PNG para su posterior análisis. 
+\end{itemize}
+
+\section{Catálogo de requisitos}
+
+\subsection{Requisitos funcionales}
+
+Los requisitos funcionales del módulo de \emph{clustering} son:
+
+\begin{itemize}
+
+    \item \textbf{RF1 Funcionamiento del \emph{clustering}:} la aplicación permite ejecutar varios algoritmos de \emph{clustering} tras la reestructuración del módulo.
+    \item \textbf{RF2 Ejecución del algoritmo:} la aplicación permite ejecutar varios algoritmos de cuantificación vectorial.
+    \item \textbf{RF3 Seleción del algoritmo:} el usuario puede seleccionar el algoritmo deseado para la ejecución.
+	\item \textbf{RF4 Selección de datos:} el usuario elige los alumnos y sus datos en Moodle con los que ejecutar el algoritmo.
+	\item \textbf{RF5 Selección de parámetros:} el usuario puede elegir los parámetros de ejecución del algoritmo.
+	\item \textbf{RF6 Varias épocas:} el algoritmo se ejecutará tantas veces como el usuario indique.
+	\item \textbf{RF7 Filtrado de datos:} el usuario podrá seleccionar los datos entre dos fechas.
+    \item \textbf{RF8 Ejecución del SOM:} la aplicación permite ejecutar mapas autoorganizados.
+	\item \textbf{RF9 Selección del tipo en los mapas auotoorganizados:} el usuario puede elegir mostrar la matriz de neuronas en un hexmap o como mapeo de Sammon.
+    \item \textbf{RF10 Resultados en 2D:} la aplicación permite visualizar los resultados en gráficos 2D.
+    \item \textbf{RF11 Resultados en 3D:} la aplicación permite visualizar los resultados en gráficos 3D.
+	\item \textbf{RF12 Exportar en formato CSV:} exportar las gráficas mostradas en formato CSV indicando el nombre y las coordenadas de los datos y neuronas.
+	\item \textbf{RF13 Exportar en formato PNG:} exportar las gráficas mostradas como imágenes.
+
+\end{itemize}
+
+\subsection{Requisitos no funcionales}
+
+\begin{itemize}
+    \item \textbf{RNF1 Usabilidad:} La aplicación debe ser fácil de usar, con una interfaz intuitiva que el usuario entienda de forma inmediata.
+    \item \textbf{RNF2 Escalabilidad:} La aplicación debe permitir más módulos, algoritmos y gráficos fácilmente.
+    \item \textbf{RNF3 Rendimiento:} El tiempo de ejecución de los algoritmos tiene que ser aceptable teniendo en cuenta la cantidad de datos y las épocas seleccionadas.
+    \item \textbf{RNF4 Internacionalización:} La aplicación debe permitir el cambio de idiomas al menos en español e inglés.
+    \item \textbf{RNF5 Mantenimiento:} La aplicación debe ser fácil de mantener y actualizar.
+    \item \textbf{RNF6 Portabilidad:} La aplicación debe poder ejecutarse en diferentes plataformas.
+    \item \textbf{RNF7 Fiabilidad:} La aplicación debe ser confiable y cumplir con los requisitos.
+    \item \textbf{RNF8 Disponibilidad:} La aplicación debe estar disponible cuando sea necesaria.
+\end{itemize}
+
+\section{Especificación de requisitos}
+
+En esta sección se encuentran los casos de uso del módulo de \emph{clustering} con un solo actor, el usuario habitual.
+
+\section{Diagrama de casos de uso}
+
+\imagen{anexos/diagramaCU}{Diagrama de casos de uso}{1}
+    
+\section{Especificación de casos de uso}
+
+\cu{1}{Ejecutar algoritmo}
+{RF2, RF3, RF4, RF5, RF6, RF7, RF8, RF9}
+{El usuario ejecuta un algoritmo}
+{Seleccionar los datos}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se muestra una lista con los algoritmos.
+        \item El usuario elige un algoritmo.
+        \item Selecciona los datos.
+        \item Modifica los parámetros.
+        \item Realiza un filtro por fechas si lo desea.
+        \item Ejecuta el algoritmo.
+    \end{enumerate}
+}
+{Muestra el resultado de la ejecución}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item No hay usuarios seleccionados.
+        \item Debes seleccionar más de un componente.
+        \item No hay datos seleccionados.
+        \item Valores de los parámetros inválidos.
+    \end{enumerate}
+}
+{Alta}
+
+\cu{2}{Selección de datos}
+{RF4}
+{El usuario selecciona los datos deseados para la ejecución del algoritmo}
+{}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se muestran los alumnos y los datos.
+        \item Selecciona los alumnos.
+        \item Selecciona los datos.
+    \end{enumerate}
+}
+{Se almacenan los alumnos y datos seleccionados}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item No hay usuarios seleccionados.
+        \item Debes seleccionar más de un componente.
+        \item No hay datos seleccionados.
+    \end{enumerate}
+}
+{Alta}
+
+\cu{3}{Filtro de datos}
+{RF7}
+{El usuario filtra los datos por fecha}
+{Seleccionar los datos}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Selecciona la primera fecha.
+        \item Selecciona la segunda fecha.
+    \end{enumerate}
+}
+{Se almacenan los alumnos y datos seleccionas entre las dos fechas}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item La primera fecha debe ser antes que la segunda fecha.
+    \end{enumerate}
+}
+{Media}
+
+\cu{4}{Cambio de parámetros}
+{RF5, RF6, RF9}
+{El usuario puede modificar los parámetros de los algoritmos}
+{Seleccionar el algoritmo}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se muestran los parámetros de cada algoritmo con un valor por defecto.
+        \item El usuario cambia los parámetros deseados.
+    \end{enumerate}
+}
+{}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Valores de los parámetros inválidos.
+    \end{enumerate}
+}
+{Media}
+
+\cu{5}{Visualizar resultados}
+{RF10, RF11}
+{La aplicación muestra los resultados en gráficos}
+{Se ha ejecutado correctamente el algoritmo}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Mostrar gráfico 2D.
+        \item Si se han seleccionado 3 o más componentes, mostrar gráfico 3D.
+        \item Si el algoritmo es SOM mostrar solo el gráfico 2D.
+        \item Se puede exportar el resultado.
+    \end{enumerate}
+}
+{Muestra el resultado de la ejecución}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Debes seleccionar más de un componente.
+    \end{enumerate}
+}
+{Alta}
+
+\cu{6}{Gráfico 2D}
+{RF10}
+{La aplicación muestra el gráfico 2D}
+{Se ha ejecutado correctamente el algoritmo}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se muestra el gráfico 2D cuando se selecciona la pestaña 2D.
+        \item Se puede exportar el resultado.
+    \end{enumerate}
+}
+{Muestra el gráfico 2D}
+{}
+{Alta}
+
+\cu{7}{Gráfico 3D}
+{RF11}
+{La aplicación muestra el gráfico 3D}
+{Se ha ejecutado correctamente el algoritmo}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se muestra el gráfico 3D cuando se selecciona la pestaña 3D.
+        \item Se puede exportar el resultado.
+    \end{enumerate}
+}
+{Muestra el gráfico 3D}
+{}
+{Alta}
+
+\cu{8}{Exportar resultados}
+{RF12, RF13}
+{Exporta el gráfico a un fichero CSV o PNG}
+{Se ha ejecutado correctamente el algoritmo y se han mostrado los resultados}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se elige el gráfico que queremos exportar.
+        \item Se presiona click derecho sobre el gráfico.
+        \item Se elige la exportación que queremos.
+        \item Se elige la ruta donde queremos guardar el fichero.
+        \item Se elige el nombre del fichero.
+        \item Se guarda el fichero.
+    \end{enumerate}
+}
+{Se ha creado un fichero del tipo seleccionado con el nombre elegido en la ruta indicada}
+{}
+{Media}
+
+\cu{9}{Exportar CSV}
+{RF12}
+{Exporta el gráfico a un fichero CSV}
+{Se ha ejecutado correctamente el algoritmo y se han mostrado los resultados}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se elige el gráfico que queremos exportar.
+        \item Se presiona click derecho sobre el gráfico.
+        \item Se elige la exportación CSV.
+        \item Se elige la ruta donde queremos guardar el CSV.
+        \item Se elige el nombre del fichero.
+        \item Se guarda el CSV.
+    \end{enumerate}
+}
+{Se ha creado un fichero CSV con el nombre elegido en la ruta indicada}
+{}
+{Baja}
+
+\cu{10}{Exportar PNG}
+{RF13}
+{Exporta el gráfico a un imagen}
+{Se ha ejecutado correctamente el algoritmo y se han mostrado los resultados}
+{
+    \begin{enumerate}
+        \def\labelenumi{\arabic{enumi}.}
+        \tightlist
+        \item Se elige el gráfico que queremos exportar.
+        \item Se presiona click derecho sobre el gráfico.
+        \item Se elige la exportación PNG.
+        \item Se elige la ruta donde queremos guardar la imagen PNG.
+        \item Se elige el nombre de la imagen.
+        \item Se guarda la imagen.
+    \end{enumerate}
+}
+{Se ha creado una imagen PNG con el nombre elegido en la ruta indicada}
+{}
+{Baja}

@@ -1,0 +1,152 @@
+\capitulo{3}{Conceptos teóricos}
+
+\section{Clustering}
+
+El \emph{clustering}~\cite{immune:clustering} es una técnica fundamental en el campo del análisis de datos y el aprendizaje automático. Su objetivo principal es agrupar un conjunto de datos en grupos o \emph{\emph{clusters}}, de manera que los elementos dentro de cada grupo sean más similares entre sí que con los elementos de otros grupos. Esta técnica es ampliamente utilizada en diversas aplicaciones, como segmentación de clientes, análisis de imágenes, reconocimiento de patrones y compresión de datos.
+
+El \emph{clustering} es un método de aprendizaje no supervisado, es decir, el modelo no tiene conocimiento sobre el \emph{clúster} al que pertenece cada elemento. Por lo tanto, en este tipo de aprendizaje los grupos se forman en función de los datos. Los algoritmos de \emph{clustering} analizan las similitudes y diferencias entre los datos para formar grupos coherentes. Los \emph{clusters} resultantes ayudan a descubrir patrones ocultos y relaciones en los datos.
+
+Existen diferentes tipos de \emph{clustering}, cada uno con sus propias características. Explicaremos brevemente \emph{clustering} el particional y el jerárquico que son los dos que estaban implementados ya inicialmente en UBUMonitor.
+
+\subsection{Clustering particional}
+
+El \emph{clustering} particional es uno de los enfoques más comunes para agrupar datos. En este método, el conjunto de datos se divide en un número fijo de \emph{clusters} determinado previamente a la ejecución tal que los datos de cada grupo son más similares entre sí que con los datos de otros grupos. El algoritmo más conocido de \emph{clustering} particional es K-Means, aunque también están implementados los algoritmos de Fuzzy K-means, DBSCAN y DENCLUE entre otros.
+
+\subsection{Clustering jerárquico}
+
+El \emph{clustering} jerárquico~\cite{estrategia:jerarquico} crea una jerarquía de \emph{clusters} que se pueden representar en forma de árbol o dendrograma. Existen dos enfoques principales para el \emph{clustering} jerárquico: aglomerativo y divisivo.
+
+\subsubsection{Clustering aglomerativo (Bottom-up)}
+ 
+El \emph{clustering} aglomerativo~\cite{jerarquico:metodos} es un método ascendente que comienza con cada punto de datos como un \emph{cluster} individual y luego combina los \emph{clusters} más cercanos hasta que todos los puntos estén en un solo cluster.
+
+\subsubsection{Clustering divisivo (Top-down)}
+
+El \emph{clustering} divisivo~\cite{jerarquico:metodos} es un método descendente que comienza con todos los puntos en un solo \emph{cluster} y luego divide los \emph{clusters} hasta que cada punto de datos esté en su propio cluster. Es decir, el proceso contrario al \emph{clustering} aglomerativo. Este enfoque es menos común debido a su complejidad computacional.
+
+
+\section{Cuantificación vectorial}
+
+La cuantificación vectorial y el \emph{clustering} son técnicas que, aunque tienen objetivos y aplicaciones ligeramente diferentes, están estrechamente relacionadas en términos de sus fundamentos y procesos subyacentes. Ambas técnicas se utilizan para organizar datos en grupos significativos, reduciendo la dimensionalidad y facilitando la compresión y el análisis de los datos. De hecho, la cuantificación vectorial puede considerarse una forma específica de \emph{clustering} con un enfoque particular en la compresión de datos, por ello, se ha decidido introducir dentro del módulo de \emph{clustering}. Además, en la libreria SMILE~\cite{haifengl:VectorQuantization} (Statistical Machine Intelligence and Learning Engine) que es la que utilizamos principalmente para la inclusión de los algoritmos, también están incluidas las implementaciones correspondientes a dicha cuantificación.
+
+La cuantificación vectorial es una técnica de compresión de datos que se utiliza en una variedad de aplicaciones, incluyendo la compresión de imágenes, codificación de voz y reconocimiento de patrones. Nosotros la utilizaremos para esta última.
+
+Este proceso consiste en dividir un gran conjunto de puntos en regiones y representar cada región por un vector de referencia también conocido como centroide o \emph{codeword}. Todos los centroides tendrán un número parecido de puntos cercanos. El conjunto de \emph{codewords} forman un \emph{codebook} y cada vector nuevo de entrada se asigna al vector más cercano dentro del \emph{codebook}.
+
+Está técnica se puede utilizar cuando necesitemos comprimir datos, ya que se reduce significativamente el tamaño y puede ser útil para su almacenamiento o transmisión. También puede ser interesante para la reducción de dimensionalidad para facilitar el análisis de datos al reducir la cantidad de variables a tener en cuenta. Por último, también puede ser interesante para mejorar la velocidad de procesamiento ya que al tener los datos de forma más compacta, se puede realizar el procesamiento más rápido.
+
+Todos los algoritmos de este ámbito que veremos a continuación están dentro del método de aprendizaje no supervisado y más específicamente, en el aprendizaje competitivo.
+
+\subsection{Mapas autoorganizados(SOM)}
+
+Un Mapa Autoorganizados~\cite{halweb:SOM} (SOM, por sus siglas en inglés: Self-Organizing Map) es un método de aprendizaje no supervisado que se utiliza principalmente para la reducción de dimensionalidad, normalmente bidimensional y la visualización de datos discretos en mapas. Fue introducido por el profesor finlandés Teuvo Kohonen en los años 80, y por eso también se les conoce como Mapas de Kohonen.
+
+\imagen{memoria/ejemploSOM}{Ejemplo SOM~\cite{haifengl:VectorQuantization}}{.5}
+
+Los mapas consisten en una cuadrícula de neuronas normalmente hexagonal. A su vez, cada neurona tiene asociado un vector de pesos con la misma dimensión que los datos de entrada.
+
+Estas redes de neuronas se inicializan con unos pesos aleatorios (aunque también se puede definir un método de inicialización) y al recibir un vector de entrada, se calcula la distancia entre dicho vector y los pesos de todas las neuronas. La neurona cuya distancia sea la menor (la que más se parezca al vector de datos) será la llamanda neurona ganadora, de ahí el nombre de aprendizaje competitivo.
+
+La neurona ganadora, junto a sus vecinos cercanos ajustarán sus pesos para parecerse más a los datos de entrada.
+
+Este proceso se repetira con todos los datos, lo que permite que la red se organice de manera que las neuronas cercanas respondan a datos de entrada similares.
+
+\subsection{Neural gas}
+
+El algoritmo de Neural Gas~\cite{wiki:NeuralGas} es una técnica de reducción de dimensión basada en redes neuronales no supervisadas. Está inspirado en los mapas autoorganizados para encontrar representaciones óptimas basadas en vectores de características y fue introducido en 1991 por Thomas Martinetz.
+
+\imagen{memoria/ejemploNG}{Ejemplo Neural Gas~\cite{haifengl:VectorQuantization}}{.5}
+
+Neural gas es similar a los SOM y al algoritmo K-Means, pero tiene ventajas sobre estos en términos de estabilidad y convergencia. 
+
+Se denominó ``Gas neuronal'' debido a la dinámica de los vectores de características durante el proceso de adaptación, que se distribuyen como un gas dentro del espacio de datos.
+
+Este algoritmo se utiliza principalmente cuando la compresión de datos o la cuantificación de vectores son un problema, aunque, también se utiliza para el análisis de \emph{clustering} como alternativa al algoritmo K-Means.
+
+A diferencia de SOM, el modelo de Neural Gas no asume que algunos vectores sean vecinos. Si dos vectores están muy juntos, tenderán a moverse juntos, mientras que si están alejados, sucederá el caso contrario. Por el contrario, en un SOM, si dos vectores son considerados vecinos, siempre tenderán a moverse juntos sin importar si estos se encuentran próximos o no en el espacio euclideano.
+
+El funcionamiento básico de este algoritmo consiste de los siguientes pasos.
+
+\begin{enumerate}
+	\item Inicializar N vectores de las carácteristicas de forma aleatoria dentro del espacio de datos donde cada uno sera una neurona.
+	\item En cada iteracción actualizamos.
+        \begin{itemize}
+            \item Tasa de aprendizaje que decrecee exponencialmente.
+            \item Constante de vecindad que decrecee exponencialmente.
+            \item Todos los vectores de carácteristicas según una lista ordenada de las distancias entre ellos y su vecindad.
+        \end{itemize}
+    \item Repetimos el proceso de actualizar hasta que alcancemos un criterio de convergencia, es decir, un número máximo de iteraciones o una mejora mínima que hayamos definido previamente.
+\end{enumerate}
+
+La adaptación de Neural Gas puede interpretarse como un descenso de gradiente (algoritmo de optimización para minimizar/maximizar una función objetivo) en una función de costos. Y al adaptar todos los vectores de características y no solo el más cercano, se puede lograr una convergencia mucho más robusta.
+
+\subsection{Growing Neural Gas}
+
+El algoritmo Growing Neural Gas (GNG) es una extensión de Neural Gas visto previamente en la que podemos añadir y eliminar nodos mientras se ejecuta el algoritmo. 
+
+\imagen{memoria/ejemploGNG}{Ejemplo Neural Gas~\cite{haifengl:VectorQuantization}}{.5}
+
+Las diferencias entre el Neural Gas y el GNG son:
+
+\tablaSmall{Diferencias entre Neural Gas y Growing Neural Gas}{l c c c c}{diferenenciasNG-GNG}
+{ \multicolumn{1}{l}{Características} & Neural Gas & Growing Neural Gas \\}{ 
+Número de neuronas & Fijo & Dinámico\\
+Actualización & Todos los vectores & Más cercanos y vecinos directos\\
+Nuevas neuronas & No & Sí\\
+Manejo de conexiones & No & Manejo dinámico\\
+Error acumulado & No & Sí\\
+Robustez y flexibilidad & Menos flexible & Más robusto y adaptable\\
+} 
+
+\begin{itemize}
+    \item El número de neuronas o vectores de carácteristicas en Neural Gas es fijo y se define antes ejecutarse mientras que en GNG es dinámico y comienza con unas pocas neuronas y se van agregando a medida que se necesiten para ajustar mejor los datos.
+    \item En Neural Gas, todos los vectores se actualizan en cada iteración, pero las neuronas más cercanas se actualizan más que los más lejanos mientras que en GNG se actualizan solamente los más cercanos y sus vecinos directos
+    \item En Neural Gas, no se insertan nuevas neuronas mientras que en GNG se añaden periódicamente en lugares donde el error acumulado es mayor, lo que permite mayor adaptabilidad.
+    \item Neural Gas no maneja las conexiones entre neuronas mientras que en GNG sí. Estas se crean y eliminan dinámicamente dependiendo de la edad y el error acumulado.
+    \item Neural Gas tampoco maneja el error acumulado para los vectores mientras que en GNG, cada neurona, acumula el error calculando su distancia con el vector de datos más cercano en cada iteración.
+    \item Por último, Neural Gas es robusto para un número de neuronas fijo, pero si este número no es el adecuado, puede que no se adapte correctamente a cambios en la distribución de los datos. Por lo contrario, GNG es más robusto y flexible si tenemos datos complejos y cambiantes, ya que puede manejar las neuronas y sus conexciones de forma dinámica.
+\end{itemize}
+
+\subsection{BIRCH}
+
+El algoritmo BIRCH~\cite{medium:BIRCH} (Balanced Iterative Reducing and \emph{clustering} using Hierarchies) es un método jerárquico de \emph{clustering} diseñado para ser muy eficiente en términos de memoria como de tiempo, lo que lo hace adecuado para manejar grandes volúmenes de datos. Es especialmente útil cuando la memoria es limitada y los datos son demasiado grandes para ser almacenados completamente en la memoria principal.
+
+\imagen{memoria/ejemploBIRCH}{Ejemplo Neural Gas~\cite{haifengl:VectorQuantization}}{.5}
+
+BIRCH tienes varias ventajas. Por ejemplo, 
+\begin{itemize}
+    \item Cada decisión de \emph{clustering} se toma sin escanear todos los puntos de datos y clusteres existentes actualmente.
+    \item Utiliza la observación de que el espacio de datos no suele estar ocupado de manera uniforme y que no todos los puntos son igual de importantes.
+    \item Emplea de manera completa la memoria disponible para obtener los mejores resultados en cuanto a los sub\emph{clusters} posibles y al mismo tiempo minimiza los costes de E/S.
+    \item Es un método incremental que no requiere de todos los datos disponibles desde el primer momento.
+\end{itemize}
+
+Este algoritmo consta de 3 pasos, pero primero explicaremos lo que es CF(\emph{clustering} Feature), un término importante para BIRCH.
+
+CF es una estructura de datos que resume la información estadística de un conjunto de puntos de datos lo cual permite una representación compacta de los \emph{clusters} y facilita su proceso de fusión y división durante el proceso de \emph{clustering}.
+
+Normalmente, el Clustering Feature se representa con una tripleta (N, LS, SS), donde:
+
+\begin{description}
+    \item[N(Número de puntos)] Número total de puntos del subcluster.
+    \item[LS(Suma lineal)] Vector suma de las coordenadas de todos los puntos del subcluster. Representa la suma de los puntos a lo largo de cada dimensión.
+    \item[SS(Suma de cuandrados)] Vector suma de los cuadrados de las coordenadas de todos los puntos del subcluster. Representa la suma de los cuadrados de los puntos a lo largo de cada dimensión.
+\end{description}
+
+Pasos del algoritmo BIRCH:
+
+\begin{enumerate}
+    \item Primero de todo se crea un árbol de Clustering Feature mediante un único escaneo de la base de datos dode cada nodo contiene un número limitado de CF. Para cada punto de datos, se busca el \emph{cluster} más cercano mediante una métrica de distancia. Si el punto se puede añadir al sub\emph{cluster} sin sobrepasar la capacidad del nodo se actualiza el CF, en caso contrario, se crea un nuevo nodo y se ajusta la estructura del árbol.
+    \item Posteriormente, se agrupan las hojas del árbol CF utilizando un \emph{clustering} jerárquico.
+    \item Por último, podemos utilizar el modelo aprendido para agrupar los datos de entrada.
+\end{enumerate}
+
+\subsection{Neural Map}
+
+Neural Map~(Mapa neuronal) es un algoritmo de aprendizaje competitivo eficiente inspirado en Growing Neural Gas y BIRCH. Al igual que GNG, Neural Map puede añadir y eliminar neuronas de forma dinámica. A su vez, también existen bordes entre neuronas cercanas.
+
+\imagen{memoria/ejemploNM}{Ejemplo Neural Gas~\cite{haifengl:VectorQuantization}}{.5}
+
+Aparte, para acelerar el aprendizaje respecto a BIRCH se emplea la técnica Locality-Sensitive Hashing. Esta técnica consiste en realizar búsquedas eficientes de vecinos cercanos en grandes conjuntos de datos de alta dimensionalidad. Su principal objetivo es reducir la complejidad computacional de encontrar elementos similares al proyectar datos a una dimensión inferior donde los elementos similares tienen una alta probabilidad de colisionar.
+
+La estructura de este mapa consiste de una malla de nodos(neuronas) en forma rectangular, generalmente una cuadrícula 2D. Cada nodo tiene asociado un vector de pesos de la misma dimensión que los datos de entrada. Para entrenar este algoritmo, cada nodo compite para representar los datos de entrada. La neurona ganadora junto a sus vecinos ajustan sus pesos, lo que permite que la estructura de la malla capture la topología de los datos de entrada. 

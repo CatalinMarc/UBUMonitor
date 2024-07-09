@@ -7,7 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/CatalinMarc/UBUMonitor)](https://github.com/CatalinMarc/UBUMonitor/blob/master/LICENSE)
 
 ## Release 
-La release de la aplicación está disponible: [Aquí](https://github.com/CatalinMarc/UBUMonitorLauncher/releases)
+La release de la aplicación está disponible: [Aquí](https://github.com/CatalinMarc/UBUMonitor/releases)
 
 ## Monitorización de alumnos en la plataforma Moodle
 ### Descripción:
@@ -17,14 +17,12 @@ Herramienta de visualización de calificaciones y registros (logs) del curso en 
 Esta aplicación está dirigida a docentes que usen los servicios de Moodle.
 
 Esta proyecto es una extensión del módulo de clustering de la aplicación [UBUMonitor Clustering](https://github.com/xjx1001/UBUMonitor) de [Xing Long Ji](https://github.com/xjx1001).
-<p align="center"><img src="/latex/img/ejemplo_barras_apiladas.png" />
-
 ## Citar trabajo
 [Citar este trabajo](https://www.mdpi.com/2079-9292/11/6/954#cite)
 
 ## Dependencias:
 La aplicación requiere **Java 8**.
-Las librerías externas de **Java** están incluidas en la carpeta [lib](lib), de **JavaScript** en [resources/graphics/lib/](resources/graphics/lib/) y un pack de iconos.
+Las librerías externas de **Java** están incluidas en la carpeta [lib](lib), de **JavaScript** en [src/main/resources/graphics/lib](src/main/resources/graphics/lib) y un pack de iconos.
 
 ### Dependencias de Java:
 * [Apache Commons CSV](https://commons.apache.org/proper/commons-csv/)

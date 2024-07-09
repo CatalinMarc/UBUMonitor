@@ -1,0 +1,37 @@
+\capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
+
+\section{Cambio de interfaz gráfica}
+
+En cuanto a aspectos relevantes, el módulo de clustering sobre el que he trabajado en este proyecto se había desarrollado de manera independiente antes de ser integrado en la aplicación de UBUMonitor. Esto resultó en una interfaz gráfica de usuario (GUI) que no era coherente ni homogénea con respecto a los demás módulos de la aplicación. Aunque el módulo era funcionalmente correcto, su integración trajo consigo una desarmonía en la GUI que afectaba negativamente la experiencia del usuario, haciéndola inconsistente y posiblemente confusa.
+
+Antes de añadir los mapas autoorganizados, quise cambiar esta interfaz. Sin embargo, este proceso me llevó más tiempo del esperado y no conseguí modificarla como me habría gustado. El cambio más destacado fue la reubicación de los distintos parámetros y botones para la ejecución del clustering. Inicialmente, estos elementos estaban en la parte superior, pero en los demás módulos, todos estos botones se encuentran en la parte inferior.
+
+Uno de los cambios significativos que propuse fue la unificación de las pestañas del módulo de clustering para que se asemejaran a las utilizadas en otros módulos de la aplicación, como se ilustra en la Figura 5.1. Inicialmente, logré modificar la interfaz gráfica del módulo de clustering para que adoptara el diseño mostrado en la Figura 5.2. Esta modificación incluyó la implementación correcta de los algoritmos de clustering.
+
+\imagen{memoria/GUInormal}{GUI de los demás módulos}{.9}
+\imagen{memoria/GUIprueba}{Idea de GUI principal para clustering}{.9}
+
+No obstante, encontré numerosos desafíos al intentar integrar la visualización de gráficos. En los otros módulos de la aplicación, todos los gráficos se muestran dentro de un único webview, lo que permite una gestión centralizada de la visualización de datos. Contrariamente, en el módulo de clustering, cada tipo de gráfico (2D, 3D y Silueta) se presenta en su propio webview, utilizando archivos HTML independientes y distintas bibliotecas gráficas.
+
+Para resolver esta inconsistencia, intenté combinar todas las visualizaciones gráficas en un solo archivo HTML. Esto implicaba la consolidación de las diferentes bibliotecas y ajustes específicos para asegurar la compatibilidad y el correcto funcionamiento dentro de un único webview. Sin embargo, a pesar de mis esfuerzos, no pude lograr que esta integración funcionara de manera efectiva.
+
+Debido a las dificultades técnicas y limitaciones encontradas, no pude implementar este cambio completamente. Como resultado, la visualización de gráficos en el módulo de clustering permanece segmentada, cada uno en su propio webview tal como se muestra en la Figura 5.3.
+
+\imagen{memoria/GUIclustering}{GUI de clustering final}{.9}
+
+Aunque se lograron avances significativos en la uniformidad de la interfaz gráfica y la correcta ejecución de los algoritmos de clustering, la consolidación de las visualizaciones gráficas en un único webview sigue siendo un desafío pendiente. Este problema subraya la necesidad de una estrategia más robusta para la integración de bibliotecas y la gestión de recursos en el desarrollo de interfaces gráficas complejas.
+
+\section{Librerías utilizadas para los gráficos}
+
+Para la implementación de los gráficos en la sección de \emph{vector quantization}, inicialmente se utilizó la librería de SMILE, al igual que con los algoritmos. Esta elección facilitó significativamente el trabajo, ya que solo era necesario instanciar el gráfico y enviar las neuronas directamente desde el algoritmo empleado. El gráfico generado constabo con un método ``canvas'' que devolvía una imagen con los datos deseados, la cual se mostraba en un ``ImageView'' de JavaFX. Sin embargo, esta solución presentaba varias limitaciones, dado que, al tener solo una imagen, no se podía interactuar con el gráfico.
+
+Posteriormente, se decidió utilizar la librería Plotly en JavaScript debido a la amplia variedad de gráficos interactivos que ofrece. Esta solución funcionó perfectamente para gráficos 2D. No obstante, al tratar de implementar gráficos 3D, surgieron errores debido a la incompatibilidad del navegador que incorpora el WebView en Scene Builder ya que utiliza el motor de renderizado WebKit~\cite{webkit} que es un poco anticuando y no soporta WebGL, ya sea porque no está habilitado o por la posible utilización de una versión antigua del navegador.
+
+La compatibilidad del navegador con WebGL puede verificarse accediendo a la página de WebGL~\cite{webgl:test}, si vemos un cubo 3D girando es que nuestro navegador soporta correctamente WebGL.
+
+\imagen{memoria/graficoPlotly2D}{Gráfico Plotly 2D}{.5}
+
+Debido a estos inconvenientes, se buscó otra biblioteca adecuada para gráficos 3D. Inicialmente se probó con Chart.js, pero esta librería no ofrecía soporte para gráficos 3D. Finalmente, se optó por utilizar Highcharts.js. Aunque Highcharts.js proporciona gráficos con funcionalidades más limitadas, resultó ser una opción viable y también se utilizó previamente para la sección de clustering clásico.
+
+\imagen{memoria/graficoHighcharts3D}{Gráfico Highcharts 3D}{.5}
+En resumen, la elección de las bibliotecas gráficas estuvo guiada por la necesidad de interacción y compatibilidad con las tecnologías empleadas, logrando así una implementación funcional y ajustada a los requerimientos del proyecto.

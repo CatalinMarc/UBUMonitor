@@ -1,0 +1,13 @@
+\capitulo{1}{Introducción}
+
+En el ámbito de la ciencia de datos y el análisis de patrones, el \emph{clustering}~\cite{immune:clustering} desempeña un papel fundamental al identificar estructuras subyacentes y grupos naturales en conjuntos de datos no etiquetados. Esto puede ser muy útil en el campo de la enseñanza, sobre todo, cuando se trabaja con grandes cantidades de alumnos. Por ello, en este proyecto implementaremos una nueva extensión al módulo de clustering que serán la cuantificación vectorial~(Vector Quantization, VQ). 
+
+El \emph{clustering} clásico es uno de los enfoques más comunes y ampliamente utilizados en análisis de datos. Algoritmos como K-Means y DBSCAN son ejemplos destacados de esta categoría. Estos algoritmos dividen el conjunto de datos en grupos distintos basándose en la distancia entre los puntos de datos, asignando cada punto a un \emph{cluster} según su similitud con los centroides o vecindarios.
+
+Por otro lado, el \emph{clustering} jerárquico ofrece una perspectiva más estructurada al organizar los \emph{clusters} en una jerarquía, creando árboles de \emph{clusters} que representan relaciones de agrupamiento a diferentes niveles de detalle. Los métodos aglomerativos y divisivos son dos enfoques comunes en \emph{clustering} jerárquico, permitiendo explorar las relaciones entre \emph{clusters} de manera escalable y visualmente intuitiva.
+
+Sin embargo, uno de los enfoques más fascinantes y poderosos en \emph{clustering} es la cuantificación vectorial~(VQ)~\cite{saturn:vector}. La VQ es una técnica de \emph{clustering} y compresión de datos que divide el espacio de entrada en regiones y asigna cada punto de datos a un representante o \emph{codeword} de estas regiones. Este método no solo agrupa datos de manera efectiva, sino que también reduce la dimensionalidad y mejora la eficiencia en el procesamiento de datos al representar grandes conjuntos de datos mediante un número reducido de prototipos o \emph{codebooks}, permitiendo una representación clara y comprensible de las estructuras subyacentes en los datos.
+
+También trataremos con los mapas autooraganizados~(Self-Organizing Map) que es un técnica incluida dentro de la cuantificación vectorial que destaca por la visualización en una cuadrícula de neuronas, similar a la estructura del cerebro humano. Este enfoque no solo agrupa datos de manera eficaz, sino que también mantiene las relaciones espaciales entre los datos, facilitando su visualización y comprensión.
+
+Este proyecto se integrará en la aplicación de UBUMonitor~\cite{github:ubumonitor}, la cual extrae los datos del servidor de Moodle y se aplican diferentes algoritmos a los datos recogidos relativos a la actividad y calificaciones de los alumnos para mostrarlos de forma visual.

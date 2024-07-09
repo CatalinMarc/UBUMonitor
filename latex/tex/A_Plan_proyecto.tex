@@ -1,0 +1,214 @@
+\apendice{Plan de Proyecto Software}
+
+\section{Introducción}
+
+El propósito de este apartado es definir de forma clara los objetivos del proyecto y de qué manera van a ser alcanzados.
+
+\section{Planificación temporal}
+
+La planificacón del proyecto se llevó a cabo mediante una metodología ágil, en concreto SCRUM~\cite{wearemarketing:scrum}. Se ha utilizado la herramienta de Zube para llevar el control de los \emph{sprints} y de las tareas.
+
+SCRUM tiene como objetivo lograr una progresión incremental, dividiendo el tiempo de trabajo en segmentos denominados \emph{sprints}. Antes de iniciar cada uno de estos \emph{sprints}, se lleva a cabo una reunión de planificación con los miembros del equipo, en la cual se asigna un conjunto específico de tareas que se intentarán completar durante ese \emph{sprint}. Las tareas completadas dentro del período asignado al \emph{sprint} se marcan como finalizadas, mientras que las que no puedan ser terminadas a tiempo se trasladarán al siguiente \emph{sprint}.
+
+En este caso particular, la duración de cada \emph{sprint} se ha establecido de dos semanas. 
+
+A continuación se detallan los \emph{sprints}.
+
+\subsection{\emph{Sprint} 1 (21/3/2024 - 3/4/2024)}
+
+Este primer \emph{sprint} se ha centrado principalmente como una toma de contacto con el proyecto ya que se ha preparado el entorno para el desarrollo de la aplicación. 
+
+Para ello se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Instalar una versión previa del JDK para evitar problemas de compatibilidad con el proyecto principal.
+    \item Revisar la instalación de Maven para su correcto funcionamiento.
+    \item Instalar Scene Builder para los ficheros FXML.
+    \item Hacer un \emph{fork} del proyecto actual de UBUMonitor para poder editar el repositorio de GitHub.
+    \item Crear la estructura de carpetas del workspace de Eclipse en la que yo tenía principalmente dos proyectos, uno siendo la aplicación original sin ninguna modificación y otro con los cambios que iba realizando. Esto me ayudaba mucho para ver los dos proyectos simultáneamente.
+    \item Entender la estructura general del proyecto. Principalmente utilizaba el patrón de arquitectura de software Modelo-Vista-Controlador~(MVC) además de otras carpetas para organizar mejor la carpeta \texttt{main} que contenia el código principal. También disponemos de una carpeta \texttt{resources} donde tenemos todas las imágenes, gráficos, traducciones y demás recursos que utiliza el proyecto.
+    \item Empezar con el cambio de interfaz del módulo \emph{clustering}.
+\end{itemize}
+
+\subsection{\emph{Sprint} 2 (4/4/2024 - 17/4/2024)}
+
+El segundo \emph{sprint} se ha dedicado principalmente a la modificación de la interfaz gráfica del módulo de \emph{clustering} y al aprendizaje sobre las herramientas utilizadas.
+
+Tareas realizadas:
+
+\begin{itemize}
+    \item Investigar sobre el funcionamiento de Scene Builder y JavaFX
+    \item Terminar la reestructuración de la interfaz del módulo.
+    \item Modificar la implementación del clustering para que se adapte a la nueva interfaz.
+    \item Implementar los gráficos en la nueva interfaz.   
+\end{itemize}
+
+Durante este \emph{sprint} se había conseguido modificar la interfaz para que sea igual a los demás módulos y al correcto funcionamiento del \emph{clustering}, pero debido a que no se conseguía mostrar los diferentes gráficos de los resultados, se tuvo que revertir la mayoría de los cambios ya que no podiamos perder más tiempo y la interfaz gráfica no era lo primordial de este proyecto.
+
+\subsection{\emph{Sprint} 3 (18/4/2024 - 2/5/2024)}
+
+En este \emph{sprint} se comenzó con la extensión del módulo y la implementación de los algoritmos de cuantificación vectorial.
+
+Para ello se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Añadir nueva pestaña de cuantificación vectorial.
+    \item Crear la interfaz para esta pestañana.
+    \item Integrar algoritmo SOM.
+    \item Implementar gráficos SOM.
+    \item Integrar algoritmo Neural Gas.
+    \item Implementar gráfico 2D Neural Gas.
+\end{itemize}
+
+\subsection{\emph{Sprint} 4 (16/5/2024 - 29/5/2024)}
+
+El \emph{sprint} 4 tambíen se ha centrado principalmente en la implementación de nuevas algoritmos de cuantificación vectorial con sus gráfico y permitir a los usuarios que elijan los parámetros de los algoritmos.
+
+Además, se ha internacionalizado toda esta extensión del módulo a inglés y español.
+
+Tareas realizadas:
+
+\begin{itemize}
+    \item Integrar algoritmo GNG.
+    \item Integrar algoritmo BIRCH.
+    \item Integrar algoritmo Neural Map.    
+    \item Implementar gráficos 2D de estos algoritmos.
+    \item Implementar gráficos 3D de estos algoritmos.
+    \item Permitir parámetros seleccionados por los usuarios.
+    \item Establecer los parámetros pertinentes a cada algoritmo.
+    \item Internacionalización del módulo.
+    \item Reducción de dimensiones al seleccionar más de 3 componentes.
+\end{itemize}
+
+\subsection{\emph{Sprint} 5 (12/6/2024 - 26/6/2024)}
+
+En el \emph{sprint} 5 ya se ha terminado con las implementaciones generales del código y se ha utilizado para hacer modificaciones y arreglar errores.
+
+Tareas realizadas:
+
+\begin{itemize}
+    \item Cambiar implementación gráficos a los de la libría de Plotly.
+    \item Cambiar implementación gráficos 3D a los de la libría de Highcharts debido a incompatibilidades con el motor de renderizado.
+    \item Corregir reducciones de dimensionalidad para poder mostrar gráficos 2D y 3D simultaneamente con los mismos datos en la misma ejecución del algoritmo.
+    \item Corregir dimensiones de los gráficos.
+    \item Corregir errores de robustez.
+    \item Corregir las conexiones de las neuronas tras reducir las dimensiones ya que utilizaba las coordenadas de las neuronas con las dimensiones originales.
+\end{itemize}
+
+\subsection{\emph{Sprint} 6 (27/6/2024 - 8/7/2024)}
+
+El último \emph{sprint} será para corregir los últimos detalles y lanzar la versión final de la aplicación con un funcionamiento correcto.
+
+\begin{itemize}
+    \item Corregir errores de sintaxis.
+    \item Corregir errores en las conexiones de neuronas 3D.
+    \item Corregir error de internalización.
+    \item Documentación del código.
+    \item Mejorar la calidad del código.
+    \item Crear fichero .bat para ejecutar la aplicación Windows.
+    \item Crear fichero .sh para ejecutar la aplicación en Linux.
+\end{itemize}
+
+\section{Estudio de viabilidad}
+
+En esta sección se examinan ciertos aspectos que se deberían considerar si el producto desarrollado en este proyecto se llevara a un entorno más realista, donde sería necesario rendir cuentas ante otras personas en caso de surgir algún problema.
+
+\subsection{Viabilidad económica}
+
+Aquí haremos un estudio económico sobre los costes y las ganancias del proyecto. 
+
+\subsubsection{Costes de personal}
+
+Durante el transcurso del desarrollo del proyecto ha trabajado una sola persona durante 3 meses. El salario medio de un programador junior en España es alrdedor de 21.000€ al año lo que equivale a 1.750€ mensuales.
+
+\tablaSmallSinColores{Costes de personal.}{l r}{costesPersonal}
+{\multicolumn{1}{l}{\textbf{Concepto}} & \textbf{Coste (€)} \\}{
+Salario mensual & 1.750\\
+Cuota a pagar en el IRPF & 200\\
+Cuotas a la Seguridad Social & 500\\
+\otoprule
+Sueldo bruto mensual & 2.450\\
+\textbf{Total de 3 meses} & \textbf{7.350}\\
+}
+
+\subsubsection{Costes de \emph{hardware}}
+
+Para el desarrollo de la aplicación se han utilizado los siguientes dispositivos \emph{hardware} estableciendo un periodo de amortización de 5 años, aunque solo fueron utilizados durante 3 meses.
+
+\tablaSmallSinColores{Costes de \emph{hardware}.}{l r r}{costesHardware}
+{\multicolumn{1}{l}{\textbf{Concepto}} & \textbf{Coste (€)} & \textbf{Coste amortizado (€)}\\}{
+	Ordenador de sobremesa & 800 & 39,90\\
+    Dos monitores & 300 & 18,00\\
+    Teclado y ratón & 80 & 3,90\\
+    Escritorio & 150 & 9,00\\
+	\otoprule
+	\textbf{Total} & \textbf{1.180} & \textbf{70,80}\\
+}
+
+\subsubsection{Costes de \emph{software}}
+
+Todas la herramientas y \emph{software} utilizado para este proyecto no representaron ninguún coste ya que eran gratuitas.
+
+\subsubsection{Costes totales}
+
+La siguiente tabla muestra de forma resumida los costes en los que se ha incurrido durante el desarrollo del proyecto.
+
+\tablaSmallSinColores{Costes totales}{l r}{costes}
+{ Concepto & Coste (€) \\}{ 
+Personal & 7.350,00 \\
+Hardware & 61,80 \\
+Software & 0,00 \\
+\toprule
+\textbf{Total} & \textbf{7.420,80} \\
+}
+
+\subsubsection{Ganancias}
+
+En términos de beneficios, se podría proceder a la comercialización de licencias de la aplicación UBUMonitor a diversas instituciones educativas para su utilización. Dada la capacidad de internacionalización de la aplicación, también es factible su venta a instituciones educativas en países de habla inglesa. En caso de una demanda significativa, se podría considerar la adición de más idiomas para su comercialización, ampliando así su alcance global.
+
+El costo de estas licencias se establecerá en 100€ por institución, un precio sumamente accesible en relación con los múltiples beneficios que ofrece la aplicación. Además, esta estrategia de venta contribuirá a la reducción de costos operativos, permitiendo una optimización de los recursos disponibles.
+
+\subsection{Viabilidad legal}
+
+En esta sección se tratarán principalmente las licencias del software incluidas en la aplicación. Al evaluar si una biblioteca es adecuada para nuestro proyecto, se considera si su licencia es compatible con la licencia MIT. La licencia MIT permite la libre redistribución del software, y se ha optado por esta licencia porque la aplicación que incluye este proyecto utiliza esta misma licencia.
+
+Destacaremos principalmente 3 bibliotecas que han sido de gran ayuda para este proyecto.
+
+La primera y la más importante es la librería SMILE~(\emph{Statistical Machine Intelligence and Learning Engine})~\cite{haifengl:VectorQuantization} es una biblioteca de aprendizaje automático para Java y Scala. Ofrece una alta gama de algoritmos y destaca por su rendimiento, eficiencia y facilidad de uso. Es la librería principal en la que me he basado para la implementación de todos los algoritmos de la parte de cuantificación vectorial. La biblioteca tiene una licencia LGPL~\cite{smile:license}
+
+Otra libreía importante es la de Plotly.js que se ha utilizado para la mayoría de gráficos 2D. Esta biblioteca es de código abierto utilizada para visualizar datos den JavaScript y destaca por la facilidad de uso, la versatilidad y los gráficos de alta calidad. Tiene licencia MIT~\cite{plotly:license} al igual que nuestro proyecto.
+
+También destaca la librería HighCharts.js~\cite{highcharts} que se ha utilizado para todos los gráficos 3D del módulo de \emph{clustering}. HighCharts tiene una licencia OEM~\cite{highcharts:license}.
+
+Otras bibliotecas que se han empleado en este proyecto y mencionaremos:
+
+\begin{itemize}
+    \item Apache Commons CSV 1.8, que es una librería para trabajar con archivos CSV en Java. Licencia: Apache License 2.0.
+    \item Apache Commons Math 3.6.1, una librería de utilidades matemáticas y estadísticas. Licencia: Apache License 2.0.
+    \item Apache LIcene 8.6.2, un motor de búsqueda de texto completo. Licencia: Apache License 2.0.
+    \item Apache POI 4.1.1, una librería para manipular archivos de Microsoft Office. Licencia: Apache License 2.0.
+    \item CommonMark 0.15.1, una implementación de Markdown compatible con CommonMark. Licencia: BSD 2-Clause License.
+    \item ControlsFX 8.40.17, una colección de controles JavaFX adicionales. Licencia: BSD 3-Clause License.
+    \item JSON In Java 20190722, una librería para trabajar con JSON en Java. Licencia: JSON License.
+    \item JSoup Java HTML Parser 1.12.1, una librería para analizar HTML. Licencia: MIT License.
+    \item Kumo 1.27, una librería para generar nubes de palabras en Java. Licencia: Apache License 2.0.
+    \item OkHttp 4.4.1, una librería HTTP para Java y Android. Licencia: Apache License 2.0.
+    \item OpenCSV 4.6, una librería para leer y escribir archivos CSV. Licencia: Apache License 2.0.
+    \item SLF4J API Module 1.7.26, una API para el registro en Java. Licencia: MIT License.
+    \item SLF4J LOG4J 12 Binding 1.7.26, un puente de SLF4J a Log4j. Licencia: MIT License.
+    \item Smile 2.4.0, una plataforma de aprendizaje automático en Java. Licencia: Apache License 2.0
+    \item T-SNE-Java 2.5.0, una implementación de T-SNE en Java. Licencia: Apache License 2.0. 
+    \item ThreeTen Extra 1.5.0, una librería para trabajar con fechas y horas en Java. Licencia: BSD 3-Clause License.
+    \item ApexCharts 3.19.2, una librería de gráficos JavaScript. Licencia: MIT License.
+    \item Chart.js 2.9.3, una librería de gráficos JavaScript. Licencia: MIT License.
+    \item Chart.js Box and Violin Plot 2.3.0, una extensión de Chart.js para diagramas de caja y violín. Licencia: MIT License.
+    \item color-hash 1.0.3, una librería para generar colores a partir de cadenas de texto. Licencia: MIT License.
+    \item html2canvas 1.0.0-rc.5, una librería para capturar pantallas en HTML. Licencia: MIT License.
+    \item Plotly 2.6.4, una librería de gráficos interactivos. Licencia: MIT License.
+    \item Tabulator 4.9.3, una librería para crear tablas interactivas en JavaScript. Licencia: MIT License.
+    \item Vis Network 8.2.0, una librería para crear gráficos de red interactivos. Licencia: MIT License.
+    \item Vis Timeline 7.3.7, una librería para crear líneas de tiempo interactivas. Licencia: MIT License.
+    \item Zulu JRE (Java Runtime Environment) zulu8.76.0.17-ca-fx-jdk8.0.402-win\_x64, que es una distribución certificada de OpenJDK y tiene licencia GNU General Public License, versión 2, con la Clasepath Exception (GPLv2+CE).
+
+\end{itemize}
+

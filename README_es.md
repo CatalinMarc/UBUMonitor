@@ -3,11 +3,11 @@
 </a>
 
 # UBUMonitor
-[![GitHub release](https://img.shields.io/github/release/yjx0003/UBUMonitor.svg)](https://github.com/yjx0003/UBUMonitor/releases/)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f79d51e496b3495690aa6480269536b8)](https://www.codacy.com/app/yjx0003/UBUMonitor?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yjx0003/UBUMonitor&amp;utm_campaign=Badge_Grade)
+[![GitHub release](https://img.shields.io/github/release/CatalinMarc/UBUMonitor.svg)](https://github.com/CatalinMarc/UBUMonitor/releases/)
+[![GitHub license](https://img.shields.io/github/license/CatalinMarc/UBUMonitor)](https://github.com/CatalinMarc/UBUMonitor/blob/master/LICENSE)
 
-## Versión actualizable
-La versión actualizable de la aplicación está disponible: [Aquí](https://github.com/yjx0003/UBUMonitorLauncher/releases)
+## Release 
+La release de la aplicación está disponible: [Aquí](https://github.com/CatalinMarc/UBUMonitorLauncher/releases)
 
 ## Monitorización de alumnos en la plataforma Moodle
 ### Descripción:
@@ -16,14 +16,11 @@ Herramienta de visualización de calificaciones y registros (logs) del curso en 
 
 Esta aplicación está dirigida a docentes que usen los servicios de Moodle.
 
-Esta versión es la continuación de [UBUGrades](https://github.com/huco95/UBUGrades) de [Félix Nogal Santamaría](https://github.com/huco95).
+Esta proyecto es una extensión del módulo de clustering de la aplicación [UBUMonitor Clustering](https://github.com/xjx1001/UBUMonitor) de [Xing Long Ji](https://github.com/xjx1001).
 <p align="center"><img src="/latex/img/ejemplo_barras_apiladas.png" />
 
 ## Citar trabajo
 [Citar este trabajo](https://www.mdpi.com/2079-9292/11/6/954#cite)
-## Manual de usuario:
-<!--* https://ubumonitor.gitbook.io/ubumonitor/-->
-* https://ubumonitordocs.readthedocs.io/es/latest/
 
 ## Dependencias:
 La aplicación requiere **Java 8**.
@@ -140,10 +137,10 @@ Las librerías externas de **Java** están incluidas en la carpeta [lib](lib), d
 
 ## Autor
 
-- Yi Peng Ji
+-   Ionut Catalin Marc
 
-## Tutores
-- Raúl Marticorena Sánchez
-- Carlos Pardo Aguilar
+## Tutor
+-   Raúl Marticorena Sánchez
+
 ## Licencia
 Este proyecto está licenciado bajo la licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.

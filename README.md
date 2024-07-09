@@ -4,12 +4,13 @@
 
 
 # UBUMonitor
-[![GitHub release](https://img.shields.io/github/release/yjx0003/UBUMonitor.svg)](https://github.com/yjx0003/UBUMonitor/releases/)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f79d51e496b3495690aa6480269536b8)](https://www.codacy.com/app/yjx0003/UBUMonitor?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yjx0003/UBUMonitor&amp;utm_campaign=Badge_Grade)
+[![GitHub release](https://img.shields.io/github/release/CatalinMarc/UBUMonitor.svg)](https://github.com/CatalinMarc/UBUMonitor/releases/)
+[![GitHub license](https://img.shields.io/github/license/CatalinMarc/UBUMonitor)](https://github.com/CatalinMarc/UBUMonitor/blob/master/LICENSE)
 <p align="center"><img height="300" src="src/main/resources/img/logo.png" />
 
-## Updatable version
-Updatable version of application is available: [Here](https://github.com/yjx0003/UBUMonitorLauncher/releases)
+## Release
+Release of application is available: [Here](https://github.com/CatalinMarc/UBUMonitorLauncher/releases)
+
 ## Monitoring of students on the Moodle platform
 ### Description:
 
@@ -17,12 +18,9 @@ Tool for displaying grades and course records (logs) on different types of chart
 
 This application is aimed at teachers who use Moodle services.
 
-This version is the continuation of [Félix Nogal Santamaría](https://github.com/huco95) [UBUGrades](https://github.com/huco95/UBUGrades) application.
+This project is an extension of the clustering module of [Xing Long Ji](https://github.com/xjx1001) [UBUMonitor Clustering](https://github.com/xjx1001/UBUMonitor) application.
 ## Cite this
 [Cite this](https://www.mdpi.com/2079-9292/11/6/954#cite)
-## User's manual:
-<!--* https://ubumonitor.gitbook.io/ubumonitor/-->
-* https://ubumonitordocs.readthedocs.io/es/latest/
 
 ## Dependencies:
 The application requires **Java 8**.
@@ -138,11 +136,10 @@ External **JavaScript** libraries are included in  [resources/graphics/lib/](res
 
 ## Author
 
-- Yi Peng Ji
+- Ionut Catalin Marc
 
 ## Tutors
 - Raúl Marticorena Sánchez
-- Carlos Pardo Aguilar
 
 ## License
 This project is licensed under the MIT license - see the [LICENSE](LICENSE) file for details.
